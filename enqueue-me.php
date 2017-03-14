@@ -1,0 +1,47 @@
+<?php
+
+/*
+Plugin Name: 	Enqueue Me
+Plugin URI: 	http://www.wpmaz.uk
+Description:    	Easily enqueue your favourite CSS and Javascipt libraries into your theme
+Version: 		0.1
+Author: 		Mario Jaconelli
+Author URI:  	http://www.wpmaz.uk
+*/
+
+
+
+include('inc/admin.php');
+
+function em_settings_init(){
+	
+	register_setting('em_user_settings' , 'em_user_licence' );
+
+	add_settings_section( 'user_settings', 'User Settings', 'em_user_settings_render', 'em_user_settings' );
+
+	add_settings_field(
+	      'user_licence',
+	      'User Licence',
+	      'user_licence_render',
+	      'em_user_settings',
+	      'user_settings'
+	  );
+
+} 
+
+add_action( 'admin_init', 'em_settings_init' );
+
+function em_user_settings_render(){
+
+	settings_fields('em_user_settings');
+
+}
+
+function user_licence_render(){
+
+	$user_licence = get_option('em_user_licence')['user_licence'];
+	?>
+	<input type='text' name='em_user_licence[user_licence]' value='<?php echo $user_licence; ?>'>
+	<?php
+	
+}
