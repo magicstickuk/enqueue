@@ -5,28 +5,8 @@ function em_admin_page(){
 	add_submenu_page('options-general.php','Enqueue Me', 'Enqueue Me', 'manage_options', 'em_settings','em_admin_menu_markup');
   
 }
+
 add_action( 'admin_menu', 'em_admin_page' );
-
-function em_update_options($post_data){
-
-	$enc_array = get_em_data();
-
-		if(isset($post_data['main-submit'])){
-
-			foreach ($enc_array as $enc) {
-				
-				${ $enc['databaseKey'] } = $post_data[ $enc['databaseKey'] ] ? '1' : '0';
-
-				update_option($enc['databaseKey'], ${ $enc['databaseKey'] });
-
-			}
-
-			update_option('bip_pure_wrap_width', $post_data['pure-wrap-width']);
-
-			echo '<div class="updated" style="margin-top:20px"><p>Your settings were saved succesfully.</p></div>';
-
-		}
-}
 
 function em_admin_menu_markup(){
 
@@ -36,17 +16,17 @@ function em_admin_menu_markup(){
 
 		<div class="wrap">
 
-	    			<h1>Enqueue Me Settings</h1>
+    			<h1>Enqueue Me Settings</h1>
 
-	    			<?php echo "<div class='wrap'>";
-			echo "<form action='options.php' method='post'>";
-			
-			do_settings_sections( 'em_user_settings' );
-			submit_button();
+    			<?php echo "<div class='wrap'>";
+				echo "<form action='options.php' method='post'>";
 		
-			echo "</form>";
+				do_settings_sections( 'em_user_settings' );
+				submit_button();
+	
+				echo "</form>";
 
-	    			 ?>
+    			 ?>
 
  		</div>
 
@@ -56,13 +36,13 @@ function em_admin_menu_markup(){
 
 function em_load_admin_styles(){
 
-		if(get_current_screen()->id == 'settings_page_em_settings'){
+	if(get_current_screen()->id == 'settings_page_em_settings'){
 
-			wp_register_style( 'bipenc-admin-styles', plugins_url( '/css/admin.css', __FILE__ ));
+		wp_register_style( 'bipenc-admin-styles', plugins_url( '/css/admin.css', __FILE__ ));
 
-			wp_enqueue_style( 'bipenc-admin-styles');
+		wp_enqueue_style( 'bipenc-admin-styles');
 
-		}
+	}
 		
 }
 

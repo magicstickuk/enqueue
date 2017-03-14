@@ -12,6 +12,7 @@ Author URI:  	http://www.wpmaz.uk
 
 
 include('inc/admin.php');
+include('inc/load-scripts.php');
 
 function em_settings_init(){
 	
@@ -39,9 +40,11 @@ function em_user_settings_render(){
 
 function user_licence_render(){
 
-	$user_licence = get_option('em_user_licence')['user_licence'];
-	?>
-	<input type='text' name='em_user_licence[user_licence]' value='<?php echo $user_licence; ?>'>
+	$user_licence = get_option('em_user_licence')['user_licence']; ?>
+
+		<input id="licenece-box" type='text' name='em_user_licence[user_licence]' value='<?php echo $user_licence; ?>'> <span class="licence-tick" style="display:none">tick</span>
+		<p><a id="update-licence" href="">Update Licence</a>
+
 	<?php
 	
 }
