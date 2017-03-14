@@ -1,3 +1,5 @@
-#licenece-box{
-	
+.enqueueme-settings input:not([type="submit"]){
+	width: 100%;
+	max-width: 400px;
+	padding: 0.5em;
 }

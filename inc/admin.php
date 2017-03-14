@@ -18,7 +18,7 @@ function em_admin_menu_markup(){
 
     			<h1>Enqueue Me Settings</h1>
 
-    			<?php echo "<div class='wrap'>";
+    			<?php echo "<div class='wrap enqueueme-settings'>";
 				echo "<form action='options.php' method='post'>";
 		
 				do_settings_sections( 'em_user_settings' );
@@ -27,6 +27,12 @@ function em_admin_menu_markup(){
 				echo "</form>";
 
     			 ?>
+
+    			 <h1>My Packages</h1>
+
+    			 <div id="mypackage-wrap">
+    			 	
+    			 </div>
 
  		</div>
 
