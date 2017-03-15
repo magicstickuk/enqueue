@@ -44,7 +44,8 @@ function em_check_licence(){
 function em_load_user_packages(user_id){
 
 	var data = {
-	      "user_id" : user_id
+	      "user_id" : user_id,
+	      'sync_id' : em_admin_setting_vars.sync_id
        }
         
 	jQuery.ajax({
@@ -52,7 +53,18 @@ function em_load_user_packages(user_id){
 	    dataType: 'json',
 	    crossDomain: true,
 	    success: function(responseData, textStatus, jqXHR){
-	    	 jQuery('#mypackage-wrap').append('Hello ' + responseData);
+	    	if(responseData == 'use_plugin'){
+
+	    		// Use current favoites object to print markup
+
+	    	}else{
+	    		// Process new timestamp
+	    		
+	    		//Build a new local favourites object the print out markup
+	    		jQuery('#mypackage-wrap').append('Hello ' + responseData);
+
+	    	}
+	    	 
 	    	 console.log(responseData);
 	    },
 	    error: function (responseData, textStatus, errorThrown){

@@ -39,3 +39,12 @@ function em_admin_menu_markup(){
 <?php 
 
 }
+
+function em_get_sync_id(){
+
+	$user_id = get_current_user_id();
+	$sync_id = get_user_meta( $user_id, 'em_last_modified', true);
+
+	return $sync_id;
+
+}

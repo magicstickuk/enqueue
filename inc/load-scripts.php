@@ -14,7 +14,8 @@ function em_load_admin_scripts(){
 
 		wp_localize_script('em-admin-settings-scripts', 'em_admin_setting_vars', 
 			array(
-				'user_id' => get_current_user_id()
+				'user_id' => get_current_user_id(),
+				'sync_id' => em_get_sync_id()
 			)
 		);
 
