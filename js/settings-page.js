@@ -54,7 +54,6 @@ function em_load_user_packages(user_id){
 	    success: function(responseData, textStatus, jqXHR){
 	    	 jQuery('#mypackage-wrap').append('Hello ' + responseData);
 	    	 console.log(responseData);
-	    	 console.log(responseData[0]['ID']);
 	    },
 	    error: function (responseData, textStatus, errorThrown){
 	    		

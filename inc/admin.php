@@ -39,17 +39,3 @@ function em_admin_menu_markup(){
 <?php 
 
 }
-
-function em_load_admin_styles(){
-
-	if(get_current_screen()->id == 'settings_page_em_settings'){
-
-		wp_register_style( 'bipenc-admin-styles', plugins_url( '/css/admin.css', __FILE__ ));
-
-		wp_enqueue_style( 'bipenc-admin-styles');
-
-	}
-		
-}
-
-add_action('admin_enqueue_scripts','em_load_admin_styles');
