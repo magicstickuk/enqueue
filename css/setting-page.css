@@ -11,7 +11,10 @@
 	width: 100%;
 }
 .ui-sortable{
-
+	cursor: move
+}
+.ui-sortable-handle:hover td{
+	background-color: #f6f6f6 !important;
 }
 .ui-sortable-placeholder td{
 	background-color: #f3f3f3!important;

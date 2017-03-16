@@ -25,7 +25,6 @@ jQuery( document ).resize(function() {
 
 function em_draw(table_id){
 	
-
 	// Count and apply the row numbers
 	jQuery("#" + table_id + " .row-number").each(function(count){
 		jQuery(this).html(count + 1);
@@ -33,9 +32,10 @@ function em_draw(table_id){
 
 	//Assign Parent Package
 	jQuery("#" + table_id + " tr").each(function(count){
-		var previous_id = jQuery(this).prev().attr('data-package-id');
+		var previous_id = (jQuery(this).prev().attr('data-package-id') == null ? 0 : jQuery(this).prev().attr('data-package-id') );
 		jQuery(this).attr('data-parent-package', previous_id);
 	});
+	
 }
 
 function set_sortable_widths(id){
@@ -101,8 +101,8 @@ function em_load_user_packages(user_id){
 	    		jQuery('#mypackage-wrap').append('Hello ' + responseData);
 
 	    	}
-	    	 
-	    	 console.log(responseData);
+	    	em_draw('sortable');
+	    	console.log(responseData);
 	    },
 	    error: function (responseData, textStatus, errorThrown){
 	    		
