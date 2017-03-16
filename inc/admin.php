@@ -28,7 +28,7 @@ function em_admin_menu_markup(){
 
     			 ?>
 
-    			 <h1>My Packages</h1>
+    			 <h1>My Enqueue</h1>
 
     			 <div id="mypackage-wrap">
 
@@ -52,8 +52,8 @@ function em_admin_menu_markup(){
     			 		</thead>
     			 		<tbody>
     			 			
-    			 			<tr>
-    			 				<td>
+    			 			<tr data-package-id="21" data-parent-package="0">
+    			 				<td class='row-number'>
     			 					1
     			 				</td>
     			 				<td>	
@@ -68,8 +68,8 @@ function em_admin_menu_markup(){
     			 				</td>
     			 			</tr>
 
-    			 			<tr>
-    			 				<td>
+    			 			<tr data-package-id="22" data-parent-package="21">
+    			 				<td class='row-number'>
     			 					2
     			 				</td>
     			 				<td>	
@@ -84,8 +84,8 @@ function em_admin_menu_markup(){
     			 				</td>
     			 			</tr>
 
-    			 			<tr>
-    			 				<td>
+    			 			<tr data-package-id="23" data-parent-package="22">
+    			 				<td class='row-number'>
     			 					3
     			 				</td>
     			 				<td>	

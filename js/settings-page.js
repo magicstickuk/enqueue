@@ -6,15 +6,44 @@ jQuery( document ).ready(function() {
 		e.preventDefault();
 		em_check_licence();
 	});
+
 	set_sortable_widths('#sortable');
-    	jQuery( "#sortable tbody" ).sortable({placeholder: "ui-sortable-placeholder"});
+
+    jQuery( "#sortable tbody" ).sortable({
+    		placeholder: "ui-sortable-placeholder",
+    		stop: function( event, ui ) {
+    			var table_id = jQuery(event.target).closest('table').attr('id');
+    			em_draw(table_id);
+    		}
+    });
+
 });
+
+jQuery( document ).resize(function() {
+	set_sortable_widths('#sortable');
+});
+
+function em_draw(table_id){
+	
+
+	// Count and apply the row numbers
+	jQuery("#" + table_id + " .row-number").each(function(count){
+		jQuery(this).html(count + 1);
+	});
+
+	//Assign Parent Package
+	jQuery("#" + table_id + " tr").each(function(count){
+		var previous_id = jQuery(this).prev().attr('data-package-id');
+		jQuery(this).attr('data-parent-package', previous_id);
+	});
+}
 
 function set_sortable_widths(id){
 
 	jQuery(id + " td").each(function(){
 		jQuery(this).css('width', jQuery(this).width() + "px");
 	});
+
 }
 
 function em_check_licence(){
