@@ -31,6 +31,76 @@ function em_admin_menu_markup(){
     			 <h1>My Packages</h1>
 
     			 <div id="mypackage-wrap">
+
+    			 	<table id="sortable" class="widefat fixed">
+    			 		<thead>
+    			 			<tr>
+    			 				<th width="40px">
+    			 					
+    			 				</th>
+    			 				<th>
+    			 					Package Name
+    			 				</th>
+    			 				<th>
+    			 					Assets
+    			 				</th>
+    			 				<th width="40px">
+    			 					NQ Me?
+    			 				</th>
+
+    			 			</tr>
+    			 		</thead>
+    			 		<tbody>
+    			 			
+    			 			<tr>
+    			 				<td>
+    			 					1
+    			 				</td>
+    			 				<td>	
+    			 					Pure CSS
+    			 				</td>
+    			 				<td>	
+    			 				 	Some Assets CSS<br>
+    			 				 	Some Assets js
+    			 				</td>
+    			 				<td>	
+    			 					<input type="checkbox" name="mario">
+    			 				</td>
+    			 			</tr>
+
+    			 			<tr>
+    			 				<td>
+    			 					2
+    			 				</td>
+    			 				<td>	
+    			 					WoW
+    			 				</td>
+    			 				<td>	
+    			 				 	Wow CSS<br>
+    			 				 	WoW js
+    			 				</td>
+    			 				<td>	
+    			 					<input type="checkbox" name="mario">
+    			 				</td>
+    			 			</tr>
+
+    			 			<tr>
+    			 				<td>
+    			 					3
+    			 				</td>
+    			 				<td>	
+    			 					Images Loaded
+    			 				</td>
+    			 				<td>	
+    			 				 	Main js<br>
+    			 				 	
+    			 				</td>
+    			 				<td>	
+    			 					<input type="checkbox" name="mario">
+    			 				</td>
+    			 			</tr>
+    			 		</tbody>
+    			 	</table>
     			 	
     			 </div>
 

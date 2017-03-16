@@ -1,5 +1,30 @@
-.enqueueme-settings input:not([type="submit"]){
+.enqueueme-settings input:not([type="submit"]):not([type="checkbox"]){
 	width: 100%;
 	max-width: 400px;
 	padding: 0.5em;
+}
+
+#sortable td{
+	background-color: #fff;	
+}
+#sortable tr{
+	width: 100%;
+}
+.ui-sortable{
+
+}
+.ui-sortable-handle{
+	background-color: red;
+	width:100%;
+}
+.ui-sortable-placeholder td{
+	background-color: #f3f3f3!important;
+	border-bottom: 2px dotted #cdcdcd;
+	border-top: 2px dotted #cdcdcd;
+	min-height: 10px;	
+}
+.ui-sortable-helper td{
+	background-color: #000;
+	height: 20px;
+	width: initial;
 }

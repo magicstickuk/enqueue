@@ -6,8 +6,16 @@ jQuery( document ).ready(function() {
 		e.preventDefault();
 		em_check_licence();
 	});
-    	
+	set_sortable_widths('#sortable');
+    	jQuery( "#sortable tbody" ).sortable({placeholder: "ui-sortable-placeholder"});
 });
+
+function set_sortable_widths(id){
+
+	jQuery(id + " td").each(function(){
+		jQuery(this).css('width', jQuery(this).width() + "px");
+	});
+}
 
 function em_check_licence(){
 
