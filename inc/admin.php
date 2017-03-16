@@ -48,3 +48,21 @@ function em_get_sync_id(){
 	return $sync_id;
 
 }
+
+function em_update_sync_id($user_id, $sync_id){
+
+	update_user_meta( $user_id, 'em_last_modified', $sync_id);
+
+}
+
+function update_sync_id_ajax(){
+
+	$new_timestamp = $_POST['timestamp'];
+	$user_id = $_POST['user_id'];
+
+	em_update_sync_id($user_id, $new_timestamp);
+
+	echo $new_timestamp;
+
+}
+add_action('wp_ajax_em_update_timestamp', 'update_sync_id_ajax');

@@ -59,7 +59,7 @@ function em_load_user_packages(user_id){
 
 	    	}else{
 	    		// Process new timestamp
-	    		
+	    		em_update_timestamp(responseData);
 	    		//Build a new local favourites object the print out markup
 	    		jQuery('#mypackage-wrap').append('Hello ' + responseData);
 
@@ -72,6 +72,22 @@ function em_load_user_packages(user_id){
 	    },
 	    url: 'https://wpmaz.uk/enqueueme/em-requests.php',
 	    data: data
+	});
+
+}
+
+function em_update_timestamp(responseData){
+
+	data = {
+          action : 'em_update_timestamp',
+          timestamp : responseData.new_timestamp,
+          user_id : em_admin_setting_vars.user_id
+      };
+
+	jQuery.post(ajaxurl,data,function(response) {
+
+		console.log('timestamp updated: ' + response);
+						
 	});
 
 }
