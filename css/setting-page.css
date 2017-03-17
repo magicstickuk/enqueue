@@ -3,6 +3,10 @@
 	max-width: 400px;
 	padding: 0.5em;
 }
+.enqueueme-settings select{
+	width: 100%;
+	max-width: 400px;
+}
 
 #sortable td{
 	background-color: #fff;	

@@ -27,6 +27,14 @@ function em_admin_menu_markup(){
 				echo "</form>";
 
     			 ?>
+    			 <h1>Add Packages from library</h1>
+
+    			 	<p>
+    			 		<select class="em-packages-select">
+    			 			<option></option>
+    			 			
+    			 		</select>
+    			 	</p>
 
     			 <h1>My Enqueue</h1>
 

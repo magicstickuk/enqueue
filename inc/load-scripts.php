@@ -7,10 +7,16 @@ function em_load_admin_scripts(){
 	if($screenid == 'settings_page_em_settings'){
 
 		wp_enqueue_script( 'jquery-ui-core' );
-    	wp_enqueue_script( 'jquery-ui-accordion' );
-    	wp_enqueue_script( 'jquery-ui-sortable' );
-    	wp_enqueue_script( 'jquery-ui-draggable' );
-    	wp_enqueue_script( 'jquery-ui-droppable' );
+    		wp_enqueue_script( 'jquery-ui-accordion' );
+    		wp_enqueue_script( 'jquery-ui-sortable' );
+    		wp_enqueue_script( 'jquery-ui-draggable' );
+    		wp_enqueue_script( 'jquery-ui-droppable' );
+
+    		wp_enqueue_script(
+			'em-select2-scripts',
+			'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js',
+			array( 'jquery' )
+		);
 
 		wp_enqueue_script(
 			'em-admin-settings-scripts',
@@ -32,6 +38,14 @@ function em_load_admin_scripts(){
 		);
 
 		wp_enqueue_style( 'em-settings-styles');
+
+		wp_register_style(
+			'em-select2-styles',
+			'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css',
+			false
+		);
+
+		wp_enqueue_style( 'em-select2-styles');
 
 
 

@@ -9,15 +9,133 @@ jQuery( document ).ready(function() {
 
 	set_sortable_widths('#sortable');
 
-    jQuery( "#sortable tbody" ).sortable({
+      jQuery( "#sortable tbody" ).sortable({
     		placeholder: "ui-sortable-placeholder",
     		stop: function( event, ui ) {
     			var table_id = jQuery(event.target).closest('table').attr('id');
-    			em_draw(table_id);
+    			em_draw("#" +table_id);
     		}
-    });
+      });
+      
+      em_load_packages();
+
+	
 
 });
+
+function em_load_packages(){
+
+	var data = {
+	      "full_package_query" : 1,
+      }
+
+	jQuery.ajax({
+	    type: 'POST',
+	    dataType: 'json',
+	    crossDomain: true,
+	    success: function(responseData, textStatus, jqXHR){
+	    	 if(responseData != 0){
+	    	 	
+	    	 	em_process_packages_data(responseData);
+
+	    	 }else{
+	    	 	
+	    	 	console.log('No Results');	
+	    	 	
+	    	 }
+	    },
+	    error: function (responseData, textStatus, errorThrown){
+	    	console.log(errorThrown);	
+	    },
+	    url: 'https://wpmaz.uk/enqueueme/em-requests.php',
+	    data: data
+	});
+
+	
+}
+
+function em_process_packages_data(responseData){
+
+	var packages = new Array();
+	 var previous_id = -1;  	 	
+
+ 	responseData.forEach(function(element) {
+ 		
+ 		var package = {};
+ 		if(element.ID != previous_id){
+ 			package.id = String(element.ID);
+    			package.text = element.package_name;
+    			package.package_name = element.package_name;
+    			package.content = element.content;
+    			package.url = element.url;
+
+    			package.assets = 
+				[{
+					'asset_name': element.asset_name,
+					'asset_id' : element.asset_id,
+					'link' : element.link,
+					'type' : element.type,
+					'in_footer' : element.in_footer,
+					'media' : element.media,
+					'conditional' : element.conditional,
+					'added' : element.added,
+				}];
+    			
+    			
+			packages.push(package);
+ 		
+		}else{
+
+			var additional_asset = {
+				'asset_name': element.asset_name,
+				'asset_id' : element.asset_id,
+				'link' : element.link,
+				'type' : element.type,
+				'in_footer' : element.in_footer,
+				'media' : element.media,
+				'conditional' : element.conditional,
+				'added' : element.added,
+			};
+
+			packages[packages.length -1]['assets'].push(additional_asset);
+			
+		}
+		
+		previous_id = element.ID;
+
+	});
+
+
+      jQuery(".em-packages-select").select2({
+	  placeholder: "Select a package",
+	  allowClear: true,
+	  data: packages
+	});
+
+	jQuery('.em-packages-select').on('select2:select', function (p) {
+	  
+	  	em_add_package_to_table('#sortable', p);
+
+	});
+
+}
+
+function em_add_package_to_table(table, package){
+	package = package.params.data;
+	html = '<tr data-package-id="'+ package.id + '" data-parent-package="0"><td class="row-number"></td><td>' + package.package_name + '</td>';
+
+	html +=  '<td>'
+	package.assets.forEach(function(element) {
+		html += element.asset_name + '<br>';
+	});
+	html += '</td>'
+	
+
+	html += '<td><input type="checkbox" name="mario"></td></tr>';
+	jQuery(table).find('tbody').append(html);
+	em_draw(table);
+	set_sortable_widths('#sortable');
+}
 
 jQuery( document ).resize(function() {
 	set_sortable_widths('#sortable');
@@ -26,12 +144,12 @@ jQuery( document ).resize(function() {
 function em_draw(table_id){
 	
 	// Count and apply the row numbers
-	jQuery("#" + table_id + " .row-number").each(function(count){
+	jQuery(table_id + " .row-number").each(function(count){
 		jQuery(this).html(count + 1);
 	});
 
 	//Assign Parent Package
-	jQuery("#" + table_id + " tr").each(function(count){
+	jQuery(table_id + " tr").each(function(count){
 		var previous_id = (jQuery(this).prev().attr('data-package-id') == null ? 0 : jQuery(this).prev().attr('data-package-id') );
 		jQuery(this).attr('data-parent-package', previous_id);
 	});
@@ -78,6 +196,41 @@ function em_check_licence(){
 
 }
 
+function em_load_package(id){
+
+	var data = {
+	      "package_id" : id,
+	      'single_package_query' : 1
+       }
+        
+	jQuery.ajax({
+	    type: 'POST',
+	    dataType: 'json',
+	    crossDomain: true,
+	    success: function(responseData, textStatus, jqXHR){
+
+	    		if(responseData != 0){
+	    	 	
+	    	 		//em_process_packages_data(responseData);
+
+		    	 }else{
+		    	 	
+		    	 	console.log('No Results');	
+		    	 	
+		    	 }
+
+
+	    },
+	    error: function (responseData, textStatus, errorThrown){
+	    		
+	    },
+	    url: 'https://wpmaz.uk/enqueueme/em-requests.php',
+	    data: data
+	    
+	});
+
+}
+
 function em_load_user_packages(user_id){
 
 	var data = {
@@ -101,7 +254,7 @@ function em_load_user_packages(user_id){
 	    		jQuery('#mypackage-wrap').append('Hello ' + responseData);
 
 	    	}
-	    	em_draw('sortable');
+	    	em_draw('#sortable');
 	    	console.log(responseData);
 	    },
 	    error: function (responseData, textStatus, errorThrown){
@@ -109,6 +262,7 @@ function em_load_user_packages(user_id){
 	    },
 	    url: 'https://wpmaz.uk/enqueueme/em-requests.php',
 	    data: data
+
 	});
 
 }
