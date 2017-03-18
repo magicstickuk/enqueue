@@ -30,7 +30,7 @@ function em_settings_init(){
 
 	add_settings_field(
 	      'user_licence',
-	      'User Licence',
+	      'User Personal Key',
 	      'user_licence_render',
 	      'em_user_settings',
 	      'user_settings'

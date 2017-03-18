@@ -1,3 +1,6 @@
+
+//
+// 
 jQuery( document ).ready(function() {
 	
 	em_check_licence();
@@ -9,14 +12,15 @@ jQuery( document ).ready(function() {
 
 	set_sortable_widths('#sortable');
 
-      jQuery( "#sortable tbody" ).sortable({
-    		placeholder: "ui-sortable-placeholder",
-    		stop: function( event, ui ) {
+    jQuery( "#sortable tbody" ).sortable({
+		placeholder: "ui-sortable-placeholder",
+		stop: function( event, ui ) {
 
-    			var table_id = jQuery(event.target).closest('table').attr('id');
-    			em_draw( "#" + table_id );
+    		var table_id = jQuery(event.target).closest('table').attr('id');
+    		em_draw( "#" + table_id );
 
-    		}
+    	}
+      
       });
       
       em_load_packages();
@@ -27,7 +31,7 @@ function em_load_packages(){
 
 	var data = {
 	      "full_package_query" : 1,
-      }
+    }
 
 	jQuery.ajax({
 		type: 'POST',
@@ -61,6 +65,37 @@ function em_load_packages(){
 function em_process_packages_data(responseData){
 
 	var packages 	= new Array();
+
+	responseData.forEach(function(element) {
+
+		var package = {};
+
+		package.id 			= String(element.ID);
+		package.text 		= element.package_name;
+
+		packages.push(package);
+	
+	});
+
+	jQuery(".em-packages-select").select2({
+		
+		placeholder: "Select a package",
+		allowClear: true,
+		data: packages
+
+	});
+
+	jQuery('.em-packages-select').on('select2:select', function (p) {
+	  	
+		em_add_package_to_table('#sortable', p);
+
+	});
+}
+
+
+function em_add_package_row(responseData){
+
+	var packages 	= new Array();
 	var previous_id 	= -1;  	 	
 
  	responseData.forEach(function(element) {
@@ -69,7 +104,7 @@ function em_process_packages_data(responseData){
  		
  		if(element.ID != previous_id){
 
- 			package.id 			= String(element.ID);
+ 				package.id 			= String(element.ID);
     			package.text 		= element.package_name;
     			package.package_name 	= element.package_name;
     			package.content 		= element.content;
@@ -109,26 +144,8 @@ function em_process_packages_data(responseData){
 
 	});
 
-
-      jQuery(".em-packages-select").select2({
-		
-		placeholder: "Select a package",
-		allowClear: true,
-		data: packages
-
-	});
-
-	jQuery('.em-packages-select').on('select2:select', function (p) {
-	  
-	  	em_add_package_to_table('#sortable', p);
-
-	});
-
-}
-
-function em_add_package_to_table(table, package){
-
-	package 	= package.params.data;
+    // Add the single package to the table. redraw
+	package 	= packages[0];
 	html 		= '<tr data-package-id="'+ package.id + '" data-parent-package="0"><td class="row-number"></td><td>' + package.package_name + '</td>';
 
 	html 		+= '<td>'
@@ -143,9 +160,49 @@ function em_add_package_to_table(table, package){
 
 	html		+= '<td><input type="checkbox" name="mario"></td></tr>';
 
-	jQuery(table).find('tbody').append(html);
-	em_draw(table);
+	jQuery('#sortable').find('tbody').append(html);
+	em_draw('#sortable');
 	set_sortable_widths('#sortable');
+
+}
+
+function em_add_package_to_table(table, package){
+
+
+	// Get the single package object via ajax
+
+	var data = {
+	      "single_package_query" : 1,
+	      'package_id' : package.params.data.id
+    }
+
+    jQuery.ajax({
+		type: 'POST',
+		dataType: 'json',
+		crossDomain: true,
+		success: function(responseData, textStatus, jqXHR){
+			if(responseData != 0){
+	    	 	
+	    	 		em_add_package_row(responseData);
+
+	    	}else{
+	    	 	
+	    	 		console.log('No Results');	
+	    	 	
+	    	}
+
+		},
+		error: function (responseData, textStatus, errorThrown){
+	    		
+	    		console.log(errorThrown);	
+		
+		},
+		url: 'https://wpmaz.uk/enqueueme/em-requests.php',
+		data: data
+
+	});
+
+	
 
 }
 
