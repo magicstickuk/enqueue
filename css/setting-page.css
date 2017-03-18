@@ -29,3 +29,19 @@
 .ui-sortable-helper{
 	box-shadow: 0 10px 10px 2px #777;
 }
+.spinner-container{
+	width: 1.25em;
+	height: 1.25em;
+	display: inline-block;
+}
+.select-boxes-container{
+	width:100%;
+	box-sizing: border-box;
+}
+.select-box-container{
+	box-sizing: border-box;
+	width: 50%;
+	float: left;
+	padding: 0 1em 0 0;
+}
+

@@ -51,8 +51,8 @@ function user_licence_render(){
 
 	$user_licence = get_option('em_user_licence')['user_licence']; ?>
 
-		<input id="licenece-box" type='text' name='em_user_licence[user_licence]' value='<?php echo $user_licence; ?>'> <span class="licence-tick" style="display:none">tick</span><span class="licence-cross" style="display:none">cross</span>
-		<p><a id="update-licence" href="">Update Licence</a>
+		<input id="licenece-box" type='text' name='em_user_licence[user_licence]' value='<?php echo $user_licence; ?>'> <span class="licence-tick" style="display:none">tick</span><span class="licence-cross" style="display:none">cross</span><span class="spinner-container"></span>
+		<p><a id="update-licence" href="">Update Licence</a></p>
 
 	<?php
 	

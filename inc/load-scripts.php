@@ -17,7 +17,13 @@ function em_load_admin_scripts(){
 			'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js',
 			array( 'jquery' )
 		);
+    		wp_enqueue_script(
+			'em-loadingOverly-scripts',
+			'https://cdn.jsdelivr.net/jquery.loadingoverlay/latest/loadingoverlay.min.js',
+			array( 'jquery' )
+		);
 
+    	
 		wp_enqueue_script(
 			'em-admin-settings-scripts',
 			plugins_url( '../js/settings-page.js', __FILE__ ),

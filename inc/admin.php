@@ -26,15 +26,33 @@ function em_admin_menu_markup(){
 	
 				echo "</form>";
 
-    			 ?>
-    			 <h1>Add Packages from library</h1>
+    			?>
+    			
+                <div class="select-boxes-container">
+                    <div class="select-box-container left">
+                        <h1>Add Packages from library</h1>
 
-    			 	<p>
-    			 		<select class="em-packages-select">
-    			 			<option></option>
-    			 			
-    			 		</select>
-    			 	</p>
+                        <p>
+                            <select class="em-packages-select">
+                                <option></option>
+                                
+                            </select>
+                        </p>
+
+                    </div>
+                    <div class="select-box-container right">
+                        <h1>Add Packages from my favourites</h1>
+
+                        <p>
+                            <select class="em-packages-favoutites-select">
+                                <option></option>
+                                
+                            </select>
+                        </p>
+                    </div>                    
+
+                </div>
+               
 
     			 <h1>My Enqueue</h1>
 

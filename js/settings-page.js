@@ -25,6 +25,13 @@ jQuery( document ).ready(function() {
       
       em_load_packages();
 
+      jQuery(".em-packages-favoutites-select").select2({
+		
+		placeholder: "Select a package",
+		allowClear: true,
+
+	});
+     
 });
 
 function em_load_packages(){
@@ -62,6 +69,21 @@ function em_load_packages(){
 	
 }
 
+function em_get_added_ids(table_id){
+	
+	var package_ids = new Array();
+	
+	em_draw(table_id);
+	
+	package_id = jQuery(table_id + " tbody tr").each(function(){
+
+		package_ids.push(jQuery(this).attr('data-package-id'));
+
+	});
+
+	return package_ids;
+
+}
 function em_process_packages_data(responseData){
 
 	var packages 	= new Array();
@@ -86,8 +108,19 @@ function em_process_packages_data(responseData){
 	});
 
 	jQuery('.em-packages-select').on('select2:select', function (p) {
-	  	
-		em_add_package_to_table('#sortable', p);
+
+	  	var current_packages = em_get_added_ids('#sortable');
+
+	  	if(current_packages.indexOf(p.params.data.id) == -1){
+
+	  		em_add_package_to_table('#sortable', p);
+
+	  	}else{
+
+	  		alert("This package is already in your enqueue list.");
+
+	  	}
+		
 
 	});
 }
@@ -95,54 +128,34 @@ function em_process_packages_data(responseData){
 
 function em_add_package_row(responseData){
 
-	var packages 	= new Array();
-	var previous_id 	= -1;  	 	
+	var packages 		= new Array();  	 	
 
  	responseData.forEach(function(element) {
  		
  		var package = {};
  		
- 		if(element.ID != previous_id){
+		package.id 				= String(element.ID);
+		package.text 			= element.package_name;
+		package.package_name 	= element.package_name;
+		package.content 		= element.content;
+		package.url 			= element.url;
 
- 				package.id 			= String(element.ID);
-    			package.text 		= element.package_name;
-    			package.package_name 	= element.package_name;
-    			package.content 		= element.content;
-    			package.url 		= element.url;
-
-    			package.assets = [{
-				'asset_name': element.asset_name,
-				'asset_id' : element.asset_id,
-				'link' : element.link,
-				'type' : element.type,
-				'in_footer' : element.in_footer,
-				'media' : element.media,
-				'conditional' : element.conditional,
-				'added' : element.added,
-			}];
-    			
-			packages.push(package);
- 		
-		}else{
-
-			var additional_asset = {
-				'asset_name': element.asset_name,
-				'asset_id' : element.asset_id,
-				'link' : element.link,
-				'type' : element.type,
-				'in_footer' : element.in_footer,
-				'media' : element.media,
-				'conditional' : element.conditional,
-				'added' : element.added,
-			};
-
-			packages[packages.length -1]['assets'].push(additional_asset);
+		package.assets = [{
+			'asset_name': element.asset_name,
+			'asset_id' : element.asset_id,
+			'link' : element.link,
+			'type' : element.type,
+			'in_footer' : element.in_footer,
+			'media' : element.media,
+			'conditional' : element.conditional,
+			'added' : element.added,
+		}];
 			
-		}
-		
-		previous_id = element.ID;
-
+		packages.push(package);
+ 		
 	});
+
+ 	jQuery('#sortable').LoadingOverlay("hide");
 
     // Add the single package to the table. redraw
 	package 	= packages[0];
@@ -166,14 +179,16 @@ function em_add_package_row(responseData){
 
 }
 
+
+
 function em_add_package_to_table(table, package){
 
+	jQuery(table).LoadingOverlay("show");
 
 	// Get the single package object via ajax
-
 	var data = {
-	      "single_package_query" : 1,
-	      'package_id' : package.params.data.id
+		"single_package_query" : 1,
+		"package_id" : package.params.data.id
     }
 
     jQuery.ajax({
@@ -181,6 +196,7 @@ function em_add_package_to_table(table, package){
 		dataType: 'json',
 		crossDomain: true,
 		success: function(responseData, textStatus, jqXHR){
+
 			if(responseData != 0){
 	    	 	
 	    	 		em_add_package_row(responseData);
@@ -192,6 +208,7 @@ function em_add_package_to_table(table, package){
 	    	}
 
 		},
+
 		error: function (responseData, textStatus, errorThrown){
 	    		
 	    		console.log(errorThrown);	
@@ -244,10 +261,12 @@ function set_sortable_widths(id){
 
 function em_check_licence(){
 
+	jQuery('.spinner-container').LoadingOverlay("show", {color: 'transparent'});
+
 	var data = {
 		"licence" : jQuery('#licenece-box').val(),
 		"user_email" : jQuery('#licenece-email-box').val()
-       }
+    }
         
 	jQuery.ajax({
 		type: 'POST',
@@ -256,21 +275,26 @@ function em_check_licence(){
 		success: function(responseData, textStatus, jqXHR){
 		
 			if(responseData != 0){
+
 		    	 	jQuery('.licence-tick').show();
 		    	 	jQuery('.licence-cross').hide();
+
 		    	 	em_load_user_packages(responseData);
-		    	 }else{
+
+		   	}else{
 		    	 	jQuery('.licence-cross').show();
 		    	 	jQuery('.licence-tick').hide();
 		    	 	
-		    	 }
+		    }
 
-	    	},
+		    jQuery('.spinner-container').LoadingOverlay("hide");
+
+	    },
 		error: function (responseData, textStatus, errorThrown){
 	    		
 	    		console.log(errorThrown);	
 	    	
-	    	},
+	    },
 		url: 'https://wpmaz.uk/enqueueme/em-requests.php',
 		data: data
 
@@ -284,7 +308,7 @@ function em_load_package(id){
 	var data = {
 		"package_id" : id,
 		"single_package_query" : 1
-       }
+	}
         
 	jQuery.ajax({
 	    type: 'POST',
@@ -292,16 +316,15 @@ function em_load_package(id){
 	    crossDomain: true,
 	    success: function(responseData, textStatus, jqXHR){
 
-	    		if(responseData != 0){
+	    	if(responseData != 0){
 	    	 	
-	    	 		//em_process_packages_data(responseData);
+	    	 	em_process_packages_data(responseData);
 
-		    	 }else{
+		    }else{
 		    	 	
-		    	 	console.log('No Results');	
+		    	console.log('No Results');	
 		    	 	
-		    	 }
-
+		    }
 
 	    },
 	    error: function (responseData, textStatus, errorThrown){
@@ -317,9 +340,10 @@ function em_load_package(id){
 function em_load_user_packages(user_id){
 
 	var data = {
+		"user_favouites_query" : 1,
 		"user_id" : user_id,
-	      "sync_id" : em_admin_setting_vars.sync_id
-       }
+	    "sync_id" : em_admin_setting_vars.sync_id
+	}
         
 	jQuery.ajax({
 		type: 'POST',
@@ -359,7 +383,7 @@ function em_update_timestamp(responseData){
 		action : 'em_update_timestamp',
 		timestamp : responseData.new_timestamp,
 		user_id : em_admin_setting_vars.user_id
-      };
+    };
 
 	jQuery.post(ajaxurl,data,function(response) {
 
