@@ -24,13 +24,6 @@ jQuery( document ).ready(function() {
       });
       
       em_load_packages();
-
-      jQuery(".em-packages-favoutites-select").select2({
-		
-		placeholder: "Select a package",
-		allowClear: true,
-
-	});
      
 });
 
@@ -128,6 +121,7 @@ function em_process_packages_data(responseData){
 
 function em_add_package_row(responseData){
 
+	console.log(responseData);
 	var packages 		= new Array();  	 	
 
  	responseData.forEach(function(element) {
@@ -159,6 +153,17 @@ function em_add_package_row(responseData){
 
     // Add the single package to the table. redraw
 	package 	= packages[0];
+
+	html = em_do_row_html(package);
+
+	jQuery('#sortable').find('tbody').append(html);
+	em_draw('#sortable');
+	set_sortable_widths('#sortable');
+
+}
+
+function em_do_row_html(package){
+
 	html 		= '<tr data-package-id="'+ package.id + '" data-parent-package="0"><td class="row-number"></td><td>' + package.package_name + '</td>';
 
 	html 		+= '<td>'
@@ -173,11 +178,10 @@ function em_add_package_row(responseData){
 
 	html		+= '<td><input type="checkbox" name="mario"></td></tr>';
 
-	jQuery('#sortable').find('tbody').append(html);
-	em_draw('#sortable');
-	set_sortable_widths('#sortable');
+	return html;
 
 }
+
 
 
 
@@ -198,7 +202,7 @@ function em_add_package_to_table(table, package){
 		success: function(responseData, textStatus, jqXHR){
 
 			if(responseData != 0){
-	    	 	
+	    	 		console.log(responseData);
 	    	 		em_add_package_row(responseData);
 
 	    	}else{
@@ -350,6 +354,8 @@ function em_load_user_packages(user_id){
 		dataType: 'json',
 		crossDomain: true,
 		success: function(responseData, textStatus, jqXHR){
+			
+			em_do_favourite_select_box(user_id);
 
 			if(responseData == 'use_plugin'){
 
@@ -364,7 +370,7 @@ function em_load_user_packages(user_id){
 		    	}
 
 	    		em_draw('#sortable');
-	    		console.log(responseData);
+	    		
 
 		},
 		error: function (responseData, textStatus, errorThrown){
@@ -378,7 +384,7 @@ function em_load_user_packages(user_id){
 }
 
 function em_update_timestamp(responseData){
-
+	
 	data = {
 		action : 'em_update_timestamp',
 		timestamp : responseData.new_timestamp,
@@ -392,3 +398,73 @@ function em_update_timestamp(responseData){
 	});
 
 }
+function em_do_favourite_select_box(user_id){
+
+	var data = {
+		"user_favouites_query_for_select" : 1,
+		"user_id" : user_id,
+	}
+        
+	jQuery.ajax({
+
+		type: 'POST',
+		dataType: 'json',
+		crossDomain: true,
+		success: function(responseData, textStatus, jqXHR){
+
+			em_do_favourite_select_box_responce(responseData);
+
+		},
+		error: function (responseData, textStatus, errorThrown){
+	    		
+		},
+		url: 'https://wpmaz.uk/enqueueme/em-requests.php',
+		data: data
+
+	});
+
+}
+
+function em_do_favourite_select_box_responce(responseData){
+
+	var packages 	= new Array();
+
+	responseData.forEach(function(element) {
+
+		var package = {};
+
+		package.id 			= String(element.ID);
+		package.text 		= element.package_name;
+
+		packages.push(package);
+	
+	});
+
+	jQuery(".em-packages-favoutites-select").select2({
+		
+		placeholder: "Select a package",
+		allowClear: true,
+		data: packages
+
+	});
+
+	jQuery('.em-packages-favoutites-select').on('select2:select', function (p) {
+
+	  	var current_packages = em_get_added_ids('#sortable');
+
+	  	if(current_packages.indexOf(p.params.data.id) == -1){
+
+	  		em_add_package_to_table('#sortable', p);
+
+	  	}else{
+
+	  		alert("This package is already in your enqueue list.");
+
+	  	}
+		
+
+	});
+
+}
+
+	
