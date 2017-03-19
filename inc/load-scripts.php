@@ -22,6 +22,13 @@ function em_load_admin_scripts(){
 			'https://cdn.jsdelivr.net/jquery.loadingoverlay/latest/loadingoverlay.min.js',
 			array( 'jquery' )
 		);
+    		wp_enqueue_script(
+			'em-fontawesome-scripts',
+			'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css',
+			array( 'jquery' )
+		);
+
+    		
 
     	
 		wp_enqueue_script(

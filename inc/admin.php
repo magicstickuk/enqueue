@@ -96,7 +96,7 @@ function em_admin_menu_markup(){
 		    			 				 	<?php endforeach; ?>
 		    			 				</td>
 		    			 				<td>	
-		    			 					<input type="checkbox" name="mario">
+		    			 					<a href="" class="em-remove-row" title="remove"><i class="fa fa-minus-circle" aria-hidden="true"></i></a>
 		    			 				</td>
 									</tr>
 								<?php endforeach;?>

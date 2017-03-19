@@ -24,6 +24,13 @@ jQuery( document ).ready(function() {
       });
       
       em_load_packages();
+
+      jQuery('.em-remove-row').click(function(e){
+      	e.preventDefault();
+      	jQuery(this).closest('tr').remove();
+    	em_draw( '#sortable');
+
+      });
      
 });
 
@@ -133,17 +140,25 @@ function em_add_package_row(responseData){
 		package.content 		= element.content;
 		package.url 			= element.url;
 
-		package.assets = [{
-			'asset_name': element.asset_name,
-			'asset_id' : element.asset_id,
-			'link' : element.link,
-			'type' : element.type,
-			'in_footer' : element.in_footer,
-			'media' : element.media,
-			'conditional' : element.conditional,
-			'added' : element.added,
-		}];
-			
+		var assets 	= new Array();
+		console.log(element);
+		// element.assets.forEach(function(asset){
+
+		// 	var asset = {
+		// 		'asset_name': asset.asset_name,
+		// 		'asset_id' : asset.asset_id,
+		// 		'link' : asset.link,
+		// 		'type' : asset.type,
+		// 		'in_footer' : asset.in_footer,
+		// 		'media' : asset.media,
+		// 		'conditional' : asset.conditional,
+		// 		'added' : asset.added,
+		// 	}
+
+		// 	assets.push(asset);
+
+		// });
+		// package.assets = assets;
 		packages.push(package);
  		
 	});
@@ -175,7 +190,7 @@ function em_do_row_html(package){
 	
 	html 		+= '</td>';
 
-	html		+= '<td><input type="checkbox" name="mario"></td></tr>';
+	html		+= '<td><a href="" class="em-remove-row" title="remove"><i class="fa fa-minus-circle" aria-hidden="true"></i></a></td></tr>';
 
 	return html;
 
