@@ -77,55 +77,43 @@ function em_admin_menu_markup(){
     			 			</tr>
     			 		</thead>
     			 		<tbody>
-    			 			
-    			 			<tr data-package-id="21" data-parent-package="0">
-    			 				<td class='row-number'>
-    			 					1
-    			 				</td>
-    			 				<td>	
-    			 					Pure CSS
-    			 				</td>
-    			 				<td>	
-    			 				 	Some Assets CSS<br>
-    			 				 	Some Assets js
-    			 				</td>
-    			 				<td>	
-    			 					<input type="checkbox" name="mario">
-    			 				</td>
-    			 			</tr>
 
-    			 			<tr data-package-id="22" data-parent-package="21">
-    			 				<td class='row-number'>
-    			 					2
-    			 				</td>
-    			 				<td>	
-    			 					WoW
-    			 				</td>
-    			 				<td>	
-    			 				 	Wow CSS<br>
-    			 				 	WoW js
-    			 				</td>
-    			 				<td>	
-    			 					<input type="checkbox" name="mario">
-    			 				</td>
-    			 			</tr>
+	    			 		<?php $packages = get_option('em_assets_to_enqueue'); ?>
 
-    			 			<tr data-package-id="23" data-parent-package="22">
-    			 				<td class='row-number'>
-    			 					3
-    			 				</td>
-    			 				<td>	
-    			 					Images Loaded
-    			 				</td>
-    			 				<td>	
-    			 				 	Main js<br>
-    			 				 	
-    			 				</td>
-    			 				<td>	
-    			 					<input type="checkbox" name="mario">
-    			 				</td>
-    			 			</tr>
+	    			 		<?php if($packages): ?>
+
+								<?php foreach($packages as $key => $package):?>
+									<tr data-package-id="<?php echo $package['id']; ?>" data-parent-package="<?php echo $package['dependant'];?>">
+										<td class='row-number'>
+	    			 						1
+	    			 					</td>
+		    			 				<td class="package-name">	
+		    			 					<?php echo $package['name']; ?>
+		    			 				</td>
+		    			 				<td>
+		    			 					<?php foreach($package['assets'] as $asset):?>
+		    			 				 	<span class="em_asset"
+		    			 				 			data-asset-id="<?php echo $asset['id']?>"
+		    			 				 			data-asset-link="<?php echo $asset['link']?>"
+		    			 				 			data-asset-type="<?php echo $asset['type']?>"
+		    			 				 			data-asset-media="<?php echo $asset['media']?>"
+		    			 				 			data-asset-conditional="<?php echo $asset['conditional']?>"
+		    			 				 			data-asset-in-footer="<?php echo $asset['in_footer']?>">
+		    			 				 			<?php echo $asset['name']?></span><br>
+		    			 				 	<?php endforeach; ?>
+		    			 				</td>
+		    			 				<td>	
+		    			 					<input type="checkbox" name="mario">
+		    			 				</td>
+									</tr>
+								<?php endforeach;?>
+
+	    			 		<?php else: ?>
+
+	    			 		<?php endif; ?>
+ 
     			 		</tbody>
+
     			 	</table>
     			 	
     			 </div>
@@ -160,5 +148,26 @@ function update_sync_id_ajax(){
 
 	echo $new_timestamp;
 
+	die();
+
 }
 add_action('wp_ajax_em_update_timestamp', 'update_sync_id_ajax');
+
+function em_update_enqueue_list_ajax(){
+
+	$packages = $_POST['packages'];
+
+	em_update_enqueue_list($packages);
+
+	echo $packages;
+
+	die();
+
+}
+add_action('wp_ajax_em_update_enqueue_list', 'em_update_enqueue_list_ajax');
+
+function em_update_enqueue_list($packages){
+
+	update_option('em_assets_to_enqueue', $packages);
+
+}

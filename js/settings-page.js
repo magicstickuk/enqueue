@@ -121,7 +121,6 @@ function em_process_packages_data(responseData){
 
 function em_add_package_row(responseData){
 
-	console.log(responseData);
 	var packages 		= new Array();  	 	
 
  	responseData.forEach(function(element) {
@@ -164,13 +163,13 @@ function em_add_package_row(responseData){
 
 function em_do_row_html(package){
 
-	html 		= '<tr data-package-id="'+ package.id + '" data-parent-package="0"><td class="row-number"></td><td>' + package.package_name + '</td>';
+	html 		= '<tr data-package-id="'+ package.id + '" data-parent-package="0"><td class="row-number"></td><td class="package-name">' + package.package_name + '</td>';
 
 	html 		+= '<td>'
 	
 	package.assets.forEach(function(element) {
 		
-		html += element.asset_name + '<br>';
+		html += '<span class="em_asset" data-asset-id="' + element.asset_id + '" data-asset-link="'+ element.link +'" data-asset-type="' + element.type + '" data-asset-media="' + element.media + '" data-asset-conditional="' + element.conditional + '" data-asset-in-footer="' + element.in_footer + '">' + element.asset_name + '<br>';
 
 	});
 	
@@ -250,7 +249,59 @@ function em_draw(table_id){
 		jQuery(this).attr('data-parent-package', previous_id);
 
 	});
+
+	// Save the new state
+	em_update_enqueue_list(table_id);
+
 	
+}
+
+function em_update_enqueue_list(table_id){
+
+	//Gather Data
+	var packages 	= new Array();
+
+	jQuery(table_id + " tbody tr").each(function(){
+
+		var package = {};
+
+		package.id 			= jQuery(this).attr('data-package-id');
+		package.name 		= jQuery(this).find('.package-name').html();
+		package.dependant 	= jQuery(this).attr('data-parent-package');
+
+		var assets 	= new Array();
+
+		jQuery(this).find('.em_asset').each(function(){
+
+			var asset = {
+				id 			: jQuery(this).attr('data-asset-id'),
+				name 		: jQuery(this).text(),
+				link 		: jQuery(this).attr('data-asset-link'),
+				type 		: jQuery(this).attr('data-asset-type'),
+				media 		: jQuery(this).attr('data-asset-media'),
+				conditional : jQuery(this).attr('data-asset-conditional'),
+				in_footer  	: jQuery(this).attr('data-asset-in-footer'),
+			};
+
+			assets.push(asset);
+
+		});
+
+		package.assets = assets;
+		packages.push(package);
+
+	});
+
+	data = {
+		action : 'em_update_enqueue_list',
+		packages : packages,
+    };
+
+	jQuery.post(ajaxurl,data,function(response) {
+
+		console.log(response);
+						
+	});
 }
 
 function set_sortable_widths(id){
