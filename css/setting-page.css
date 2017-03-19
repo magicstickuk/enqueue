@@ -37,6 +37,7 @@
 .select-boxes-container{
 	width:100%;
 	box-sizing: border-box;
+	display: inline-block;
 }
 .select-box-container{
 	box-sizing: border-box;

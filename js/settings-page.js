@@ -266,7 +266,7 @@ function em_update_enqueue_list(table_id){
 		var package = {};
 
 		package.id 			= jQuery(this).attr('data-package-id');
-		package.name 		= jQuery(this).find('.package-name').html();
+		package.name 		= jQuery(this).find('.package-name').html().trim();
 		package.dependant 	= jQuery(this).attr('data-parent-package');
 
 		var assets 	= new Array();
@@ -275,7 +275,7 @@ function em_update_enqueue_list(table_id){
 
 			var asset = {
 				id 			: jQuery(this).attr('data-asset-id'),
-				name 		: jQuery(this).text(),
+				name 		: jQuery(this).text().trim(),
 				link 		: jQuery(this).attr('data-asset-link'),
 				type 		: jQuery(this).attr('data-asset-type'),
 				media 		: jQuery(this).attr('data-asset-media'),
@@ -297,11 +297,7 @@ function em_update_enqueue_list(table_id){
 		packages : packages,
     };
 
-	jQuery.post(ajaxurl,data,function(response) {
-
-		console.log(response);
-						
-	});
+	jQuery.post(ajaxurl,data,function(response) {});
 }
 
 function set_sortable_widths(id){
@@ -336,6 +332,8 @@ function em_check_licence(){
 
 		    	 	em_load_user_packages(responseData);
 
+		    	 	em_show_favourite_select();
+
 		   	}else{
 		    	 	jQuery('.licence-cross').show();
 		    	 	jQuery('.licence-tick').hide();
@@ -356,6 +354,18 @@ function em_check_licence(){
 	});
 
 
+}
+
+function em_show_favourite_select(){
+
+	if(jQuery('.selectbox-inner').length == 0){
+
+		jQuery('.select-box-container.right').append('<div class="selectbox-inner" style="display:none"><h1>Add Packages from my favourites</h1><p><select class="em-packages-favoutites-select"><option></option></select></p></div>');
+	
+		em_do_favourite_select_box(em_admin_setting_vars.user_id);
+
+	}
+	
 }
 
 function em_load_package(id){
@@ -405,8 +415,6 @@ function em_load_user_packages(user_id){
 		dataType: 'json',
 		crossDomain: true,
 		success: function(responseData, textStatus, jqXHR){
-			
-			em_do_favourite_select_box(user_id);
 
 			if(responseData == 'use_plugin'){
 
@@ -491,6 +499,7 @@ function em_do_favourite_select_box_responce(responseData){
 	
 	});
 
+	jQuery('.select-box-container.right .selectbox-inner').show();
 	jQuery(".em-packages-favoutites-select").select2({
 		
 		placeholder: "Select a package",
@@ -498,6 +507,10 @@ function em_do_favourite_select_box_responce(responseData){
 		data: packages
 
 	});
+	
+	
+
+
 
 	jQuery('.em-packages-favoutites-select').on('select2:select', function (p) {
 

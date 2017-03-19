@@ -41,14 +41,7 @@ function em_admin_menu_markup(){
 
                     </div>
                     <div class="select-box-container right">
-                        <h1>Add Packages from my favourites</h1>
 
-                        <p>
-                            <select class="em-packages-favoutites-select">
-                                <option></option>
-                                
-                            </select>
-                        </p>
                     </div>                    
 
                 </div>
