@@ -47,7 +47,7 @@ function em_admin_menu_markup(){
                 </div>
                
 
-    			 <h1>My Enqueue</h1>
+    			 <h1 class="my-enqueue-header">My Enqueue <span class="state-saved-icon"><img style="display:none" src="<?php echo plugins_url('../img/tick.png',__FILE__); ?>" alt=""></span><span class="state-saved-words" style="display:none">Saved</span></h1>
 
     			 <div id="mypackage-wrap">
 
@@ -108,6 +108,7 @@ function em_admin_menu_markup(){
     			 		</tbody>
 
     			 	</table>
+
     			 	
     			 </div>
 

@@ -25,15 +25,21 @@ jQuery( document ).ready(function() {
       
       em_load_packages();
 
-      jQuery('.em-remove-row').click(function(e){
+      em_set_remove_buttons();
+
+      
+     
+});
+function em_set_remove_buttons(){
+
+	jQuery('.em-remove-row').click(function(e){
       	e.preventDefault();
       	jQuery(this).closest('tr').remove();
     	em_draw( '#sortable');
 
-      });
-     
-});
+    });
 
+}
 function em_load_packages(){
 
 	var data = {
@@ -157,8 +163,6 @@ function em_add_package_row(responseData){
 	
 	package.assets = assets;
 
- 	jQuery('#sortable').LoadingOverlay("hide");
-
 	em_do_add_row(package);
 
 }
@@ -180,9 +184,11 @@ function em_do_add_row(package){
 	html		+= '<td><a href="" class="em-remove-row" title="Remove"><i class="fa fa-minus-circle fa-2x" aria-hidden="true"></i></a></td></tr>';
 
 	jQuery('#sortable').find('tbody').append(html);
-	em_draw('#sortable');
+	
 	set_sortable_widths('#sortable');
-
+	jQuery('#sortable').LoadingOverlay("hide");
+	em_draw('#sortable');
+	em_set_remove_buttons();
 	return html;
 
 }
@@ -207,7 +213,7 @@ function em_add_package_to_table(table, package){
 		success: function(responseData, textStatus, jqXHR){
 
 			if(responseData != 0){
-	    	 		console.log(responseData);
+
 	    	 		em_add_package_row(responseData);
 
 	    	}else{
@@ -303,7 +309,17 @@ function em_update_enqueue_list(table_id){
 		packages : packages,
     };
 
-	jQuery.post(ajaxurl,data,function(response) {});
+	jQuery.post(ajaxurl,data,function(response) {
+
+		//jQuery('.state-saved-icon').LoadingOverlay("hide", {color: '#f1f1f1'});
+		jQuery('.state-saved-icon img').fadeIn();
+		jQuery('.state-saved-words').fadeIn();
+		setTimeout(function(){
+			jQuery('.state-saved-icon img').fadeOut('slow');
+			jQuery('.state-saved-words').fadeOut('slow');
+		}, 1500);
+
+	});
 }
 
 function set_sortable_widths(id){
