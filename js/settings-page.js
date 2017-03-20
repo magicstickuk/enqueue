@@ -127,56 +127,43 @@ function em_process_packages_data(responseData){
 
 
 function em_add_package_row(responseData){
-
-	var packages 		= new Array();  	 	
-
- 	responseData.forEach(function(element) {
+	 
+ 	var package = {};
  		
- 		var package = {};
- 		
-		package.id 				= String(element.ID);
-		package.text 			= element.package_name;
-		package.package_name 	= element.package_name;
-		package.content 		= element.content;
-		package.url 			= element.url;
+	package.id 				= String(responseData.ID);
+	package.text 			= responseData.package_name;
+	package.package_name 	= responseData.package_name;
+	package.content 		= responseData.content;
+	package.url 			= responseData.url;
 
-		var assets 	= new Array();
-		console.log(element);
-		// element.assets.forEach(function(asset){
+	var assets 	= new Array();
 
-		// 	var asset = {
-		// 		'asset_name': asset.asset_name,
-		// 		'asset_id' : asset.asset_id,
-		// 		'link' : asset.link,
-		// 		'type' : asset.type,
-		// 		'in_footer' : asset.in_footer,
-		// 		'media' : asset.media,
-		// 		'conditional' : asset.conditional,
-		// 		'added' : asset.added,
-		// 	}
+	responseData.assets.forEach(function(asset){
 
-		// 	assets.push(asset);
+		var asset = {
+			'asset_name'	: asset.asset_name,
+			'asset_id' 		: asset.asset_id,
+			'link' 			: asset.link,
+			'type' 			: asset.type,
+			'in_footer' 	: asset.in_footer,
+			'media' 		: asset.media,
+			'conditional' 	: asset.conditional,
+			'added' 		: asset.added,
+		}
 
-		// });
-		// package.assets = assets;
-		packages.push(package);
- 		
+		assets.push(asset);
+
 	});
+	
+	package.assets = assets;
 
  	jQuery('#sortable').LoadingOverlay("hide");
 
-    // Add the single package to the table. redraw
-	package 	= packages[0];
-
-	html = em_do_row_html(package);
-
-	jQuery('#sortable').find('tbody').append(html);
-	em_draw('#sortable');
-	set_sortable_widths('#sortable');
+	em_do_add_row(package);
 
 }
 
-function em_do_row_html(package){
+function em_do_add_row(package){
 
 	html 		= '<tr data-package-id="'+ package.id + '" data-parent-package="0"><td class="row-number"></td><td class="package-name">' + package.package_name + '</td>';
 
@@ -184,13 +171,17 @@ function em_do_row_html(package){
 	
 	package.assets.forEach(function(element) {
 		
-		html += '<span class="em_asset" data-asset-id="' + element.asset_id + '" data-asset-link="'+ element.link +'" data-asset-type="' + element.type + '" data-asset-media="' + element.media + '" data-asset-conditional="' + element.conditional + '" data-asset-in-footer="' + element.in_footer + '">' + element.asset_name + '<br>';
+		html += '<span class="em_asset" data-asset-id="' + element.asset_id + '" data-asset-link="'+ element.link +'" data-asset-type="' + element.type + '" data-asset-media="' + element.media + '" data-asset-conditional="' + element.conditional + '" data-asset-in-footer="' + element.in_footer + '">' + element.asset_name + '</span><br>';
 
 	});
 	
 	html 		+= '</td>';
 
-	html		+= '<td><a href="" class="em-remove-row" title="remove"><i class="fa fa-minus-circle" aria-hidden="true"></i></a></td></tr>';
+	html		+= '<td><a href="" class="em-remove-row" title="Remove"><i class="fa fa-minus-circle fa-2x" aria-hidden="true"></i></a></td></tr>';
+
+	jQuery('#sortable').find('tbody').append(html);
+	em_draw('#sortable');
+	set_sortable_widths('#sortable');
 
 	return html;
 
@@ -381,40 +372,6 @@ function em_show_favourite_select(){
 
 	}
 	
-}
-
-function em_load_package(id){
-
-	var data = {
-		"package_id" : id,
-		"single_package_query" : 1
-	}
-        
-	jQuery.ajax({
-	    type: 'POST',
-	    dataType: 'json',
-	    crossDomain: true,
-	    success: function(responseData, textStatus, jqXHR){
-
-	    	if(responseData != 0){
-	    	 	
-	    	 	em_process_packages_data(responseData);
-
-		    }else{
-		    	 	
-		    	console.log('No Results');	
-		    	 	
-		    }
-
-	    },
-	    error: function (responseData, textStatus, errorThrown){
-	    		
-	    },
-	    url: 'https://wpmaz.uk/enqueueme/em-requests.php',
-	    data: data
-	    
-	});
-
 }
 
 function em_load_user_packages(user_id){

@@ -96,7 +96,7 @@ function em_admin_menu_markup(){
 		    			 				 	<?php endforeach; ?>
 		    			 				</td>
 		    			 				<td>	
-		    			 					<a href="" class="em-remove-row" title="remove"><i class="fa fa-minus-circle" aria-hidden="true"></i></a>
+		    			 					<a href="" class="em-remove-row" title="Remove"><i class="fa fa-minus-circle fa-2x" aria-hidden="true"></i></a>
 		    			 				</td>
 									</tr>
 								<?php endforeach;?>
