@@ -3,6 +3,8 @@
 // 
 jQuery( document ).ready(function() {
 	
+	var table_id = "#sortable";
+
 	em_check_licence();
 
 	jQuery('#update-licence').click(function(e){
@@ -10,14 +12,13 @@ jQuery( document ).ready(function() {
 		em_check_licence();
 	});
 
-	set_sortable_widths('#sortable');
+	set_sortable_widths(table_id);
 
-    jQuery( "#sortable tbody" ).sortable({
+    jQuery(table_id + " tbody" ).sortable({
 		placeholder: "ui-sortable-placeholder",
 		stop: function( event, ui ) {
 
-    		var table_id = jQuery(event.target).closest('table').attr('id');
-    		em_draw( "#" + table_id );
+    		em_draw( table_id );
 
     	}
       
@@ -36,7 +37,6 @@ function em_set_remove_buttons(){
       	e.preventDefault();
       	jQuery(this).closest('tr').remove();
     	em_draw( '#sortable');
-
     });
 
 }
@@ -50,19 +50,20 @@ function em_load_packages(){
 		type: 'POST',
 		dataType: 'json',
 		crossDomain: true,
-		success: function(responseData, textStatus, jqXHR){
-			if(responseData != 0){
+		success: function(rD, textStatus, jqXHR){
+			
+			if(rD != 0){
 	    	 	
-	    	 		em_process_packages_data(responseData);
+	    	 	em_process_packages_data(rD);
 
-	    	 	}else{
+	    	}else{
 	    	 	
-	    	 		console.log('No Results');	
+	    	 	console.log('No Results');	
 	    	 	
-	    	 	}
+	    	}
 
 		},
-		error: function (responseData, textStatus, errorThrown){
+		error: function (rD, textStatus, errorThrown){
 	    		
 	    		console.log(errorThrown);	
 		
@@ -90,11 +91,11 @@ function em_get_added_ids(table_id){
 	return package_ids;
 
 }
-function em_process_packages_data(responseData){
+function em_process_packages_data(rD){
 
 	var packages 	= new Array();
 
-	responseData.forEach(function(element) {
+	rD.forEach(function(element) {
 
 		var package = {};
 
@@ -132,19 +133,19 @@ function em_process_packages_data(responseData){
 }
 
 
-function em_add_package_row(responseData){
+function em_add_package_row(rD){
 	 
  	var package = {};
  		
-	package.id 				= String(responseData.ID);
-	package.text 			= responseData.package_name;
-	package.package_name 	= responseData.package_name;
-	package.content 		= responseData.content;
-	package.url 			= responseData.url;
+	package.id 				= String(rD.ID);
+	package.text 			= rD.package_name;
+	package.package_name 	= rD.package_name;
+	package.content 		= rD.content;
+	package.url 			= rD.url;
 
 	var assets 	= new Array();
 
-	responseData.assets.forEach(function(asset){
+	rD.assets.forEach(function(asset){
 
 		var asset = {
 			'asset_name'	: asset.asset_name,
@@ -193,7 +194,37 @@ function em_do_add_row(package){
 
 }
 
+function em_ajax(data, callback, no_rows_callback){
 
+	jQuery.ajax({
+		type: 'POST',
+		dataType: 'json',
+		crossDomain: true,
+		success: function(rD, textStatus, jqXHR){
+
+			if(rD != 0){
+
+	    	 		callback(rD);
+
+	    	}else{
+	    	 	
+	    	 		no_rows_callback();	
+	    	 	
+	    	}
+
+		},
+
+		error: function (rD, textStatus, errorThrown){
+	    		
+	    		console.log(errorThrown);	
+		
+		},
+		url: 'https://wpmaz.uk/enqueueme/em-requests.php',
+		data: data
+
+	});
+
+}
 
 
 function em_add_package_to_table(table, package){
@@ -206,35 +237,9 @@ function em_add_package_to_table(table, package){
 		"package_id" : package.params.data.id
     }
 
-    jQuery.ajax({
-		type: 'POST',
-		dataType: 'json',
-		crossDomain: true,
-		success: function(responseData, textStatus, jqXHR){
-
-			if(responseData != 0){
-
-	    	 		em_add_package_row(responseData);
-
-	    	}else{
-	    	 	
-	    	 		console.log('No Results');	
-	    	 	
-	    	}
-
-		},
-
-		error: function (responseData, textStatus, errorThrown){
-	    		
-	    		console.log(errorThrown);	
-		
-		},
-		url: 'https://wpmaz.uk/enqueueme/em-requests.php',
-		data: data
-
-	});
-
-	
+    em_ajax(data, em_add_package_row, function(){
+    	console.log('No Results');
+    });
 
 }
 
@@ -340,41 +345,18 @@ function em_check_licence(){
 		"licence" : jQuery('#licenece-box').val(),
 		"user_email" : jQuery('#licenece-email-box').val()
     }
-        
-	jQuery.ajax({
-		type: 'POST',
-		dataType: 'json',
-		crossDomain: true,
-		success: function(responseData, textStatus, jqXHR){
-		
-			if(responseData != 0){
-
-		    	 	jQuery('.licence-tick').show();
-		    	 	jQuery('.licence-cross').hide();
-
-		    	 	em_load_user_packages(responseData);
-
-		    	 	em_show_favourite_select();
-
-		   	}else{
-		    	 	jQuery('.licence-cross').show();
-		    	 	jQuery('.licence-tick').hide();
-		    	 	
-		    }
-
-		    jQuery('.spinner-container').LoadingOverlay("hide");
-
-	    },
-		error: function (responseData, textStatus, errorThrown){
-	    		
-	    		console.log(errorThrown);	
-	    	
-	    },
-		url: 'https://wpmaz.uk/enqueueme/em-requests.php',
-		data: data
-
-	});
-
+    
+    em_ajax(data, function(rD){
+    	jQuery('.licence-tick').show();
+		jQuery('.licence-cross').hide();
+		em_load_user_packages(rD);
+		em_show_favourite_select();
+		jQuery('.spinner-container').LoadingOverlay("hide");
+    }, function(){
+    	jQuery('.licence-cross').show();
+		jQuery('.licence-tick').hide();
+		jQuery('.spinner-container').LoadingOverlay("hide");
+    });
 
 }
 
@@ -402,17 +384,17 @@ function em_load_user_packages(user_id){
 		type: 'POST',
 		dataType: 'json',
 		crossDomain: true,
-		success: function(responseData, textStatus, jqXHR){
+		success: function(rD, textStatus, jqXHR){
 
-			if(responseData == 'use_plugin'){
+			if(rD == 'use_plugin'){
 
 		    		// Use current favoites object to print markup
 
 		    	}else{
 		    		// Process new timestamp
-		    		em_update_timestamp(responseData);
+		    		em_update_timestamp(rD);
 		    		//Build a new local favourites object the print out markup
-		    		jQuery('#mypackage-wrap').append('Hello ' + responseData);
+		    		jQuery('#mypackage-wrap').append('Hello ' + rD);
 
 		    	}
 
@@ -420,7 +402,7 @@ function em_load_user_packages(user_id){
 	    		
 
 		},
-		error: function (responseData, textStatus, errorThrown){
+		error: function (rD, textStatus, errorThrown){
 	    		
 		},
 		url: 'https://wpmaz.uk/enqueueme/em-requests.php',
@@ -430,11 +412,11 @@ function em_load_user_packages(user_id){
 
 }
 
-function em_update_timestamp(responseData){
+function em_update_timestamp(rD){
 	
 	data = {
 		action : 'em_update_timestamp',
-		timestamp : responseData.new_timestamp,
+		timestamp : rD.new_timestamp,
 		user_id : em_admin_setting_vars.user_id
     };
 
@@ -451,32 +433,16 @@ function em_do_favourite_select_box(user_id){
 		"user_favouites_query_for_select" : 1,
 		"user_id" : user_id,
 	}
-        
-	jQuery.ajax({
 
-		type: 'POST',
-		dataType: 'json',
-		crossDomain: true,
-		success: function(responseData, textStatus, jqXHR){
-
-			em_do_favourite_select_box_responce(responseData);
-
-		},
-		error: function (responseData, textStatus, errorThrown){
-	    		
-		},
-		url: 'https://wpmaz.uk/enqueueme/em-requests.php',
-		data: data
-
-	});
+	em_ajax(data, em_do_favourite_select_box_responce);
 
 }
 
-function em_do_favourite_select_box_responce(responseData){
+function em_do_favourite_select_box_responce(rD){
 
 	var packages 	= new Array();
 
-	responseData.forEach(function(element) {
+	rD.forEach(function(element) {
 
 		var package = {};
 
