@@ -57,7 +57,7 @@ function em_get_added_ids(table_id){
 	
 	var package_ids = new Array();
 	
-	em_draw(table_id);
+	em_draw(table_id, false);
 	
 	package_id = jQuery(table_id + " tbody tr").each(function(){
 
@@ -226,7 +226,7 @@ jQuery( document ).resize(function() {
 
 });
 
-function em_draw(table_id){
+function em_draw(table_id, show_alert = true){
 	
 	// Count and apply the row numbers
 	jQuery(table_id + " .row-number").each(function(count){
@@ -245,12 +245,12 @@ function em_draw(table_id){
 	});
 
 	// Save the new state
-	em_update_enqueue_list(table_id);
+	em_update_enqueue_list(table_id, show_alert);
 
 	
 }
 
-function em_update_enqueue_list(table_id){
+function em_update_enqueue_list(table_id, show_alert){
 
 	//Gather Data
 	var packages 	= new Array();
@@ -292,14 +292,17 @@ function em_update_enqueue_list(table_id){
     };
 
 	jQuery.post(ajaxurl,data,function(response) {
+		
+		if(show_alert){
+			jQuery('.state-saved-icon img').fadeIn();
+			jQuery('.state-saved-words').fadeIn();
+			setTimeout(function(){
+				jQuery('.state-saved-icon img').fadeOut('slow');
+				jQuery('.state-saved-words').fadeOut('slow');
+			}, 1500);
 
-		//jQuery('.state-saved-icon').LoadingOverlay("hide", {color: '#f1f1f1'});
-		jQuery('.state-saved-icon img').fadeIn();
-		jQuery('.state-saved-words').fadeIn();
-		setTimeout(function(){
-			jQuery('.state-saved-icon img').fadeOut('slow');
-			jQuery('.state-saved-words').fadeOut('slow');
-		}, 1500);
+		}
+		
 
 	});
 }
@@ -328,13 +331,13 @@ function em_check_licence(){
 		jQuery('.licence-cross').hide();
 		em_load_user_packages(rD);
 		em_show_favourite_select();
-		jQuery('.spinner-container').LoadingOverlay("hide");
+		
     }, function(){
     	jQuery('.licence-cross').show();
 		jQuery('.licence-tick').hide();
-		jQuery('.spinner-container').LoadingOverlay("hide");
     });
 
+    jQuery('.spinner-container').LoadingOverlay("hide");
 }
 
 function em_show_favourite_select(){
@@ -375,7 +378,7 @@ function em_load_user_packages(user_id){
 
 		    	}
 
-	    		em_draw('#sortable');
+	    		em_draw('#sortable',false);
 	    		
 
 		},
