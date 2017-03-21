@@ -46,32 +46,9 @@ function em_load_packages(){
 	      "full_package_query" : 1,
     }
 
-	jQuery.ajax({
-		type: 'POST',
-		dataType: 'json',
-		crossDomain: true,
-		success: function(rD, textStatus, jqXHR){
-			
-			if(rD != 0){
-	    	 	
-	    	 	em_process_packages_data(rD);
-
-	    	}else{
-	    	 	
-	    	 	console.log('No Results');	
-	    	 	
-	    	}
-
-		},
-		error: function (rD, textStatus, errorThrown){
-	    		
-	    		console.log(errorThrown);	
-		
-		},
-		url: 'https://wpmaz.uk/enqueueme/em-requests.php',
-		data: data
-
-	});
+    em_ajax(data, em_process_packages_data, function(){
+    	console.log('No Results');
+    });
 
 	
 }
