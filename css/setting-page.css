@@ -80,4 +80,7 @@ h1.my-enqueue-header{
 .em_tooltip_content{
 	display: none;
 }
+.tooltipster-content a{
+	color: #FFF !important;
+}
 

@@ -20,13 +20,13 @@ function em_admin_menu_markup(){
 
     			<?php 
 
-    				echo "<div class='wrap enqueueme-settings'>";
-				echo "<form action='options.php' method='post'>";
-		
-				do_settings_sections( 'em_user_settings' );
-				submit_button();
-	
-				echo "</form>";
+        			echo "<div class='wrap enqueueme-settings'>";
+    				echo "<form action='options.php' method='post'>";
+    		
+    				do_settings_sections( 'em_user_settings' );
+    				submit_button();
+    	
+    				echo "</form>";
 
     			?>
     			
@@ -88,65 +88,75 @@ function em_admin_menu_markup(){
 
 	    			 		<?php if($packages): ?>
 
-							<?php foreach($packages as $key => $package):?>
+    							<?php foreach($packages as $key => $package):?>
 
-								<tr data-package-id="<?php echo $package['id']; ?>" data-parent-package="<?php echo $package['dependant'];?>">
+    								<tr data-package-id="<?php echo $package['id']; ?>" data-parent-package="<?php echo $package['dependant'];?>">
 
-									<td class='row-number'>
-	    			 						1
-	    			 					</td>
+    									<td class='row-number'>
+    	    			 						1
+    	    			 					</td>
 
-		    			 				<td class="package-name">	
-		    			 					<?php echo $package['name']; ?>
-		    			 				</td>
+    		    			 				<td class="package-name">	
+    		    			 					<?php echo $package['name']; ?>
+    		    			 				</td>
 
-		    			 				<td>
-										
-										<?php foreach($package['assets'] as $asset):?>
+    		    			 				<td>
+    										
+    										<?php foreach($package['assets'] as $asset):?>
 
-		    			 						<?php $icon = $asset['type'] == 'css' ? 'paint-brush' : 'code'; ?>
+    		    			 					<?php $icon = $asset['type'] == 'css' ? 'paint-brush' : 'code'; ?>
 
-											<i class="fa fa-<?php echo $icon; ?>" aria-hidden="true"></i>
-												
-											<span data-tooltip-content="#tooltip_<?php echo $package['id']; ?>" class="em_asset tooltip"
-												data-asset-id="<?php echo $asset['id']?>"
-												data-asset-link="<?php echo $asset['link']?>"
-												data-asset-type="<?php echo $asset['type']?>"
-												data-asset-media="<?php echo $asset['media']?>"
-												data-asset-conditional="<?php echo $asset['conditional']?>"
-												data-asset-in-footer="<?php echo $asset['in_footer']?>">
-												<?php echo $asset['name']?>
-											</span><br>
+    											<i class="fa fa-<?php echo $icon; ?>" aria-hidden="true"></i>
+    												
+    											<span data-tooltip-content="#tooltip_<?php echo $asset['id']; ?>" class="em_asset tooltip"
+    												data-asset-id="<?php echo $asset['id']?>"
+    												data-asset-link="<?php echo $asset['link']?>"
+    												data-asset-type="<?php echo $asset['type']?>"
+    												data-asset-media="<?php echo $asset['media']?>"
+    												data-asset-conditional="<?php echo $asset['conditional']?>"
+    												data-asset-in-footer="<?php echo $asset['in_footer']?>">
+    												<?php echo $asset['name']?>
+    											</span><br>
 
-		    			 				 	<?php endforeach; ?>
+                                                <div class="em_tooltip_content">
 
-		    			 				 	<div class="em_tooltip_content">
+                                                    <span id="tooltip_<?php echo $asset['id']; ?>">
+                                                        
+                                                        Link : <?php echo $asset['link']?><br>
+                                                        Type : <?php echo strtoupper($asset['type']); ?><br>
+                                                        
+                                                        <?php if($asset['type'] == 'css'): ?>
+                                                            Media Query : <?php echo $asset['media']?><br>
+                                                        <?php else:?>
+                                                            Condition : <?php echo $asset['conditional']?><br>
+                                                            Location : <?php echo $asset['in_footer'] == 0 ? 'Header' : 'Footer' ?>
+                                                        <?php endif; ?>
 
-											<span id="tooltip_<?php echo $package['id']; ?>">
-										        
-												Link : <?php echo $asset['link']?><br>
-												Type : <?php echo $asset['type']?><br>
-										        
-												<?php if($asset['type'] == 'css'): ?>
-													Media Query : <?php echo $asset['media']?><br>
-												<?php else:?>
-													Condition : <?php echo $asset['conditional']?><br>
-													In Footer : <?php echo $asset['in_footer']?>
-												<?php endif; ?>
-											</span>
+                                                    </span>
 
-										</div>
-		    			 				</td>
+                                                </div>
 
-		    			 				<td class="em-action-icons">	
+    		    			 				 <?php endforeach; ?>
+    		    			 				 	
 
-										<a target="_blank" class="em-package-link" href="<?php echo $package['url']; ?>"" title="Package Link"><i class="fa fa-link" aria-hidden="true"></i></a><a href="" class="em-remove-row"><i class="fa fa-minus-circle tooltip" title="Remove" aria-hidden="true"></i></a>
-									
-									</td>
-								
-								</tr>
-							
-							<?php endforeach;?>
+    		    			 				</td>
+
+    		    			 				<td class="em-action-icons">	
+
+    										<a target="_blank" class="em-package-link" href="<?php echo $package['url']; ?>" title="Package Link"><i data-tooltip-content="#tooltip_link_<?php echo $package['id']; ?>" class="fa fa-link tooltip-interact" aria-hidden="true"></i></a><a href="" class="em-remove-row"><i class="fa fa-minus-circle tooltip" title="Remove" aria-hidden="true"></i></a>
+    									   
+                                           <div class="em_tooltip_content">
+
+                                                <span id="tooltip_link_<?php echo $package['id']; ?>">
+                                                    <a target="_blank" href="<?php echo $package['url']; ?>">Package Info <i class="fa fa-external-link" aria-hidden="true"></i></a>
+                                                </span>
+
+                                            </div>
+    									</td>
+    								
+    								</tr>
+    							
+    							<?php endforeach;?>
 
 	    			 		<?php else: ?>
 

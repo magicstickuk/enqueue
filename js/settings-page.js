@@ -239,6 +239,7 @@ function em_draw(table_id, save_state = true){
 	});
 
 	//Assign Parent Package
+
 	jQuery(table_id + " tr").each(function(count){
 		
 		var previous_id = (jQuery(this).prev().attr('data-package-id') == null ? 0 : jQuery(this).prev().attr('data-package-id') );
@@ -246,12 +247,19 @@ function em_draw(table_id, save_state = true){
 		jQuery(this).attr('data-parent-package', previous_id);
 
 	});
-		
+	
+	// Do the Tooltips	
 	jQuery('.tooltip').tooltipster({contentCloning: true});
+
+	jQuery('.tooltip-interact').tooltipster({contentCloning: true, interactive : true});
 
 	jQuery('body').on('mouseenter', '.tooltip:not(.tooltipstered)', function(){
 	     jQuery(this).tooltipster({contentCloning: true});
-	 });
+	});
+
+	jQuery('body').on('mouseenter', '.tooltip-interact:not(.tooltipstered)', function(){
+	     jQuery(this).tooltipster({contentCloning: true, interactive : true});
+	});
 
 	// Save the new state
 	em_update_enqueue_list(table_id, save_state);
@@ -266,25 +274,29 @@ function em_update_enqueue_list(table_id, save_state){
 
 	jQuery(table_id + " tbody tr").each(function(){
 
+		t = jQuery(this);
+
 		var package = {};
 
-		package.id 			= jQuery(this).attr('data-package-id');
-		package.name 		= jQuery(this).find('.package-name').html().trim();
-		package.dependant 	= jQuery(this).attr('data-parent-package');
-		package.url 		= jQuery(this).find('.em-package-link').attr('href');
+		package.id 			= t.attr('data-package-id');
+		package.name 		= t.find('.package-name').html().trim();
+		package.dependant 	= t.attr('data-parent-package');
+		package.url 		= t.find('.em-package-link').attr('href');
 
 		var assets 	= new Array();
 
-		jQuery(this).find('.em_asset').each(function(){
+		t.find('.em_asset').each(function(){
 
+			tt = jQuery(this);
+			
 			var asset = {
-				id 			: jQuery(this).attr('data-asset-id'),
-				name 		: jQuery(this).text().trim(),
-				link 		: jQuery(this).attr('data-asset-link'),
-				type 		: jQuery(this).attr('data-asset-type'),
-				media 		: jQuery(this).attr('data-asset-media'),
-				conditional : jQuery(this).attr('data-asset-conditional'),
-				in_footer  	: jQuery(this).attr('data-asset-in-footer'),
+				id 			: tt.attr('data-asset-id'),
+				name 		: tt.text().trim(),
+				link 		: tt.attr('data-asset-link'),
+				type 		: tt.attr('data-asset-type'),
+				media 		: tt.attr('data-asset-media'),
+				conditional : tt.attr('data-asset-conditional'),
+				in_footer  	: tt.attr('data-asset-in-footer'),
 			};
 
 			assets.push(asset);
