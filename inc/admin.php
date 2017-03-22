@@ -16,9 +16,11 @@ function em_admin_menu_markup(){
 
 		<div class="wrap">
 
-    			<h1>Enqueue Me Settings</h1>
+			<h1>Enqueue Me Settings</h1>
 
-    			<?php echo "<div class='wrap enqueueme-settings'>";
+    			<?php 
+
+    				echo "<div class='wrap enqueueme-settings'>";
 				echo "<form action='options.php' method='post'>";
 		
 				do_settings_sections( 'em_user_settings' );
@@ -28,32 +30,41 @@ function em_admin_menu_markup(){
 
     			?>
     			
-                <div class="select-boxes-container">
-                    <div class="select-box-container left">
-                        <h1>Add Packages from library</h1>
+			<div class="select-boxes-container">
+				
+				<div class="select-box-container left">
+					
+					<h1>Add Packages from library</h1>
 
-                        <p>
-                            <select class="em-packages-select">
-                                <option></option>
+						<p>
+							
+							<select class="em-packages-select">
+
+                                			<option></option>
                                 
-                            </select>
-                        </p>
+                            			</select>
+						
+						</p>
 
-                    </div>
-                    <div class="select-box-container right">
+                   	 </div>
 
-                    </div>                    
+				<div class="select-box-container right">
 
-                </div>
+				</div>                    
+
+			</div>
                
 
-    			 <h1 class="my-enqueue-header">My Enqueue <span class="state-saved-icon"><img style="display:none" src="<?php echo plugins_url('../img/tick.png',__FILE__); ?>" alt=""></span><span class="state-saved-words" style="display:none">Saved</span></h1>
+			<h1 class="my-enqueue-header">My Enqueue <span class="state-saved-icon"><img style="display:none" src="<?php echo plugins_url('../img/tick.png',__FILE__); ?>" alt=""></span><span class="state-saved-words" style="display:none">Saved</span></h1>
 
-    			 <div id="mypackage-wrap">
+			<div id="mypackage-wrap">
 
-    			 	<table id="sortable" class="widefat fixed">
-    			 		<thead>
-    			 			<tr>
+				<table id="sortable" class="widefat fixed">
+
+					<thead>
+
+						<tr>
+    			 				
     			 				<th width="40px">
     			 					
     			 				</th>
@@ -63,56 +74,91 @@ function em_admin_menu_markup(){
     			 				<th>
     			 					Assets
     			 				</th>
-    			 				<th width="40px">
-    			 					NQ Me?
+    			 				<th width="100px">
+    			 					
     			 				</th>
 
     			 			</tr>
+
     			 		</thead>
+
     			 		<tbody>
 
 	    			 		<?php $packages = get_option('em_assets_to_enqueue'); ?>
 
 	    			 		<?php if($packages): ?>
 
-								<?php foreach($packages as $key => $package):?>
-									<tr data-package-id="<?php echo $package['id']; ?>" data-parent-package="<?php echo $package['dependant'];?>">
-										<td class='row-number'>
+							<?php foreach($packages as $key => $package):?>
+
+								<tr data-package-id="<?php echo $package['id']; ?>" data-parent-package="<?php echo $package['dependant'];?>">
+
+									<td class='row-number'>
 	    			 						1
 	    			 					</td>
+
 		    			 				<td class="package-name">	
 		    			 					<?php echo $package['name']; ?>
 		    			 				</td>
+
 		    			 				<td>
-		    			 					<?php foreach($package['assets'] as $asset):?>
-		    			 				 	<span class="em_asset"
-		    			 				 			data-asset-id="<?php echo $asset['id']?>"
-		    			 				 			data-asset-link="<?php echo $asset['link']?>"
-		    			 				 			data-asset-type="<?php echo $asset['type']?>"
-		    			 				 			data-asset-media="<?php echo $asset['media']?>"
-		    			 				 			data-asset-conditional="<?php echo $asset['conditional']?>"
-		    			 				 			data-asset-in-footer="<?php echo $asset['in_footer']?>">
-		    			 				 			<?php echo $asset['name']?></span><br>
+										
+										<?php foreach($package['assets'] as $asset):?>
+
+		    			 						<?php $icon = $asset['type'] == 'css' ? 'paint-brush' : 'code'; ?>
+
+											<i class="fa fa-<?php echo $icon; ?>" aria-hidden="true"></i>
+												
+											<span data-tooltip-content="#tooltip_<?php echo $package['id']; ?>" class="em_asset tooltip"
+												data-asset-id="<?php echo $asset['id']?>"
+												data-asset-link="<?php echo $asset['link']?>"
+												data-asset-type="<?php echo $asset['type']?>"
+												data-asset-media="<?php echo $asset['media']?>"
+												data-asset-conditional="<?php echo $asset['conditional']?>"
+												data-asset-in-footer="<?php echo $asset['in_footer']?>">
+												<?php echo $asset['name']?>
+											</span><br>
+
 		    			 				 	<?php endforeach; ?>
+
+		    			 				 	<div class="em_tooltip_content">
+
+											<span id="tooltip_<?php echo $package['id']; ?>">
+										        
+												Link : <?php echo $asset['link']?><br>
+												Type : <?php echo $asset['type']?><br>
+										        
+												<?php if($asset['type'] == 'css'): ?>
+													Media Query : <?php echo $asset['media']?><br>
+												<?php else:?>
+													Condition : <?php echo $asset['conditional']?><br>
+													In Footer : <?php echo $asset['in_footer']?>
+												<?php endif; ?>
+											</span>
+
+										</div>
 		    			 				</td>
-		    			 				<td>	
-		    			 					<a href="" class="em-remove-row" title="Remove"><i class="fa fa-minus-circle fa-2x" aria-hidden="true"></i></a>
-		    			 				</td>
-									</tr>
-								<?php endforeach;?>
+
+		    			 				<td class="em-action-icons">	
+
+										<a target="_blank" class="em-package-link" href="<?php echo $package['url']; ?>"" title="Package Link"><i class="fa fa-link" aria-hidden="true"></i></a><a href="" class="em-remove-row"><i class="fa fa-minus-circle tooltip" title="Remove" aria-hidden="true"></i></a>
+									
+									</td>
+								
+								</tr>
+							
+							<?php endforeach;?>
 
 	    			 		<?php else: ?>
 
-	    			 		<?php endif; ?>
+	    			 	<?php endif; ?>
  
-    			 		</tbody>
+    			 	</tbody>
 
-    			 	</table>
+    			 </table>
 
-    			 	
-    			 </div>
+    		</div>
 
- 		</div>
+	</div>
 
 <?php 
 

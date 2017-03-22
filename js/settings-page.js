@@ -34,9 +34,11 @@ jQuery( document ).ready(function() {
 function em_set_remove_buttons(){
 
 	jQuery('.em-remove-row').click(function(e){
+
       	e.preventDefault();
       	jQuery(this).closest('tr').remove();
-    	em_draw( '#sortable');
+    		em_draw( '#sortable');
+
     });
 
 }
@@ -44,11 +46,11 @@ function em_load_packages(){
 
 	var data = {
 	      "full_package_query" : 1,
-    }
+	}
 
-    em_ajax(data, em_process_packages_data, function(){
-    	console.log('No Results');
-    });
+	em_ajax(data, em_process_packages_data, function(){
+    		console.log('No Results');
+	});
 
 	
 }
@@ -147,19 +149,22 @@ function em_add_package_row(rD){
 
 function em_do_add_row(package){
 
-	html 		= '<tr data-package-id="'+ package.id + '" data-parent-package="0"><td class="row-number"></td><td class="package-name">' + package.package_name + '</td>';
+	var html 	= '<tr data-package-id="'+ package.id + '" data-parent-package="0"><td class="row-number"></td><td class="package-name">' + package.package_name + '</td>';
 
 	html 		+= '<td>'
 	
 	package.assets.forEach(function(element) {
 		
+		var icon = element.type == 'css' ? 'paint-brush' : 'code';
+
+		html += '<i class="fa fa-' + icon + '" aria-hidden="true"></i> '
 		html += '<span class="em_asset" data-asset-id="' + element.asset_id + '" data-asset-link="'+ element.link +'" data-asset-type="' + element.type + '" data-asset-media="' + element.media + '" data-asset-conditional="' + element.conditional + '" data-asset-in-footer="' + element.in_footer + '">' + element.asset_name + '</span><br>';
 
 	});
 	
 	html 		+= '</td>';
 
-	html		+= '<td><a href="" class="em-remove-row" title="Remove"><i class="fa fa-minus-circle fa-2x" aria-hidden="true"></i></a></td></tr>';
+	html		+= '<td class="em-action-icons"><a target="_blank" class="em-package-link" href="' + package.url + '" title="Package Link"><i class="fa fa-link" aria-hidden="true"></i></a><a href="" class="em-remove-row"><i class="fa fa-minus-circle tooltip" title="Remove" aria-hidden="true"></i></a></td></tr>';
 
 	jQuery('#sortable').find('tbody').append(html);
 	
@@ -183,11 +188,11 @@ function em_ajax(data, callback, no_rows_callback){
 
 	    	 		callback(rD);
 
-	    	}else{
+	    		}else{
 	    	 	
 	    	 		no_rows_callback();	
 	    	 	
-	    	}
+	    		}
 
 		},
 
@@ -208,15 +213,14 @@ function em_add_package_to_table(table, package){
 
 	jQuery(table).LoadingOverlay("show");
 
-	// Get the single package object via ajax
 	var data = {
 		"single_package_query" : 1,
 		"package_id" : package.params.data.id
-    }
+	}
 
-    em_ajax(data, em_add_package_row, function(){
-    	console.log('No Results');
-    });
+	em_ajax(data, em_add_package_row, function(){
+		console.log('No Results');
+	});
 
 }
 
@@ -226,9 +230,8 @@ jQuery( document ).resize(function() {
 
 });
 
-function em_draw(table_id, show_alert = true){
+function em_draw(table_id, save_state = true){
 	
-	// Count and apply the row numbers
 	jQuery(table_id + " .row-number").each(function(count){
 		
 		jQuery(this).html(count + 1);
@@ -243,14 +246,20 @@ function em_draw(table_id, show_alert = true){
 		jQuery(this).attr('data-parent-package', previous_id);
 
 	});
+		
+	jQuery('.tooltip').tooltipster({contentCloning: true});
+
+	jQuery('body').on('mouseenter', '.tooltip:not(.tooltipstered)', function(){
+	     jQuery(this).tooltipster({contentCloning: true});
+	 });
 
 	// Save the new state
-	em_update_enqueue_list(table_id, show_alert);
+	em_update_enqueue_list(table_id, save_state);
 
 	
 }
 
-function em_update_enqueue_list(table_id, show_alert){
+function em_update_enqueue_list(table_id, save_state){
 
 	//Gather Data
 	var packages 	= new Array();
@@ -262,6 +271,7 @@ function em_update_enqueue_list(table_id, show_alert){
 		package.id 			= jQuery(this).attr('data-package-id');
 		package.name 		= jQuery(this).find('.package-name').html().trim();
 		package.dependant 	= jQuery(this).attr('data-parent-package');
+		package.url 		= jQuery(this).find('.em-package-link').attr('href');
 
 		var assets 	= new Array();
 
@@ -291,20 +301,22 @@ function em_update_enqueue_list(table_id, show_alert){
 		packages : packages,
     };
 
-	jQuery.post(ajaxurl,data,function(response) {
-		
-		if(show_alert){
+    	if(save_state){
+
+		jQuery.post(ajaxurl,data,function(response) {
+
 			jQuery('.state-saved-icon img').fadeIn();
 			jQuery('.state-saved-words').fadeIn();
+			
 			setTimeout(function(){
 				jQuery('.state-saved-icon img').fadeOut('slow');
 				jQuery('.state-saved-words').fadeOut('slow');
-			}, 1500);
+			}, 1500);		
 
-		}
-		
+		});
 
-	});
+	}
+
 }
 
 function set_sortable_widths(id){
@@ -324,20 +336,21 @@ function em_check_licence(){
 	var data = {
 		"licence" : jQuery('#licenece-box').val(),
 		"user_email" : jQuery('#licenece-email-box').val()
-    }
+	}
     
-    em_ajax(data, function(rD){
-    	jQuery('.licence-tick').show();
+	em_ajax(data, function(rD){
+		jQuery('.licence-tick').show();
 		jQuery('.licence-cross').hide();
 		em_load_user_packages(rD);
 		em_show_favourite_select();
 		
-    }, function(){
-    	jQuery('.licence-cross').show();
+	}, function(){
+	jQuery('.licence-cross').show();
 		jQuery('.licence-tick').hide();
-    });
+	});
 
-    jQuery('.spinner-container').LoadingOverlay("hide");
+	jQuery('.spinner-container').LoadingOverlay("hide");
+
 }
 
 function em_show_favourite_select(){
@@ -357,7 +370,7 @@ function em_load_user_packages(user_id){
 	var data = {
 		"user_favouites_query" : 1,
 		"user_id" : user_id,
-	    "sync_id" : em_admin_setting_vars.sync_id
+	    	"sync_id" : em_admin_setting_vars.sync_id
 	}
         
 	jQuery.ajax({
@@ -442,10 +455,6 @@ function em_do_favourite_select_box_responce(rD){
 
 	});
 	
-	
-
-
-
 	jQuery('.em-packages-favoutites-select').on('select2:select', function (p) {
 
 	  	var current_packages = em_get_added_ids('#sortable');

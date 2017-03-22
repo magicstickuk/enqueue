@@ -12,6 +12,13 @@ function em_load_admin_scripts(){
     		wp_enqueue_script( 'jquery-ui-draggable' );
     		wp_enqueue_script( 'jquery-ui-droppable' );
 
+    		
+    		wp_enqueue_script(
+			'em-tooltipster-scripts',
+			'https://cdn.jsdelivr.net/jquery.tooltipster/4.2.3/js/tooltipster.bundle.min.js',
+			array( 'jquery' )
+		);
+
     		wp_enqueue_script(
 			'em-select2-scripts',
 			'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js',
@@ -59,6 +66,14 @@ function em_load_admin_scripts(){
 		);
 
 		wp_enqueue_style( 'em-font-awesome-styles');
+
+		wp_register_style(
+			'em-tooltipster-styles',
+			'https://cdn.jsdelivr.net/jquery.tooltipster/4.2.3/css/tooltipster.bundle.min.css',
+			false
+		);
+
+		wp_enqueue_style( 'em-tooltipster-styles');
 
 	}
 		
