@@ -14,13 +14,14 @@ jQuery( document ).ready(function() {
 
 	set_sortable_widths(table_id);
 
-    jQuery(table_id + " tbody" ).sortable({
+	jQuery(table_id + " tbody" ).sortable({
+
 		placeholder: "ui-sortable-placeholder",
 		stop: function( event, ui ) {
 
-    		em_draw( table_id );
+    			em_draw( table_id );
 
-    	}
+    		}
       
       });
       
@@ -29,7 +30,6 @@ jQuery( document ).ready(function() {
       em_set_remove_buttons();
 
       
-     
 });
 function em_set_remove_buttons(){
 
@@ -149,6 +149,21 @@ function em_add_package_row(rD){
 
 function em_do_add_row(package){
 
+	html = em_do_row_html(package);
+
+	jQuery('#sortable').find('tbody').append(html);
+	
+	set_sortable_widths('#sortable');
+	jQuery('#sortable').LoadingOverlay("hide");
+	em_draw('#sortable');
+	em_set_remove_buttons();
+
+	return html;
+
+}
+
+function em_do_row_html(package){
+
 	var html 	= '<tr data-package-id="'+ package.id + '" data-parent-package="0"><td class="row-number"></td><td class="package-name">' + package.package_name + '</td>';
 
 	html 		+= '<td>'
@@ -166,12 +181,6 @@ function em_do_add_row(package){
 
 	html		+= '<td class="em-action-icons"><a target="_blank" class="em-package-link" href="' + package.url + '" title="Package Link"><i class="fa fa-link" aria-hidden="true"></i></a><a href="" class="em-remove-row"><i class="fa fa-minus-circle tooltip" title="Remove" aria-hidden="true"></i></a></td></tr>';
 
-	jQuery('#sortable').find('tbody').append(html);
-	
-	set_sortable_widths('#sortable');
-	jQuery('#sortable').LoadingOverlay("hide");
-	em_draw('#sortable');
-	em_set_remove_buttons();
 	return html;
 
 }
@@ -264,7 +273,6 @@ function em_draw(table_id, save_state = true){
 	// Save the new state
 	em_update_enqueue_list(table_id, save_state);
 
-	
 }
 
 function em_update_enqueue_list(table_id, save_state){
@@ -380,7 +388,7 @@ function em_show_favourite_select(){
 function em_load_user_packages(user_id){
 
 	var data = {
-		"user_favouites_query" : 1,
+		"user_package_state_check" : 1,
 		"user_id" : user_id,
 	    	"sync_id" : em_admin_setting_vars.sync_id
 	}
@@ -391,15 +399,11 @@ function em_load_user_packages(user_id){
 		crossDomain: true,
 		success: function(rD, textStatus, jqXHR){
 
-			if(rD == 'use_plugin'){
-
-		    		// Use current favoites object to print markup
-
-		    	}else{
+			if(rD != 'use_plugin'){
 		    		// Process new timestamp
 		    		em_update_timestamp(rD);
 		    		//Build a new local favourites object the print out markup
-		    		jQuery('#mypackage-wrap').append('Hello ' + rD);
+		    		em_update_enqueue_table(rD['package_object']);
 
 		    	}
 
@@ -416,6 +420,47 @@ function em_load_user_packages(user_id){
 	});
 
 }
+
+function em_update_enqueue_table(packages){
+
+	var current_packages = em_get_added_ids('#sortable');
+
+	jQuery('#sortable tbody tr').each(function(){
+		jQuery(this).remove();
+	});
+
+	if(current_packages.length > 0){
+
+		var data = {
+			"full_package_update" : 1,
+			"package_ids" : current_packages
+		}
+
+		em_ajax(data, 
+
+			function(responce){
+
+				current_packages.forEach(function(current_package_id){
+					responce.forEach(function(package){
+						if(package.id == current_package_id){
+							em_do_add_row(package);
+						}
+					});
+				});
+				
+			}
+
+		, function(){
+			console.log('No Results');
+		});
+			
+	}
+
+	console.log(current_packages);
+	
+}
+
+
 
 function em_update_timestamp(rD){
 	
