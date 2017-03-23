@@ -31,6 +31,13 @@ jQuery( document ).ready(function() {
 
       
 });
+
+jQuery( document ).resize(function() {
+
+	set_sortable_widths('#sortable');
+
+});
+
 function em_set_remove_buttons(){
 
 	jQuery('.em-remove-row').click(function(e){
@@ -111,7 +118,6 @@ function em_process_packages_data(rD){
 	});
 }
 
-
 function em_add_package_row(rD){
 	 
  	var package = {};
@@ -147,17 +153,21 @@ function em_add_package_row(rD){
 
 }
 
-function em_do_add_row(package){
+function em_do_add_row(package, prepare){
+
+	prepare = typeof prepare !== 'undefined' ? prepare : true;
 
 	html = em_do_row_html(package);
 
 	jQuery('#sortable').find('tbody').append(html);
 	
-	set_sortable_widths('#sortable');
-	jQuery('#sortable').LoadingOverlay("hide");
-	em_draw('#sortable');
-	em_set_remove_buttons();
-
+	if(prepare){
+		set_sortable_widths('#sortable');
+		jQuery('#sortable').LoadingOverlay("hide");
+		em_draw('#sortable');
+		em_set_remove_buttons();
+	}
+	
 	return html;
 
 }
@@ -173,13 +183,29 @@ function em_do_row_html(package){
 		var icon = element.type == 'css' ? 'paint-brush' : 'code';
 
 		html += '<i class="fa fa-' + icon + '" aria-hidden="true"></i> '
-		html += '<span class="em_asset" data-asset-id="' + element.asset_id + '" data-asset-link="'+ element.link +'" data-asset-type="' + element.type + '" data-asset-media="' + element.media + '" data-asset-conditional="' + element.conditional + '" data-asset-in-footer="' + element.in_footer + '">' + element.asset_name + '</span><br>';
+		html += '<span data-tooltip-content="#tooltip_' + element.asset_id + '" class="em_asset tooltip" data-asset-id="' + element.asset_id + '" data-asset-link="'+ element.link +'" data-asset-type="' + element.type + '" data-asset-media="' + element.media + '" data-asset-conditional="' + element.conditional + '" data-asset-in-footer="' + element.in_footer + '">' + element.asset_name + '</span><br>';
 
+		html += '<div class="em_tooltip_content"><span id="tooltip_' + element.asset_id + '">Link : '+ element.link +'<br>Type : '+ element.type +'<br>';
+		if(element.type == 'css'){
+			html += 'Media Query : ' + element.media + '<br>';
+		}else{
+			html += 'Condition : ' + element.conditional + '<br>Location : ';
+			if(element.conditional == 0){
+				html += 'Header';
+			}else{
+				html += 'Footer';
+			};
+		}
+		html += '</span></div>';
+		
 	});
 	
 	html 		+= '</td>';
 
-	html		+= '<td class="em-action-icons"><a target="_blank" class="em-package-link" href="' + package.url + '" title="Package Link"><i class="fa fa-link" aria-hidden="true"></i></a><a href="" class="em-remove-row"><i class="fa fa-minus-circle tooltip" title="Remove" aria-hidden="true"></i></a></td></tr>';
+	html		+= '<td class="em-action-icons"><a target="_blank" class="em-package-link" href="' + package.url + '" title="Package Link"><i data-tooltip-content="#tooltip_link_' + package.id +'" class="fa fa-link tooltip-interact" aria-hidden="true"></i></a><a href="" class="em-remove-row"><i class="fa fa-minus-circle tooltip" title="Remove" aria-hidden="true"></i></a>';
+
+	html 		+= '<div class="em_tooltip_content"><span id="tooltip_link_'+ package.id +'"><a target="_blank" href="'+ package.url +'">Package Info <i class="fa fa-external-link" aria-hidden="true"></i></a></span></div>';
+	html 		+= '</td></tr>';
 
 	return html;
 
@@ -233,13 +259,9 @@ function em_add_package_to_table(table, package){
 
 }
 
-jQuery( document ).resize(function() {
+function em_draw(table_id, save_state){
 
-	set_sortable_widths('#sortable');
-
-});
-
-function em_draw(table_id, save_state = true){
+	save_state = typeof save_state !== 'undefined' ? save_state : true;
 	
 	jQuery(table_id + " .row-number").each(function(count){
 		
@@ -390,7 +412,7 @@ function em_load_user_packages(user_id){
 	var data = {
 		"user_package_state_check" : 1,
 		"user_id" : user_id,
-	    	"sync_id" : em_admin_setting_vars.sync_id
+	    "sync_id" : em_admin_setting_vars.sync_id
 	}
         
 	jQuery.ajax({
@@ -400,6 +422,7 @@ function em_load_user_packages(user_id){
 		success: function(rD, textStatus, jqXHR){
 
 			if(rD != 'use_plugin'){
+
 		    		// Process new timestamp
 		    		em_update_timestamp(rD);
 		    		//Build a new local favourites object the print out markup
@@ -408,7 +431,6 @@ function em_load_user_packages(user_id){
 		    	}
 
 	    		em_draw('#sortable',false);
-	    		
 
 		},
 		error: function (rD, textStatus, errorThrown){
@@ -423,6 +445,7 @@ function em_load_user_packages(user_id){
 
 function em_update_enqueue_table(packages){
 
+	jQuery('#sortable').LoadingOverlay('show');
 	var current_packages = em_get_added_ids('#sortable');
 
 	jQuery('#sortable tbody tr').each(function(){
@@ -439,15 +462,17 @@ function em_update_enqueue_table(packages){
 		em_ajax(data, 
 
 			function(responce){
-
+				var packages_amount = current_packages.length;
+				var count = 1;
 				current_packages.forEach(function(current_package_id){
 					responce.forEach(function(package){
 						if(package.id == current_package_id){
-							em_do_add_row(package);
+							em_do_add_row(package, prepare = count == packages_amount ? true : false );
 						}
 					});
+					count++;
 				});
-				
+				jQuery('#sortable').LoadingOverlay('hide');
 			}
 
 		, function(){
@@ -459,8 +484,6 @@ function em_update_enqueue_table(packages){
 	console.log(current_packages);
 	
 }
-
-
 
 function em_update_timestamp(rD){
 	
