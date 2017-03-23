@@ -480,8 +480,6 @@ function em_update_enqueue_table(packages){
 		});
 			
 	}
-
-	console.log(current_packages);
 	
 }
 
@@ -493,11 +491,7 @@ function em_update_timestamp(rD){
 		user_id : em_admin_setting_vars.user_id
     };
 
-	jQuery.post(ajaxurl,data,function(response) {
-
-		console.log('timestamp updated: ' + response);
-						
-	});
+	jQuery.post(ajaxurl,data,function(response){});
 
 }
 function em_do_favourite_select_box(user_id){
