@@ -476,13 +476,14 @@ function em_update_enqueue_table(packages){
 		em_ajax(data, 
 
 			function(responce){
-				var packages_amount = current_packages.length;
+				var packages_amount = responce.length;
 				var count = 1;
 				current_packages.forEach(function(current_package_id){
 					responce.forEach(function(package){
 						if(package.id == current_package_id){
 							em_do_add_row(package, prepare = count == packages_amount ? true : false );
 						}
+						
 					});
 					count++;
 				});
