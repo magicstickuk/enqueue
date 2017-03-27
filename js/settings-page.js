@@ -87,6 +87,7 @@ function em_process_packages_data(rD){
 
 		package.id 			= String(element.ID);
 		package.text 		= element.package_name;
+		package.content 	= element.content;
 
 		packages.push(package);
 	
@@ -96,7 +97,20 @@ function em_process_packages_data(rD){
 		
 		placeholder: "Select a package",
 		allowClear: true,
-		data: packages
+		data: packages,
+		templateResult: function(data){
+			
+			var markup ="<div class='select2-result jsDeliver-options'><span class='option-title'>"+ data.text + "</span>";
+			if(data.content){
+				markup += "<span class='option-description'>" + data.content + "</span>";
+			}
+			
+			markup += "</div>";
+			return markup;
+		},
+		escapeMarkup: function(m) {
+			return m;
+		}
 
 	});
 
@@ -515,6 +529,7 @@ function em_do_favourite_select_box_responce(rD){
 
 		package.id 			= String(element.ID);
 		package.text 		= element.package_name;
+		package.content 	= element.content;
 
 		packages.push(package);
 	
@@ -525,7 +540,19 @@ function em_do_favourite_select_box_responce(rD){
 		
 		placeholder: "Select a package",
 		allowClear: true,
-		data: packages
+		data: packages,
+		templateResult: function(data){
+
+			var markup ="<div class='select2-result jsDeliver-options'><span class='option-title'>"+ data.text + "</span>";
+			if(data.content){
+				markup += "<span class='option-description'>" + data.content + "</span>";
+			}
+			markup += "</div>";
+			return markup;
+		},
+		escapeMarkup: function(m) {
+			return m;
+		}
 
 	});
 	

@@ -83,4 +83,32 @@ h1.my-enqueue-header{
 .tooltipster-content a{
 	color: #FFF !important;
 }
+.option-title{
+	width:100%;
+	display: inline-block;
+	font-size:1.1em;
+	clear:both;
+	padding-bottom:0.2em;
+	border-bottom: 1px solid;
+	font-weight: 700;
+
+}
+.select2-results .select2-highlighted{
+	background-color: #cdcdcd!important;
+	color:inherit!important;
+}
+.option-by{
+	font-size:11px;
+	font-style: italic;
+}
+.option-version{
+	font-size: 1em;
+	color: salmon;
+}
+.option-description{
+	width:100%;
+	display: inline-block;
+	font-size:11px;
+	clear: both;
+}
 
