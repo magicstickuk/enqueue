@@ -53,6 +53,7 @@ function em_load_packages(){
 
 	var data = {
 	      "full_package_query" : 1,
+	      "user_id" : em_admin_setting_vars.user_id
 	}
 
 	em_ajax(data, em_process_packages_data, function(){
@@ -190,6 +191,7 @@ function em_do_row_html(package){
 
 	var html 	= '<tr data-package-id="'+ package.id + '" data-parent-package="0"><td class="row-number"></td><td class="package-name">' + package.package_name + '</td>';
 
+	html 		+= '<td class="description">' + package.content + '</td>';
 	html 		+= '<td>'
 	
 	package.assets.forEach(function(element) {
@@ -324,6 +326,7 @@ function em_update_enqueue_list(table_id, save_state){
 
 		package.id 			= t.attr('data-package-id');
 		package.name 		= t.find('.package-name').html().trim();
+		package.content 	= t.find('.description').html().trim();
 		package.dependant 	= t.attr('data-parent-package');
 		package.url 		= t.find('.em-package-link').attr('href');
 
@@ -479,21 +482,21 @@ function em_update_enqueue_table(packages){
 				var packages_amount = responce.length;
 				var count = 1;
 				current_packages.forEach(function(current_package_id){
-					var hit = false;
+					
 					responce.forEach(function(package){
 						
 						if(package.id == current_package_id){
 							em_do_add_row(package, prepare = count == packages_amount ? true : false );
-							hit = true;
+							
 						}
 
 					});
 
-					if(hit == false){
+					
 						// This indicates that there was a package removed by the user. Need to think of
 						// a way of managing this so other users don't lose that package if they dont want to
-						
-					}
+						console.log(hit.length);
+					
 					count++;
 				});
 				jQuery('#sortable').LoadingOverlay('hide');

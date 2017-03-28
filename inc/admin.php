@@ -71,6 +71,9 @@ function em_admin_menu_markup(){
     			 				<th>
     			 					Package Name
     			 				</th>
+                                <th>
+                                    Description
+                                </th>
     			 				<th>
     			 					Assets
     			 				</th>
@@ -99,6 +102,9 @@ function em_admin_menu_markup(){
     		    			 				<td class="package-name">	
     		    			 					<?php echo $package['name']; ?>
     		    			 				</td>
+                                            <td class="description">   
+                                                <?php echo stripslashes($package['content']); ?>
+                                            </td>
 
     		    			 				<td>
     										
