@@ -495,7 +495,7 @@ function em_update_enqueue_table(packages){
 					
 						// This indicates that there was a package removed by the user. Need to think of
 						// a way of managing this so other users don't lose that package if they dont want to
-						console.log(hit.length);
+						
 					
 					count++;
 				});
@@ -588,4 +588,4 @@ function em_do_favourite_select_box_responce(rD){
 
 }
 
-	
+
