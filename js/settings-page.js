@@ -206,7 +206,7 @@ function em_do_row_html(package){
 			html += 'Media Query : ' + element.media + '<br>';
 		}else{
 			html += 'Condition : ' + element.conditional + '<br>Location : ';
-			if(element.conditional == 0){
+			if(element.in_footer == 0){
 				html += 'Header';
 			}else{
 				html += 'Footer';
