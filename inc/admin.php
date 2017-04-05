@@ -22,8 +22,9 @@ function em_admin_menu_markup(){
 
         			echo "<div class='wrap enqueueme-settings'>";
     				echo "<form action='options.php' method='post'>";
-    		
+    		          
     				do_settings_sections( 'em_user_settings' );
+                    settings_fields('em_user_settings');
     				submit_button();
     	
     				echo "</form>";

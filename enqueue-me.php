@@ -17,6 +17,7 @@ include('inc/load-scripts.php');
 function em_settings_init(){
 	
 	register_setting('em_user_settings' , 'em_user_licence' );
+	register_setting('em_user_settings' , 'em_root_dependancy' );
 
 	add_settings_section( 'user_settings', 'User Settings', 'em_user_settings_render', 'em_user_settings' );
 
@@ -35,6 +36,16 @@ function em_settings_init(){
 	      'em_user_settings',
 	      'user_settings'
 	  );
+
+	add_settings_section( 'em_root_dependancy', 'Root Dependancy', 'em_root_settings_render', 'em_user_settings' );
+
+	add_settings_field(
+	      'em_root_dependancy',
+	      'Alternative Root Dependancy',
+	      'em_select_root_render',
+	      'em_user_settings',
+	      'em_root_dependancy'
+	  );
 	
 
 } 
@@ -42,11 +53,24 @@ function em_settings_init(){
 add_action( 'admin_init', 'em_settings_init' );
 
 function em_user_settings_render(){
+	
+	echo "Here lies a guide";
+	
+}
+function em_root_settings_render(){
 
-	settings_fields('em_user_settings');
-
+	echo "Here lies another guide";
 }
 
+function em_select_root_render(){
+
+	$user_root = get_option('em_root_dependancy')['em_root_dependancy']; ?>
+
+		<input id="root-dep-box" type='text' name='em_root_dependancy[em_root_dependancy]' value='<?php echo $user_root; ?>'>
+
+	<?php
+
+}
 function user_licence_render(){
 
 	$user_licence = get_option('em_user_licence')['user_licence']; ?>
