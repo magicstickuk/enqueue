@@ -29,6 +29,8 @@ jQuery( document ).ready(function() {
 
       em_set_remove_buttons();
 
+      jQuery('.em-core-packages-select').select2({placeholder: "Select a package"});
+
       
 });
 

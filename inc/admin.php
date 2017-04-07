@@ -10,55 +10,79 @@ add_action( 'admin_menu', 'em_admin_page' );
 
 function em_admin_menu_markup(){
 
-    	$pure_wrap_width = get_option('bip_pure_wrap_width');
+	$pure_wrap_width = get_option('bip_pure_wrap_width');
 
-		ob_start()?>
+	ob_start()?>
 
-		<div class="wrap">
+	<div class="wrap">
 
-			<h1>Enqueue Me Settings</h1>
+		<h1>Enqueue Me Settings</h1>
 
-    			<?php 
+			<?php 
 
-        			echo "<div class='wrap enqueueme-settings'>";
-    				echo "<form action='options.php' method='post'>";
-    		          
-    				do_settings_sections( 'em_user_settings' );
-                    settings_fields('em_user_settings');
-    				submit_button();
-    	
-    				echo "</form>";
+    			echo "<div class='wrap enqueueme-settings'>";
+				echo "<form action='options.php' method='post'>";
+		          
+				do_settings_sections( 'em_user_settings' );
+                settings_fields('em_user_settings');
+				submit_button();
+	
+				echo "</form>";
 
-    			?>
-    			
-			<div class="select-boxes-container">
+			?>
+			
+		<div class="select-boxes-container">
+			
+			<div class="select-box-container left">
 				
-				<div class="select-box-container left">
-					
-					<h1>Add Packages from library</h1>
+				<h1>Add Packages from library</h1>
 
-						<p>
-							
-							<select class="em-packages-select">
-
-                                			<option></option>
-                                
-                            			</select>
+					<p>
 						
-						</p>
+						<select class="em-packages-select">
 
-                   	 </div>
+                            			<option></option>
+                            
+                        			</select>
+					
+					</p>
 
-				<div class="select-box-container right">
+               	 </div>
 
-				</div>                    
+                 <div class="select-box-container middle">
+                
+                    <h1>Add Packages from Core WordPress</h1>
 
-			</div>
-               
+                    <p>
+                        <?php global $wp_scripts; ?>
+                      
+                        <select class="em-core-packages-select">
+                            
+                            <option></option>
+                            
+                            <?php foreach ($wp_scripts->registered as $registered):?>
+                                
+                                <option value="<?php echo $registered->handle; ?>"><?php echo $registered->handle; ?></option>
+                            
+                            <?php endforeach;?>
+                                        
+                                        
+                        </select>
+                    
+                    </p>
+                    
+                </div>
 
-			<h1 class="my-enqueue-header">My Enqueue <span class="state-saved-icon"><img style="display:none" src="<?php echo plugins_url('../img/tick.png',__FILE__); ?>" alt=""></span><span class="state-saved-words" style="display:none">Saved</span></h1>
+			    <div class="select-box-container right">
 
-			<div id="mypackage-wrap">
+			    </div>                    
+
+		     </div>
+           
+
+		     <h1 class="my-enqueue-header">My Enqueue <span class="state-saved-icon"><img style="display:none" src="<?php echo plugins_url('../img/tick.png',__FILE__); ?>" alt=""></span><span class="state-saved-words" style="display:none">Saved</span></h1>
+
+		     <div id="mypackage-wrap">
 
 				<table id="sortable" class="widefat fixed">
 
@@ -173,9 +197,9 @@ function em_admin_menu_markup(){
 
     			 </table>
 
-    		</div>
+		      </div>
 
-	</div>
+       </div>
 
 <?php 
 
