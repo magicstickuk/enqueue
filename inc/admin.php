@@ -49,30 +49,6 @@ function em_admin_menu_markup(){
 
                	 </div>
 
-                 <div class="select-box-container middle">
-                
-                    <h1>Add Packages from Core WordPress</h1>
-
-                    <p>
-                        <?php global $wp_scripts; ?>
-                      
-                        <select class="em-core-packages-select">
-                            
-                            <option></option>
-                            
-                            <?php foreach ($wp_scripts->registered as $registered):?>
-                                
-                                <option value="<?php echo $registered->handle; ?>"><?php echo $registered->handle; ?></option>
-                            
-                            <?php endforeach;?>
-                                        
-                                        
-                        </select>
-                    
-                    </p>
-                    
-                </div>
-
 			    <div class="select-box-container right">
 
 			    </div>                    
