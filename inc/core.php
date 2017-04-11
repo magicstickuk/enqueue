@@ -6,25 +6,36 @@ function em_do_enqueue_script(){
 	
 	if($the_enqueue){
 
+		$js_queue 			= array();
+		$css_queue 			= array();
+		$root_dependancy 	= em_get_root_rependancy();
+
 		foreach ($the_enqueue as $package) {
 			
 			$assets = $package['assets'];
 
 			foreach ($assets as $asset) {
 				
-				$type = $asset['type'];
+				$type 	= $asset['type'];
+				$handle = em_generate_handle($asset);
 
-				$args = array(
+				$args 	= array(
 					'package_id' => $package['id'],
-					'dependant' => $package['dependant']
+					'handle' => $handle
 				);
 
 				if($type == 'js'){
+
+					$args['dependant'] = count($js_queue) > 0 ? $js_queue : $root_dependancy;
 					em_enqueue_script($asset, $args);
+					array_push($js_queue, $handle);
 					
 				}
 				if($type == 'css'){
+
+					$args['dependant'] = count($css_queue) > 0 ? $css_queue : array();
 					em_enqueue_style($asset, $args);
+					array_push($css_queue, $handle);
 					
 				}
 
@@ -40,13 +51,11 @@ add_action( 'wp_enqueue_scripts', 'em_do_enqueue_script' );
 
 function em_enqueue_script($asset, $args){
 
-	$handle 	= em_generate_handle($asset, $args);
-	$link 		= apply_filters( 'em_scr_link', $asset['link'] );
-	$deps 		= em_get_dependant($asset, $args);
+	$link 		= apply_filters( 'em_scr_link', esc_url($asset['link']) );
 	$version 	= apply_filters( 'em_script_version', null );
 	$in_footer	= apply_filters( 'em_script_in_footer', $asset['in_footer'] );
 
-	wp_enqueue_script( $handle, $link, $deps, $version, $in_footer);
+	wp_enqueue_script( $args['handle'], $link, $args['dependant'], $version, $in_footer);
 
 	if($asset['conditional'] != 'None'){
 
@@ -60,21 +69,29 @@ function em_enqueue_script($asset, $args){
 
 function em_enqueue_style($asset, $args){
 
-	//wp_enqueue_style( string $handle, string $src = '', array $deps = array(), string|bool|null $ver = false, string $media = 'all' );
+	$link 		= apply_filters( 'em_scr_link', esc_url($asset['link']) );
+	$version 	= apply_filters( 'em_script_version', null );
+	$media		= $asset['media'] == null ? 'all' : apply_filters( 'em_css_media', $asset['media'] );
+
+	wp_enqueue_style( $args['handle'], $link, $args['dependant'], $version, $media );
 
 }
 
-function em_generate_handle($asset, $args){
+function em_generate_handle($asset){
 
-	return "em-asset-" . $args['package_id'];
+	return "em-asset-" . $asset['id'];
 
 }
 
-function em_get_dependant($asset, $args){
+function em_get_root_rependancy(){
 
-	if($asset){
+	$root = get_option('em_root_dependancy')['em_root_dependancy'];
 
-	}
-	return 'jquery';
+	if(esc_url($root) != "" && filter_var($root, FILTER_VALIDATE_URL) == TRUE){
+	  	return array($root);
+   }
+
+	return array('jquery');
+
 }
 
