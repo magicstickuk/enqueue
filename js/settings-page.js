@@ -401,26 +401,38 @@ function em_check_licence(){
 		jQuery('.licence-tick').show();
 		jQuery('.licence-cross').hide();
 		em_load_user_packages(rD);
-		em_show_favourite_select();
+		em_hide_the_fruit();
 		
 	}, function(){
-	jQuery('.licence-cross').show();
+		jQuery('.licence-cross').show();
 		jQuery('.licence-tick').hide();
+		em_show_the_fruit();
 	});
 
 	jQuery('.spinner-container').LoadingOverlay("hide");
 
 }
 
-function em_show_favourite_select(){
+function em_show_the_fruit(){
 
-	if(jQuery('.selectbox-inner').length == 0){
+	jQuery('.forbidden-fruit').show();
+	jQuery('.select-box-container.right .selectbox-inner' ).remove();
 
-		jQuery('.select-box-container.right').append('<div class="selectbox-inner" style="display:none"><h1>Add Packages from my favourites</h1><p><select class="em-packages-favoutites-select"><option></option></select></p></div>');
+}
+function em_hide_the_fruit(){
+
+	jQuery('.forbidden-fruit').hide();
+	em_show_favourite_select();
 	
-		em_do_favourite_select_box(em_admin_setting_vars.user_id);
+};
 
+function em_show_favourite_select(){
+	
+	if(jQuery('.em-packages-favoutites-select').length < 1 ){
+		jQuery('.select-box-container.right').append('<div class="selectbox-inner" style="display:none"><p><select class="em-packages-favoutites-select"><option></option></select></p></div>');
+		em_do_favourite_select_box(em_admin_setting_vars.user_id);
 	}
+	
 	
 }
 

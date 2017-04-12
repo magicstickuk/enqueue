@@ -111,4 +111,18 @@ h1.my-enqueue-header{
 	font-size:11px;
 	clear: both;
 }
+div.forbidden-fruit{
+	width: 100%;
+	background-color: #d5d5d5;
+	max-width: 370px;
+	padding: 0.3em 1em;
+	border: 1px dashed #a1a1a1;
+	margin-top: 0.9em;
+	border-radius: 0.25em;
+}
+.forbidden-fruit{
+	display: none;
+}
+
+
 

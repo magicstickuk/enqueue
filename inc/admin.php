@@ -50,7 +50,8 @@ function em_admin_menu_markup(){
                	 </div>
 
 			    <div class="select-box-container right">
-
+                            <h1>Add Packages from my favourites</h1>
+                            <div class="forbidden-fruit" style="display:none"><a href="http://www.wpmaz.uk/enqueueme/">Get a User Key</a></div>
 			    </div>                    
 
 		     </div>

@@ -20,7 +20,6 @@ function em_do_enqueue_script(){
 				$handle = em_generate_handle($asset);
 
 				$args 	= array(
-					'package_id' => $package['id'],
 					'handle' => $handle
 				);
 
@@ -88,9 +87,25 @@ function em_get_root_rependancy(){
 	$root = get_option('em_root_dependancy')['em_root_dependancy'];
 
 	if(esc_url($root) != "" && filter_var($root, FILTER_VALIDATE_URL) == TRUE){
-	  	return array($root);
-   }
 
+		if(wp_script_is( 'jquery')){
+
+			 wp_deregister_script('jquery');
+			 
+		}
+
+		wp_register_script('em_root', $root, false, null);
+
+	  	return array($root);
+
+    }
+
+    if(!wp_script_is( 'jquery')){
+			
+		wp_register_script('jquery');
+			 
+	}
+	
 	return array('jquery');
 
 }
