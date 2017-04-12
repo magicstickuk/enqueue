@@ -59,7 +59,7 @@ function em_enqueue_script($asset, $args){
 	if($asset['conditional'] != 'None'){
 
 		global $wp_scripts;
-		$wp_scripts->registered[$handle]->add_data('conditional', $asset['conditional'] );
+		$wp_scripts->registered[$args['handle']]->add_data('conditional', $asset['conditional'] );
 
 	}
 	
@@ -109,4 +109,3 @@ function em_get_root_rependancy(){
 	return array('jquery');
 
 }
-

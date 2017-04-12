@@ -10,8 +10,6 @@ add_action( 'admin_menu', 'em_admin_page' );
 
 function em_admin_menu_markup(){
 
-	$pure_wrap_width = get_option('bip_pure_wrap_width');
-
 	ob_start()?>
 
 	<div class="wrap">

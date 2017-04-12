@@ -498,20 +498,19 @@ function em_update_enqueue_table(packages){
 					responce.forEach(function(package){
 						
 						if(package.id == current_package_id){
+							
 							em_do_add_row(package, prepare = count == packages_amount ? true : false );
 							
 						}
 
 					});
-
-					
-						// This indicates that there was a package removed by the user. Need to think of
-						// a way of managing this so other users don't lose that package if they dont want to
-						
-					
+										
 					count++;
+
 				});
+
 				jQuery('#sortable').LoadingOverlay('hide');
+
 			}
 
 		, function(){
