@@ -90,17 +90,20 @@ function em_get_root_rependancy(){
 
 		if(wp_script_is( 'jquery')){
 
-			 wp_deregister_script('jquery');
+			if(isset(get_option('em_root_dependancy')['em_dereg_jquery'])){
+				wp_deregister_script('jquery');
+			}
+			
 			 
 		}
 
-		wp_register_script('em_root', $root, false, null);
+		wp_enqueue_script('em_root', $root, null, null, 0);
 
-	  	return array($root);
+		return array('em_root');
 
-    }
+	}
 
-    if(!wp_script_is( 'jquery')){
+	if(!wp_script_is( 'jquery')){
 			
 		wp_register_script('jquery');
 			 

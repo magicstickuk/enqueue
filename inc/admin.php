@@ -14,26 +14,16 @@ function em_admin_menu_markup(){
 
 	<div class="wrap">
 
-		<h1>Enqueue Me Settings</h1>
-
-			<?php 
-
-    			echo "<div class='wrap enqueueme-settings'>";
-				echo "<form action='options.php' method='post'>";
-		          
-				do_settings_sections( 'em_user_settings' );
-                settings_fields('em_user_settings');
-				submit_button();
-	
-				echo "</form>";
-
-			?>
+		<h1>Enqueue Me</h1>
+        <hr>
+            <div class='wrap enqueueme-settings'>
+			
 			
 		<div class="select-boxes-container">
 			
 			<div class="select-box-container left">
 				
-				<h1>Add Packages from library</h1>
+				<h2>Add Packages from library</h2>
 
 					<p>
 						
@@ -48,7 +38,7 @@ function em_admin_menu_markup(){
                	 </div>
 
 			    <div class="select-box-container right">
-                            <h1>Add Packages from my favourites</h1>
+                            <h2>Add Packages from my favourites</h2>
                             <div class="forbidden-fruit" style="display:none"><a href="http://www.wpmaz.uk/enqueueme/">Get a User Key</a></div>
 			    </div>                    
 
@@ -173,7 +163,18 @@ function em_admin_menu_markup(){
     			 </table>
 
 		      </div>
+              <?php 
 
+                
+                echo "<form action='options.php' method='post'>";
+                  
+                do_settings_sections( 'em_user_settings' );
+                settings_fields('em_user_settings');
+                submit_button();
+    
+                echo "</form>";
+
+            ?>
        </div>
 
 <?php 

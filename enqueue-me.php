@@ -20,7 +20,7 @@ function em_settings_init(){
 	register_setting('em_user_settings' , 'em_user_licence' );
 	register_setting('em_user_settings' , 'em_root_dependancy' );
 
-	add_settings_section( 'user_settings', 'User Settings', 'em_user_settings_render', 'em_user_settings' );
+	add_settings_section( 'user_settings', 'User Settings<hr>', 'em_user_settings_render', 'em_user_settings' );
 
 	add_settings_field(
 	      'user_email',
@@ -38,12 +38,19 @@ function em_settings_init(){
 	      'user_settings'
 	  );
 
-	add_settings_section( 'em_root_dependancy', 'Root Dependancy', 'em_root_settings_render', 'em_user_settings' );
+	add_settings_section( 'em_root_dependancy', 'Root Dependancy<hr>', 'em_root_settings_render', 'em_user_settings' );
 
 	add_settings_field(
 	      'em_root_dependancy',
 	      'Alternative Root Dependancy',
 	      'em_select_root_render',
+	      'em_user_settings',
+	      'em_root_dependancy'
+	  );
+	add_settings_field(
+	      'em_dereg_jquery',
+	      'Deregister Wordpress Core jQuery?',
+	      'em_de_reg_jquery_render',
 	      'em_user_settings',
 	      'em_root_dependancy'
 	  );
@@ -74,6 +81,25 @@ function em_select_root_render(){
 	<?php
 
 }
+
+function em_de_reg_jquery_render(  ) { 
+
+	$options = get_option( 'em_root_dependancy' ); ?>
+	
+	<div class="checkbox">
+		
+		<label>
+
+			<input type='checkbox' name='em_root_dependancy[em_dereg_jquery]' <?php em_checked_lookup($options, 'em_dereg_jquery', '1') ;?> value='1'> 
+			
+		
+		</label>
+	
+	</div>
+	<?php
+}
+
+
 function user_licence_render(){
 
 	$user_licence = get_option('em_user_licence')['user_licence']; ?>
@@ -94,3 +120,19 @@ function user_email_render(){
 	
 }
 
+function em_checked_lookup($options, $option_key, $option_value, $type = null){
+    if(isset($options[$option_key])){
+        if($type=='select'){
+            $checkedLookup = selected( $options[$option_key], $option_value, false);
+        }
+        $checkedLookup = checked( $options[$option_key], $option_value, false);
+    }elseif(!$options){
+        if($type=='select'){
+            $checkedLookup = 'selected="selected"';
+        }
+        $checkedLookup = 'checked="checked"';
+    }else{
+        $checkedLookup = '';
+    };
+    echo $checkedLookup;
+}
