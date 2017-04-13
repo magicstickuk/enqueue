@@ -14,7 +14,7 @@ function em_admin_menu_markup(){
 
 	<div class="wrap">
 
-		<h1>Enqueue Me</h1>
+		<h1><?php _e('Enqueue Me','enqueue-me'); ?></h1>
         <hr>
             <div class='wrap enqueueme-settings'>
 			
@@ -23,7 +23,7 @@ function em_admin_menu_markup(){
 			
 			<div class="select-box-container left">
 				
-				<h2>Add Packages from library</h2>
+				<h2><?php _e('Add Packages from library', 'enqueue-me'); ?></h2>
 
 					<p>
 						
@@ -38,14 +38,14 @@ function em_admin_menu_markup(){
                	 </div>
 
 			    <div class="select-box-container right">
-                            <h2>Add Packages from my favourites</h2>
-                            <div class="forbidden-fruit" style="display:none"><a href="http://www.wpmaz.uk/enqueueme/">Get a User Key</a></div>
+                            <h2><?php _e('Add Packages from my favourites', 'enqueue-me');?></h2>
+                            <div class="forbidden-fruit" style="display:none"><a href="http://www.wpmaz.uk/enqueueme/"><?php _e('Get a User Key', 'enqueue-me');?></a></div>
 			    </div>                    
 
 		     </div>
            
 
-		     <h1 class="my-enqueue-header">My Enqueue <span class="state-saved-icon"><img style="display:none" src="<?php echo plugins_url('../img/tick.png',__FILE__); ?>" alt=""></span><span class="state-saved-words" style="display:none">Saved</span></h1>
+		     <h1 class="my-enqueue-header"><?php _e('My Enqueue', 'enqueue-me');?> <span class="state-saved-icon"><img style="display:none" src="<?php echo plugins_url('../img/tick.png',__FILE__); ?>" alt=""></span><span class="state-saved-words" style="display:none">Saved</span></h1>
 
 		     <div id="mypackage-wrap">
 
@@ -59,13 +59,14 @@ function em_admin_menu_markup(){
     			 					
     			 				</th>
     			 				<th>
-    			 					Package Name
+    			 					<?php _e('Package Name', 'enqueue-me');?>
     			 				</th>
                                 <th>
-                                    Description
+                                    <?php _e('Description', 'enqueue-me');?>
                                 </th>
     			 				<th>
-    			 					Assets
+                                    <?php _e('Assets', 'enqueue-me');?>
+    			 					
     			 				</th>
     			 				<th width="100px">
     			 					
@@ -118,14 +119,14 @@ function em_admin_menu_markup(){
 
                                                     <span id="tooltip_<?php echo $asset['id']; ?>">
                                                         
-                                                        Link : <?php echo $asset['link']?><br>
-                                                        Type : <?php echo strtoupper($asset['type']); ?><br>
+                                                        <?php _e('Link','enqueue-me') ?> : <?php echo $asset['link']?><br>
+                                                        <?php _e('Type','enqueue-me') ?> : <?php echo strtoupper($asset['type']); ?><br>
                                                         
                                                         <?php if($asset['type'] == 'css'): ?>
-                                                            Media Query : <?php echo $asset['media']?><br>
+                                                            <?php _e('Media Query','enqueue-me') ?> : <?php echo $asset['media']?><br>
                                                         <?php else:?>
-                                                            Condition : <?php echo $asset['conditional']?><br>
-                                                            Location : <?php echo $asset['in_footer'] == 0 ? 'Header' : 'Footer' ?>
+                                                            <?php _e('Condition','enqueue-me') ?> : <?php echo $asset['conditional']?><br>
+                                                            <?php _e('Location','enqueue-me') ?> : <?php echo $asset['in_footer'] == 0 ? __('Header', 'enqueue-me') : __('Footer', 'enqueue-me') ?>
                                                         <?php endif; ?>
 
                                                     </span>
@@ -139,12 +140,12 @@ function em_admin_menu_markup(){
 
     		    			 				<td class="em-action-icons">	
 
-    										<a target="_blank" class="em-package-link" href="<?php echo $package['url']; ?>" title="Package Link"><i data-tooltip-content="#tooltip_link_<?php echo $package['id']; ?>" class="fa fa-link tooltip-interact" aria-hidden="true"></i></a><a href="" class="em-remove-row"><i class="fa fa-minus-circle tooltip" title="Remove" aria-hidden="true"></i></a>
+    										<a target="_blank" class="em-package-link" href="<?php echo $package['url']; ?>" title="Package Link"><i data-tooltip-content="#tooltip_link_<?php echo $package['id']; ?>" class="fa fa-link tooltip-interact" aria-hidden="true"></i></a><a href="" class="em-remove-row"><i class="fa fa-minus-circle tooltip" title="<?php _e('Remove', 'enqueue-me');?>" aria-hidden="true"></i></a>
     									   
                                            <div class="em_tooltip_content">
 
                                                 <span id="tooltip_link_<?php echo $package['id']; ?>">
-                                                    <a target="_blank" href="<?php echo $package['url']; ?>">Package Info <i class="fa fa-external-link" aria-hidden="true"></i></a>
+                                                    <a target="_blank" href="<?php echo $package['url']; ?>"><?php _e('Package Info', 'enqueue-me');?> <i class="fa fa-external-link" aria-hidden="true"></i></a>
                                                 </span>
 
                                             </div>

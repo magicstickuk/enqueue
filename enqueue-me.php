@@ -5,6 +5,7 @@ Plugin Name: 	Enqueue Me
 Plugin URI: 	http://www.wpmaz.uk
 Description:    Easily enqueue your favourite CSS and Javascipt libraries into your theme
 Version: 		0.1
+Text Domain: 	enqueue-me
 Author: 		Mario Jaconelli
 Author URI:  	http://www.wpmaz.uk
 */
@@ -15,16 +16,31 @@ include('inc/admin.php');
 include('inc/load-scripts.php');
 include('inc/core.php');
 
+/**
+ * 
+ * Setup Internationalisation
+ * 
+ * @since 1.0
+ * 
+ */
+function em_load_textdomain() {
+
+	load_plugin_textdomain( 'enqueue-me', false, dirname( plugin_basename(__FILE__) ) . '/lang/' );
+	
+}
+
+add_action('plugins_loaded', 'em_load_textdomain');
+
 function em_settings_init(){
 	
 	register_setting('em_user_settings' , 'em_user_licence' );
 	register_setting('em_user_settings' , 'em_root_dependancy' );
 
-	add_settings_section( 'user_settings', 'User Settings<hr>', 'em_user_settings_render', 'em_user_settings' );
+	add_settings_section( 'user_settings', __('User Settings', 'enqueue-me'). '<hr>', 'em_user_settings_render', 'em_user_settings' );
 
 	add_settings_field(
 	      'user_email',
-	      'User Email',
+	      __('User Email', 'enqueue-me'),
 	      'user_email_render',
 	      'em_user_settings',
 	      'user_settings'
@@ -32,24 +48,24 @@ function em_settings_init(){
 
 	add_settings_field(
 	      'user_licence',
-	      'User Key',
+	      __('User Key', 'enqueue-me'),
 	      'user_licence_render',
 	      'em_user_settings',
 	      'user_settings'
 	  );
 
-	add_settings_section( 'em_root_dependancy', 'Root Dependancy<hr>', 'em_root_settings_render', 'em_user_settings' );
+	add_settings_section( 'em_root_dependancy', __('Root Dependancy', 'enqueue-me'). '<hr>', 'em_root_settings_render', 'em_user_settings' );
 
 	add_settings_field(
 	      'em_root_dependancy',
-	      'Alternative Root Dependancy',
+	      __('Alternative Root Dependancy', 'enqueue-me'),
 	      'em_select_root_render',
 	      'em_user_settings',
 	      'em_root_dependancy'
 	  );
 	add_settings_field(
 	      'em_dereg_jquery',
-	      'Deregister Wordpress Core jQuery?',
+	      __('Deregister Wordpress Core jQuery?', 'enqueue-me'),
 	      'em_de_reg_jquery_render',
 	      'em_user_settings',
 	      'em_root_dependancy'
@@ -63,20 +79,20 @@ add_action( 'admin_init', 'em_settings_init' );
 function em_user_settings_render(){
 	
 	echo "<span class='forbidden-fruit'>";
-	echo "If you want you can add your own packages to the library. You can also manage your favourite packages so they are easliy accessable in all your projects. Just register <a terget='_blank' href='http://http://www.wpmaz.uk/enqueueme/'>here for a User Key</a>. This is FREE and I'm not going to pester. We just need a central location to host package details. You get a simple control panel to manage your favourite packages.";
+	_e("If you want you can add your own packages to the library. You can also manage your favourite packages so they are easliy accessable in all your projects. Just register <a terget='_blank' href='http://http://www.wpmaz.uk/enqueueme/'>here for a User Key</a>. This is FREE and I'm not going to pester. We just need a central location to host package details. You get a simple control panel to manage your favourite packages.", 'enqueue-me');
 	echo "</span>";
 	
 }
 function em_root_settings_render(){
 
-	echo "By default this plugin uses WordPress's distrubuted jQuery as the <a target='_blank' href='https://developer.wordpress.org/reference/functions/wp_enqueue_script/'>root dependancy</a> if you would prefer an alternative version or a custom dependancy add a URL to it here.";
+	_e("By default this plugin uses WordPress's distrubuted jQuery as the <a target='_blank' href='https://developer.wordpress.org/reference/functions/wp_enqueue_script/'>root dependancy</a> if you would prefer an alternative version or a custom dependancy add a URL to it here.",'enqueue-me');
 }
 
 function em_select_root_render(){
 
 	$user_root = get_option('em_root_dependancy')['em_root_dependancy']; ?>
 
-		<input id="root-dep-box" type='text' name='em_root_dependancy[em_root_dependancy]' placeholder="Leave blank if unsure" value='<?php echo $user_root; ?>'>
+		<input id="root-dep-box" type='text' name='em_root_dependancy[em_root_dependancy]' placeholder="<?php _e('Leave blank if unsure', 'enqueue-me') ?>" value='<?php echo $user_root; ?>'>
 
 	<?php
 

@@ -96,7 +96,7 @@ function em_process_packages_data(rD){
 
 	jQuery(".em-packages-select").select2({
 		
-		placeholder: "Select a package",
+		placeholder: em_admin_setting_vars.selectPackage,
 		allowClear: true,
 		data: packages,
 		templateResult: function(data){
@@ -125,7 +125,7 @@ function em_process_packages_data(rD){
 
 	  	}else{
 
-	  		alert("This package is already in your enqueue list.");
+	  		alert(em_admin_setting_vars.alert_me);
 
 	  	}
 		
@@ -201,15 +201,15 @@ function em_do_row_html(package){
 		html += '<i class="fa fa-' + icon + '" aria-hidden="true"></i> '
 		html += '<span data-tooltip-content="#tooltip_' + element.asset_id + '" class="em_asset tooltip" data-asset-id="' + element.asset_id + '" data-asset-link="'+ element.link +'" data-asset-type="' + element.type + '" data-asset-media="' + element.media + '" data-asset-conditional="' + element.conditional + '" data-asset-in-footer="' + element.in_footer + '">' + element.asset_name + '</span><br>';
 
-		html += '<div class="em_tooltip_content"><span id="tooltip_' + element.asset_id + '">Link : '+ element.link +'<br>Type : '+ element.type +'<br>';
+		html += '<div class="em_tooltip_content"><span id="tooltip_' + element.asset_id + '">' + em_admin_setting_vars.link + ' : '+ element.link +'<br>' + em_admin_setting_vars.type + ' : '+ element.type +'<br>';
 		if(element.type == 'css'){
-			html += 'Media Query : ' + element.media + '<br>';
+			html += em_admin_setting_vars.mediaQuery + ' : ' + element.media + '<br>';
 		}else{
-			html += 'Condition : ' + element.conditional + '<br>Location : ';
+			html += em_admin_setting_vars.condition + '  : ' + element.conditional + '<br>'+em_admin_setting_vars.location + ' : ';
 			if(element.in_footer == 0){
-				html += 'Header';
+				html += em_admin_setting_vars.header;
 			}else{
-				html += 'Footer';
+				html += em_admin_setting_vars.footer;
 			};
 		}
 		html += '</span></div>';
@@ -218,9 +218,9 @@ function em_do_row_html(package){
 	
 	html 		+= '</td>';
 
-	html		+= '<td class="em-action-icons"><a target="_blank" class="em-package-link" href="' + package.url + '" title="Package Link"><i data-tooltip-content="#tooltip_link_' + package.id +'" class="fa fa-link tooltip-interact" aria-hidden="true"></i></a><a href="" class="em-remove-row"><i class="fa fa-minus-circle tooltip" title="Remove" aria-hidden="true"></i></a>';
+	html		+= '<td class="em-action-icons"><a target="_blank" class="em-package-link" href="' + package.url + '" title="' + em_admin_setting_vars.packageLink + '"><i data-tooltip-content="#tooltip_link_' + package.id +'" class="fa fa-link tooltip-interact" aria-hidden="true"></i></a><a href="" class="em-remove-row"><i class="fa fa-minus-circle tooltip" title="'+ em_admin_setting_vars.remove +'" aria-hidden="true"></i></a>';
 
-	html 		+= '<div class="em_tooltip_content"><span id="tooltip_link_'+ package.id +'"><a target="_blank" href="'+ package.url +'">Package Info <i class="fa fa-external-link" aria-hidden="true"></i></a></span></div>';
+	html 		+= '<div class="em_tooltip_content"><span id="tooltip_link_'+ package.id +'"><a target="_blank" href="'+ package.url +'">' + em_admin_setting_vars.parkageInfo + ' <i class="fa fa-external-link" aria-hidden="true"></i></a></span></div>';
 	html 		+= '</td></tr>';
 
 	return html;
@@ -562,7 +562,7 @@ function em_do_favourite_select_box_responce(rD){
 	jQuery('.select-box-container.right .selectbox-inner').show();
 	jQuery(".em-packages-favoutites-select").select2({
 		
-		placeholder: "Select a package",
+		placeholder: em_admin_setting_vars.selectPackage,
 		allowClear: true,
 		data: packages,
 		templateResult: function(data){
@@ -590,7 +590,7 @@ function em_do_favourite_select_box_responce(rD){
 
 	  	}else{
 
-	  		alert("This package is already in your enqueue list.");
+	  		alert(em_admin_setting_vars.alert_me);
 
 	  	}
 		
