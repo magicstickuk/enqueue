@@ -39,7 +39,8 @@ function em_admin_menu_markup(){
 
 			    <div class="select-box-container right">
                             <h2><?php _e('Add Packages from my favourites', 'enqueue-me');?></h2>
-                            <div class="forbidden-fruit" style="display:none"><a href="http://www.wpmaz.uk/enqueueme/"><?php _e('Get a User Key', 'enqueue-me');?></a></div>
+                            <div class="forbidden-fruit" style="display:none"><a target="_blank" href="http://www.wpmaz.uk/enqueueme/"><?php _e('Get a User Key', 'enqueue-me');?></a></div>
+                             <div class="no-results" style="display:none"><a target="_blank" href="http://www.wpmaz.uk/enqueueme/"><?php _e('No favourites yet. Add some here...', 'enqueue-me');?></a></div>
 			    </div>                    
 
 		     </div>

@@ -72,7 +72,7 @@ function em_enqueue_style($asset, $args){
 	$version 	= apply_filters( 'em_script_version', null );
 	$media		= $asset['media'] == null ? 'all' : apply_filters( 'em_css_media', $asset['media'] );
 
-	wp_enqueue_style( $args['handle'], $link, $args['dependant'], $version, $media );
+	wp_enqueue_style( $args['handle'], $link, $args['dependant'], $version, maybe_unserialize($media) );
 
 }
 
@@ -105,7 +105,7 @@ function em_get_root_rependancy(){
 
 	if(!wp_script_is( 'jquery')){
 			
-		wp_register_script('jquery');
+		wp_enqueue_script('jquery');
 			 
 	}
 	

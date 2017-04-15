@@ -491,6 +491,7 @@ function em_update_enqueue_table(packages){
 		em_ajax(data, 
 
 			function(responce){
+				consol.log(responce);
 				var packages_amount = responce.length;
 				var count = 1;
 				current_packages.forEach(function(current_package_id){
@@ -517,6 +518,8 @@ function em_update_enqueue_table(packages){
 			console.log('No Results');
 		});
 			
+	}else{
+		jQuery('#sortable').LoadingOverlay('hide');
 	}
 	
 }
@@ -539,7 +542,9 @@ function em_do_favourite_select_box(user_id){
 		"user_id" : user_id,
 	}
 
-	em_ajax(data, em_do_favourite_select_box_responce);
+	em_ajax(data, em_do_favourite_select_box_responce, function(){
+		jQuery('.no-results').show();
+	});
 
 }
 
@@ -574,7 +579,7 @@ function em_do_favourite_select_box_responce(rD){
 			markup += "</div>";
 			return markup;
 		},
-		escapeMarkup: function(m) {
+		escapeMarkup: function(m){
 			return m;
 		}
 
@@ -598,5 +603,3 @@ function em_do_favourite_select_box_responce(rD){
 	});
 
 }
-
-
