@@ -491,7 +491,6 @@ function em_update_enqueue_table(packages){
 		em_ajax(data, 
 
 			function(responce){
-				consol.log(responce);
 				var packages_amount = responce.length;
 				var count = 1;
 				current_packages.forEach(function(current_package_id){
