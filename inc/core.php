@@ -72,7 +72,14 @@ function em_enqueue_style($asset, $args){
 	$version 	= apply_filters( 'em_script_version', null );
 	$media		= $asset['media'] == null ? 'all' : apply_filters( 'em_css_media', $asset['media'] );
 
-	wp_enqueue_style( $args['handle'], $link, $args['dependant'], $version, maybe_unserialize($media) );
+	wp_enqueue_style( $args['handle'], $link, $args['dependant'], $version, $media );
+
+	if($asset['conditional'] != 'None'){
+
+		global $wp_styles;
+		$wp_styles->registered[$args['handle']]->add_data('conditional', $asset['conditional'] );
+
+	}
 
 }
 

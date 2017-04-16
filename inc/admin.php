@@ -122,11 +122,12 @@ function em_admin_menu_markup(){
                                                         
                                                         <?php _e('Link','enqueue-me') ?> : <?php echo $asset['link']?><br>
                                                         <?php _e('Type','enqueue-me') ?> : <?php echo strtoupper($asset['type']); ?><br>
+                                                        <?php _e('Condition','enqueue-me') ?> : <?php echo $asset['conditional']?><br>
                                                         
                                                         <?php if($asset['type'] == 'css'): ?>
                                                             <?php _e('Media Query','enqueue-me') ?> : <?php echo $asset['media']?><br>
                                                         <?php else:?>
-                                                            <?php _e('Condition','enqueue-me') ?> : <?php echo $asset['conditional']?><br>
+                                                            
                                                             <?php _e('Location','enqueue-me') ?> : <?php echo $asset['in_footer'] == 0 ? __('Header', 'enqueue-me') : __('Footer', 'enqueue-me') ?>
                                                         <?php endif; ?>
 
