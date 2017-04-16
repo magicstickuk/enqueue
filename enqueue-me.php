@@ -79,7 +79,7 @@ add_action( 'admin_init', 'em_settings_init' );
 function em_user_settings_render(){
 	
 	echo "<span class='forbidden-fruit'>";
-	_e("If you want you can add your own packages to the library. You can also manage your favourite packages so they are easliy accessable in all your projects. Just register <a terget='_blank' href='http://http://www.wpmaz.uk/enqueueme/'>here for a User Key</a>. This is FREE and I'm not going to pester. We just need a central location to host package details. You get a simple control panel to manage your favourite packages.", 'enqueue-me');
+	_e("If you want you can add your own packages to the library. You can also manage your favourite packages so they are easliy accessable in all your projects. Just register <a terget='_blank' href='http://http://www.wpmaz.uk/enqueue-me/'>here for a User Key</a>. This is FREE and I'm not going to pester. We just need a central location to host package details. You get a simple control panel to manage your favourite packages.", 'enqueue-me');
 	echo "</span>";
 	
 }
@@ -121,7 +121,7 @@ function user_licence_render(){
 	$user_licence = get_option('em_user_licence')['user_licence']; ?>
 
 		<input id="licenece-box" type='text' name='em_user_licence[user_licence]' value='<?php echo $user_licence; ?>'> <span class="licence-tick" style="display:none"><img src="<?php echo plugins_url('/img/tick.png',__FILE__); ?>" alt=""></span><span class="licence-cross" style="display:none"><img src="<?php echo plugins_url('/img/cross.png',__FILE__); ?>" alt=""></span><span class="spinner-container"></span>
-		<p><a id="update-licence" href="">Update User Key</a> <span class="forbidden-fruit">| <a href="http://www.wpmaz.uk/enqueueme/">Get a User Key</a></span></p>
+		<p><a id="update-licence" href="">Update User Key</a> <span class="forbidden-fruit">| <a href="http://www.wpmaz.uk/enqueue-me/">Get a User Key</a></span></p>
 
 	<?php
 	

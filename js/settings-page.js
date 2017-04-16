@@ -252,7 +252,7 @@ function em_ajax(data, callback, no_rows_callback){
 	    		console.log(errorThrown);	
 		
 		},
-		url: 'https://wpmaz.uk/enqueueme/em-requests.php',
+		url: 'https://wpmaz.uk/enqueue-me/em-requests.php',
 		data: data
 
 	});
@@ -465,7 +465,7 @@ function em_load_user_packages(user_id){
 		error: function (rD, textStatus, errorThrown){
 	    		
 		},
-		url: 'https://wpmaz.uk/enqueueme/em-requests.php',
+		url: 'https://wpmaz.uk/enqueue-me/em-requests.php',
 		data: data
 
 	});
