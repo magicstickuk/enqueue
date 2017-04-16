@@ -202,10 +202,11 @@ function em_do_row_html(package){
 		html += '<span data-tooltip-content="#tooltip_' + element.asset_id + '" class="em_asset tooltip" data-asset-id="' + element.asset_id + '" data-asset-link="'+ element.link +'" data-asset-type="' + element.type + '" data-asset-media="' + element.media + '" data-asset-conditional="' + element.conditional + '" data-asset-in-footer="' + element.in_footer + '">' + element.asset_name + '</span><br>';
 
 		html += '<div class="em_tooltip_content"><span id="tooltip_' + element.asset_id + '">' + em_admin_setting_vars.link + ' : '+ element.link +'<br>' + em_admin_setting_vars.type + ' : '+ element.type +'<br>';
-		html += em_admin_setting_vars.condition + '  : ' + element.conditional + '<br>'+em_admin_setting_vars.location + ' : ';
+		html += em_admin_setting_vars.condition + '  : ' + element.conditional + '<br>';
 		if(element.type == 'css'){
 			html += em_admin_setting_vars.mediaQuery + ' : ' + element.media + '<br>';
 		}else{
+			html += em_admin_setting_vars.location + ' : ';
 			
 			if(element.in_footer == 0){
 				html += em_admin_setting_vars.header;
