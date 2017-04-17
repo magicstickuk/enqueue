@@ -138,7 +138,7 @@ function user_licence_render(){
 
     $user_licence = get_option('em_user_licence')['user_licence']; ?>
 
-        <input id="licenece-box" type='text' name='em_user_licence[user_licence]' value='<?php echo $user_licence; ?>'> <span class="licence-tick" style="display:none"><img src="<?php echo plugins_url('/img/tick.png',__FILE__); ?>" alt=""></span><span class="licence-cross" style="display:none"><img src="<?php echo plugins_url('/img/cross.png',__FILE__); ?>" alt=""></span><span class="spinner-container"></span>
+        <input id="licenece-box" type='text' name='em_user_licence[user_licence]' value='<?php echo $user_licence; ?>'> <span class="licence-tick" style="display:none"><img src="<?php echo plugins_url('../img/tick.png',__FILE__); ?>" alt=""></span><span class="licence-cross" style="display:none"><img src="<?php echo plugins_url('../img/cross.png',__FILE__); ?>" alt=""></span><span class="spinner-container"></span>
         <p><a id="update-licence" href="">Update User Key</a> <span class="forbidden-fruit">| <a href="http://www.wpmaz.uk/enqueue-me/">Get a User Key</a></span></p>
 
     <?php
