@@ -7,24 +7,23 @@ function em_load_admin_scripts(){
 	if($screenid == 'settings_page_em_settings'){
 
 		wp_enqueue_script( 'jquery-ui-core' );
-    		wp_enqueue_script( 'jquery-ui-accordion' );
-    		wp_enqueue_script( 'jquery-ui-sortable' );
-    		wp_enqueue_script( 'jquery-ui-draggable' );
-    		wp_enqueue_script( 'jquery-ui-droppable' );
+    	wp_enqueue_script( 'jquery-ui-accordion' );
+    	wp_enqueue_script( 'jquery-ui-sortable' );
+    	wp_enqueue_script( 'jquery-ui-draggable' );
+    	wp_enqueue_script( 'jquery-ui-droppable' );
 
-    		
-    		wp_enqueue_script(
+    	wp_enqueue_script(
 			'em-tooltipster-scripts',
 			'https://cdn.jsdelivr.net/jquery.tooltipster/4.2.3/js/tooltipster.bundle.min.js',
 			array( 'jquery' )
 		);
 
-    		wp_enqueue_script(
+    	wp_enqueue_script(
 			'em-select2-scripts',
 			'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js',
 			array( 'jquery' )
 		);
-    		wp_enqueue_script(
+    	wp_enqueue_script(
 			'em-loadingOverly-scripts',
 			'https://cdn.jsdelivr.net/jquery.loadingoverlay/latest/loadingoverlay.min.js',
 			array( 'jquery' )
@@ -38,19 +37,19 @@ function em_load_admin_scripts(){
 
 		wp_localize_script('em-admin-settings-scripts', 'em_admin_setting_vars', 
 			array(
-				'user_id' => get_current_user_id(),
-				'sync_id' => em_get_sync_id(),
-				'alert_me' => __("This package is already in your enqueue list.", 'enqueue-me' ),
-				'link' => __("Link", 'enqueue-me' ),
-				'type' => __("Type", 'enqueue-me' ),
-				'location' => __("Location", 'enqueue-me' ),
-				'mediaQuery' => __("Media Query", 'enqueue-me' ),
-				'condition' => __("Condition", 'enqueue-me' ),
-				'header' => __("Header", 'enqueue-me' ),
-				'footer' => __("Footer", 'enqueue-me' ),
-				'packageLink' => __("Package Link", 'enqueue-me' ),
-				'remove' => __("Remove", 'enqueue-me' ),
-				'parkageInfo' => __("Package Info", 'enqueue-me' ),
+				'user_id' 		=> get_current_user_id(),
+				'sync_id' 		=> em_get_sync_id(),
+				'alert_me' 		=> __("This package is already in your enqueue list.", 'enqueue-me' ),
+				'link' 			=> __("Link", 'enqueue-me' ),
+				'type' 			=> __("Type", 'enqueue-me' ),
+				'location' 		=> __("Location", 'enqueue-me' ),
+				'mediaQuery' 	=> __("Media Query", 'enqueue-me' ),
+				'condition' 	=> __("Condition", 'enqueue-me' ),
+				'header' 		=> __("Header", 'enqueue-me' ),
+				'footer' 		=> __("Footer", 'enqueue-me' ),
+				'packageLink' 	=> __("Package Link", 'enqueue-me' ),
+				'remove' 		=> __("Remove", 'enqueue-me' ),
+				'parkageInfo' 	=> __("Package Info", 'enqueue-me' ),
 				'selectPackage' => __("Select a package", 'enqueue-me' ),
 			)
 		);

@@ -7,7 +7,6 @@
 	width: 100%;
 	max-width: 400px;
 }
-
 #sortable td{
 	background-color: #fff;	
 }
@@ -64,7 +63,6 @@
 .state-saved-icon img{
 	vertical-align: middle;
 }
-
 h1.my-enqueue-header{
 	margin-top: 1em
 }
@@ -91,7 +89,6 @@ h1.my-enqueue-header{
 	padding-bottom:0.2em;
 	border-bottom: 1px solid;
 	font-weight: 700;
-
 }
 .select2-results .select2-highlighted{
 	background-color: #cdcdcd!important;
@@ -129,6 +126,3 @@ div.forbidden-fruit{
 	min-height: 90px;
 	background-color: #e4e4e4
 }
-
-
-
