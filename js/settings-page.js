@@ -444,13 +444,14 @@ function em_show_the_fruit(){
 
 	jQuery('.forbidden-fruit').show();
 	jQuery('.select-box-container.right .selectbox-inner' ).remove();
+	jQuery('.manage-link').hide();
 
 }
 function em_hide_the_fruit(){
 
 	jQuery('.forbidden-fruit').hide();
 	em_show_favourite_select();
-	
+	jQuery('.manage-link').show();
 };
 
 function em_show_favourite_select(){

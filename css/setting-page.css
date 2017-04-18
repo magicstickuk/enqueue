@@ -126,3 +126,7 @@ div.forbidden-fruit{
 	min-height: 90px;
 	background-color: #e4e4e4
 }
+.manage-link, .manage-link-all{
+	margin-left: 1em;
+	display: inline-block;
+}

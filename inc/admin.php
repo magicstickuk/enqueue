@@ -179,7 +179,7 @@ function em_admin_menu_markup(){
 			
                 <div class="select-box-container left">
 				
-                    <h2><?php _e('Add Packages from library', 'enqueue-me'); ?></h2>
+                    <h2><?php _e('Add Packages from library', 'enqueue-me'); ?> <small class="manage-link-all"><a target="_blank" href="http://www.wpmaz.uk/enqueue-me/add-package/">Add more</a></small></h2>
 
 					<p>
 						
@@ -195,7 +195,7 @@ function em_admin_menu_markup(){
 
 			    <div class="select-box-container right">
                     
-                    <h2><?php _e('Add Packages from my favourites', 'enqueue-me');?></h2>
+                <h2><?php _e('Add Packages from my favourites', 'enqueue-me');?> <small class="manage-link" style="display:none"><a target="_blank" href="http://www.wpmaz.uk/enqueue-me/">Manage</a></small></h2>
                         
                     <div class="forbidden-fruit" style="display:none">
                         <a target="_blank" href="http://www.wpmaz.uk/enqueue-me/"><?php _e('Get a User Key', 'enqueue-me');?></a>
