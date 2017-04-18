@@ -139,7 +139,7 @@ function user_licence_render(){
     $user_licence = get_option('em_user_licence')['user_licence']; ?>
 
         <input id="licenece-box" type='text' name='em_user_licence[user_licence]' value='<?php echo $user_licence; ?>'> <span class="licence-tick" style="display:none"><img src="<?php echo plugins_url('../img/tick.png',__FILE__); ?>" alt=""></span><span class="licence-cross" style="display:none"><img src="<?php echo plugins_url('../img/cross.png',__FILE__); ?>" alt=""></span><span class="spinner-container"></span>
-        <p><a id="update-licence" href="">Update User Key</a> <span class="forbidden-fruit">| <a href="http://www.wpmaz.uk/enqueue-me/">Get a User Key</a></span></p>
+        <p><a target="_blank" id="update-licence" href="">Update User Key</a> <span class="forbidden-fruit">| <a href="http://www.wpmaz.uk/enqueue-me/">Get a User Key</a></span></p>
 
     <?php
     
@@ -388,6 +388,20 @@ function em_update_enqueue_list_ajax(){
 
 }
 add_action('wp_ajax_em_update_enqueue_list', 'em_update_enqueue_list_ajax');
+
+function em_save_licence_details(){
+
+    $user_licence = array(
+        'user_email' => $_POST['email'],
+        'user_licence' => $_POST['key']
+    );
+
+    update_option( 'em_user_licence', $user_licence );
+
+    die();
+}
+
+add_action('wp_ajax_em_save_licence_details', 'em_save_licence_details');
 
 function em_update_enqueue_list($packages){
 
