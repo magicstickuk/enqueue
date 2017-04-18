@@ -50,7 +50,7 @@ function em_save_licence_details(){
 
 	jQuery.post(ajaxurl,data,function(response) {
 
-				
+		em_check_licence();		
 
 	});
 
