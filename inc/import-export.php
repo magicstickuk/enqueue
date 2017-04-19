@@ -13,18 +13,27 @@ function em_import_export_buttons(){
 	</p>
 
 	<p class="em-export-box-container" style="display:none">
-		Copy this text and paster into the <em>import</em> field of your other Enqueue Me installation.<br>
+		<?php _e("Copy this text and paster into the <em>import</em> field of your other Enqueue Me installation.", "enqueue-me"); ?><br>
 		<textarea readonly="readonly" name="em-export-box" id="em-export-box" value="" rows="5" onClick="this.setSelectionRange(0, this.value.length);"></textarea>
 	</p>
 	<p class="em-import-box-container" style="display:none">
-		Paste text from your other Enqueue installtion here<br>
+		<?php _e("Paste text from your other Enqueue installtion here", "enqueue-me");?><br>
 		<textarea name="em-import-box" id="em-import-box" value="" rows="5"></textarea><br>
-		<input type="submit" name="em-import-submit" id="em-import-submit" class="button button-primary" value="Import your settings">
+		<input type="submit" name="em-import-submit" id="em-import-submit" class="button button-primary" value="Import your settings"> <span class="spinner-container submit-import"></span>
 	</p>
 
 	<?php
 }
 add_action('em_after_core_settings', 'em_import_export_buttons');
+
+function em_alert_import_success(){
+
+	if(isset($_GET['import'])):?>
+		<div class="notice notice-success"><p><?php _e("Your Enqueue Me Settings were succesfully imported", 'enqueue-me'); ?></p></div>
+	<?php endif; 
+}
+
+add_action( 'em_before_core_settings', 'em_alert_import_success');
 
 function em_load_import_export_scripts(){
 
@@ -75,10 +84,18 @@ function em_set_em_options_on_import(){
 	}
 	
 	$package = json_decode( $uncoded_import , true );
+	if($package && isset($package['assets']) && isset($package['root']) && isset($package['user']) ){
 
-	update_option('em_assets_to_enqueue', $package['assets']);
-	update_option('em_root_dependancy', $package['root']);
-	update_option('em_user_licence', $package['user']);
+		$result = update_option('em_assets_to_enqueue', $package['assets']);
+		$result = update_option('em_root_dependancy', $package['root']);
+		$result = update_option('em_user_licence', $package['user']);
+
+		_e('success', 'enqueue-me'); 
+
+		die(0);
+	}
+	
+	_e("There was a problem with the pasted text.", 'enqueue-me');
 
 	die(0);
 

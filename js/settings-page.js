@@ -42,10 +42,9 @@ jQuery( document ).resize(function() {
 function em_save_licence_details(){
 
 	data = {
-		action : 'em_save_licence_details',
-		email : jQuery('#licenece-email-box').val(),
-		key	: jQuery('#licenece-box').val()
-
+		action 	: 'em_save_licence_details',
+		email 	: jQuery('#licenece-email-box').val(),
+		key		: jQuery('#licenece-box').val()
 	};
 
 	jQuery.post(ajaxurl,data,function(response) {
@@ -53,10 +52,8 @@ function em_save_licence_details(){
 		em_check_licence();		
 
 	});
-
-	
-
 }
+
 function em_set_remove_buttons(){
 
 	jQuery('.em-remove-row').click(function(e){
@@ -68,6 +65,7 @@ function em_set_remove_buttons(){
     });
 
 }
+
 function em_load_packages(){
 
 	if(window.user_id){
