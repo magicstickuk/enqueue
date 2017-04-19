@@ -13,7 +13,7 @@ function em_import_export_buttons(){
 	</p>
 
 	<p class="em-export-box-container" style="display:none">
-		<?php _e("Copy this text and paster into the <em>import</em> field of your other Enqueue Me installation.", "enqueue-me"); ?><br>
+		<?php _e("Copy this text and paste into the <em>import</em> field of your other Enqueue Me installation.", "enqueue-me"); ?><br>
 		<textarea readonly="readonly" name="em-export-box" id="em-export-box" value="" rows="5" onClick="this.setSelectionRange(0, this.value.length);"></textarea>
 	</p>
 	<p class="em-import-box-container" style="display:none">
