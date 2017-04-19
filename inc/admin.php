@@ -117,9 +117,8 @@ function em_de_reg_jquery_render(  ) {
         
         <label>
 
-            <input type='checkbox' name='em_root_dependancy[em_dereg_jquery]' <?php em_checked_lookup($options, 'em_dereg_jquery', '1') ;?> value='1'> 
+            <input type='checkbox' name='em_root_dependancy[em_dereg_jquery]' <?php em_checked_lookup($options, 'em_dereg_jquery', 'yes') ;?> value='yes'> 
             
-        
         </label>
     
     </div>
@@ -424,10 +423,10 @@ function em_checked_lookup($options, $option_key, $option_value, $type = null){
     }elseif(!$options){
 
         if($type=='select'){
-            $checkedLookup = 'selected="selected"';
+            $checkedLookup = '';
         }
 
-        $checkedLookup = 'checked="checked"';
+        $checkedLookup = '';
 
     }else{
 
