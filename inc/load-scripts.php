@@ -6,7 +6,7 @@ function em_load_admin_scripts(){
 	
 	if($screenid == 'settings_page_em_settings'){
 
-		wp_enqueue_script( 'jquery-ui-core' );
+	wp_enqueue_script( 'jquery-ui-core' );
     	wp_enqueue_script( 'jquery-ui-accordion' );
     	wp_enqueue_script( 'jquery-ui-sortable' );
     	wp_enqueue_script( 'jquery-ui-draggable' );
@@ -23,7 +23,7 @@ function em_load_admin_scripts(){
 			'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js',
 			array( 'jquery' )
 		);
-    	wp_enqueue_script(
+    		wp_enqueue_script(
 			'em-loadingOverly-scripts',
 			'https://cdn.jsdelivr.net/jquery.loadingoverlay/latest/loadingoverlay.min.js',
 			array( 'jquery' )

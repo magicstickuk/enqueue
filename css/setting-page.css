@@ -130,3 +130,9 @@ div.forbidden-fruit{
 	margin-left: 1em;
 	display: inline-block;
 }
+#em-export-box{
+	width: 100%;
+}
+#em-import-box{
+	width: 100%;
+}

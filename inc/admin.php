@@ -173,6 +173,8 @@ function em_admin_menu_markup(){
 		<h1><?php _e('Enqueue Me','enqueue-me'); ?></h1>
         <hr>
         
+        <?php do_action('em_before_core_settings');?>
+
         <div class='wrap enqueueme-settings'>
 
             <div class="select-boxes-container">
@@ -340,7 +342,7 @@ function em_admin_menu_markup(){
             echo "</form>";
 
         ?>
-
+        <?php do_action('em_after_core_settings');?>
     </div>
 
 <?php 

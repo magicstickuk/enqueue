@@ -13,6 +13,7 @@ Author URI:  	http://www.wpmaz.uk
 include('inc/admin.php');
 include('inc/load-scripts.php');
 include('inc/core.php');
+include('inc/import-export.php');
 
 /**
  * 
