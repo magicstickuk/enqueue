@@ -30,6 +30,7 @@ function em_do_enqueue_script(){
 					array_push($js_queue, $handle);
 					
 				}
+				
 				if($type == 'css'){
 
 					$args['dependant'] = count($css_queue) > 0 ? $css_queue : array();
