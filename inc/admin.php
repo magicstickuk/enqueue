@@ -162,7 +162,14 @@ function user_email_render(){
     
 }
 
-
+/**
+ * 
+ * Markup for Main Skeleton of the settings page
+ * 
+ * @since 0.1
+ * @return null
+ * 
+ */
 function em_admin_menu_markup(){
 
 	ob_start()?>
@@ -351,6 +358,13 @@ function em_admin_menu_markup(){
 
 }
 
+/**
+ * This function gets the timestamp of the last time the current 'liceneced' user made any changes to thier packages/favourites
+ *
+ * @since 0.1
+ * @return int UNIX Timestamp
+ *
+ */
 function em_get_sync_id(){
 
 	$user_id = get_current_user_id();
@@ -360,12 +374,28 @@ function em_get_sync_id(){
 
 }
 
+/**
+ * This function sets the timestamp of the last time the current 'liceneced' user made any changes to thier packages/favourites
+ *
+ * @since 0.1
+ * @param int $user_id The ID of the user from the external managment site (wpmaz.uk)
+ * @param array $sync_id The new UNIX timestamp to update with
+ * @return null
+ *
+ */
 function em_update_sync_id($user_id, $sync_id){
 
 	update_user_meta( $user_id, 'em_last_modified', $sync_id);
 
 }
 
+/**
+ * This is a ajax wrapper for update_sync_id_ajax()
+ *
+ * @since 0.1
+ * @return null
+ *
+ */
 function update_sync_id_ajax(){
 
 	$new_timestamp = $_POST['timestamp'];
@@ -380,6 +410,13 @@ function update_sync_id_ajax(){
 }
 add_action('wp_ajax_em_update_timestamp', 'update_sync_id_ajax');
 
+/**
+ * This is a ajax wrapper for em_update_enqueue_list()
+ *
+ * @since 0.1
+ * @return null
+ *
+ */
 function em_update_enqueue_list_ajax(){
 
 	$packages = $_POST['packages'];
@@ -393,6 +430,13 @@ function em_update_enqueue_list_ajax(){
 }
 add_action('wp_ajax_em_update_enqueue_list', 'em_update_enqueue_list_ajax');
 
+/**
+ * This is a ajax wrapper to update the user licence settings
+ *
+ * @since 0.1
+ * @return null
+ *
+ */
 function em_save_licence_details(){
 
     $user_licence = array(
@@ -407,6 +451,14 @@ function em_save_licence_details(){
 
 add_action('wp_ajax_em_save_licence_details', 'em_save_licence_details');
 
+/**
+ * This is a ajax wrapper to update the user licence settings
+ *
+ * @since 0.1
+ * @param array $packages An array of package data to add to the options take which is fed into the core for enqueue.
+ * @return null
+ *
+ */
 function em_update_enqueue_list($packages){
 
 	update_option('em_assets_to_enqueue', $packages);
