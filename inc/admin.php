@@ -93,7 +93,10 @@ function em_root_settings_render(){
  */
 function em_select_root_render(){
 
-    $user_root = get_option('em_root_dependancy')['em_root_dependancy']; ?>
+    $options    = get_option('em_root_dependancy');
+    $user_root =  isset($options['em_root_dependancy']) ? $options['em_root_dependancy'] : '';
+
+     ?>
 
         <input id="root-dep-box" type='text' name='em_root_dependancy[em_root_dependancy]' placeholder="<?php _e('Leave blank if unsure', 'enqueue-me') ?>" value='<?php echo $user_root; ?>'>
 
@@ -154,7 +157,10 @@ function user_licence_render(){
  */
 function user_email_render(){
 
-    $user_email = get_option('em_user_licence')['user_email']; ?>
+    $options    = get_option('em_user_licence');
+    $user_email = isset($options['user_email']) ? $options['user_email'] : '';
+
+     ?>
 
         <input id="licenece-email-box" type='text' name='em_user_licence[user_email]' value='<?php echo $user_email; ?>'>
 
