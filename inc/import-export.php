@@ -84,6 +84,7 @@ function em_set_em_options_on_import(){
 	}
 	
 	$package = json_decode( $uncoded_import , true );
+	
 	if($package && isset($package['assets']) && isset($package['root']) && isset($package['user']) ){
 
 		$result = update_option('em_assets_to_enqueue', $package['assets']);

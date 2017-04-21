@@ -123,7 +123,6 @@ div.forbidden-fruit{
 #mypackage-wrap{
 	margin-top: 1em;
 	margin-bottom: 3em;
-	min-height: 90px;
 	background-color: #e4e4e4
 }
 .manage-link, .manage-link-all{
@@ -135,4 +134,14 @@ div.forbidden-fruit{
 }
 #em-import-box{
 	width: 100%;
+}
+.my-enqueue-wrap {
+    background-color: #dedede;
+    padding: 0.1em 2em;
+    margin: 1em 0;
+    box-shadow: 0px 0px 3px 3px #b3b3b3 inset;
+    border-radius: 3px;
+}
+#sortable{
+	border: 1px solid #b5b5b5;
 }
