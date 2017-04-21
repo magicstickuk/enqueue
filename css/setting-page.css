@@ -145,3 +145,8 @@ div.forbidden-fruit{
 #sortable{
 	border: 1px solid #b5b5b5;
 }
+#sortable th{
+	font-weight: 600!important;
+    font-size: 1.1em!important;
+}
+    

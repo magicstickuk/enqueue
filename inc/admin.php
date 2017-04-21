@@ -470,7 +470,16 @@ function em_update_enqueue_list($packages){
 	update_option('em_assets_to_enqueue', $packages);
 
 }
-
+/**
+ * A helper function to help display the default state of a settings page checkbox
+ *
+ * @since 0.1
+ * @param array $options The option from the database
+ * @param string $option_key The key from the options array you are checking
+ * @param string $option_value The value you are checking against
+ * @return string The markup to be added to the checkbox
+ *
+ */
 function em_checked_lookup($options, $option_key, $option_value, $type = null){
 
     if(isset($options[$option_key])){
