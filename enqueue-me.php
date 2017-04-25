@@ -22,13 +22,13 @@ include('inc/import-export.php');
  * @since 0.1
  * 
  */
-function em_load_textdomain() {
+function enq_me_load_textdomain() {
 
 	load_plugin_textdomain( 'enqueue-me', false, dirname( plugin_basename(__FILE__) ) . '/lang/' );
 	
 }
 
-add_action('plugins_loaded', 'em_load_textdomain');
+add_action('plugins_loaded', 'enq_me_load_textdomain');
 
 /**
  * 
@@ -37,10 +37,10 @@ add_action('plugins_loaded', 'em_load_textdomain');
  * @since 0.1
  * 
  */
-function em_admin_page(){
+function enq_me_admin_page(){
 
-	add_submenu_page('options-general.php','Enqueue Me', 'Enqueue Me', 'manage_options', 'em_settings','em_admin_menu_markup');
+	add_submenu_page('options-general.php','Enqueue Me', 'Enqueue Me', 'manage_options', 'enq_me_settings','enq_me_admin_menu_markup');
   
 }
 
-add_action( 'admin_menu', 'em_admin_page' );
+add_action( 'admin_menu', 'enq_me_admin_page' );

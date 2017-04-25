@@ -1,10 +1,10 @@
 <?php
 
-function em_load_admin_scripts(){
+function enq_me_load_admin_scripts(){
 
 	$screenid = get_current_screen()->id;
 	
-	if($screenid == 'settings_page_em_settings'){
+	if($screenid == 'settings_page_enq_me_settings'){
 
 	wp_enqueue_script( 'jquery-ui-core' );
     	wp_enqueue_script( 'jquery-ui-accordion' );
@@ -35,10 +35,10 @@ function em_load_admin_scripts(){
 			array( 'jquery' )
 		);
 
-		wp_localize_script('em-admin-settings-scripts', 'em_admin_setting_vars', 
+		wp_localize_script('em-admin-settings-scripts', 'enq_me_admin_setting_vars', 
 			array(
 				'user_id' 		=> get_current_user_id(),
-				'sync_id' 		=> em_get_sync_id(),
+				'sync_id' 		=> enq_me_get_sync_id(),
 				'alert_me' 		=> __("This package is already in your enqueue list.", 'enqueue-me' ),
 				'link' 			=> __("Link", 'enqueue-me' ),
 				'type' 			=> __("Type", 'enqueue-me' ),
@@ -90,4 +90,4 @@ function em_load_admin_scripts(){
 		
 }
 
-add_action('admin_enqueue_scripts','em_load_admin_scripts');
+add_action('admin_enqueue_scripts','enq_me_load_admin_scripts');

@@ -6,7 +6,7 @@ jQuery( document ).ready(function() {
 		jQuery('.spinner-container.import-export').LoadingOverlay('show');
 
 		data = {
-			action : 'em_get_options',
+			action : 'enq_me_get_options',
 		};
 
 		jQuery.post(ajaxurl,data,function(response) {
@@ -28,7 +28,7 @@ jQuery( document ).ready(function() {
 			jQuery('.spinner-container.submit-import').LoadingOverlay('show');
 
 			data = {
-				'action' : 'em_set_options',
+				'action' : 'enq_me_set_options',
 				'import' : jQuery('#em-import-box').val()
 			}
 

@@ -8,15 +8,15 @@
  * @return null
  *
  */
-function em_do_enqueue_script(){
+function enq_me_do_enqueue_script(){
 
-	$the_enqueue = get_option('em_assets_to_enqueue');
+	$the_enqueue = get_option('enq_me_assets_to_enqueue');
 	
 	if($the_enqueue){
 
 		$js_queue 			= array();
 		$css_queue 			= array();
-		$root_dependancy 	= em_get_root_rependancy();
+		$root_dependancy 	= enq_me_get_root_rependancy();
 
 		foreach ($the_enqueue as $package) {
 			
@@ -25,7 +25,7 @@ function em_do_enqueue_script(){
 			foreach ($assets as $asset) {
 				
 				$type 	= $asset['type'];
-				$handle = em_generate_handle($asset);
+				$handle = enq_me_generate_handle($asset);
 
 				$args 	= array(
 					'handle' => $handle
@@ -34,7 +34,7 @@ function em_do_enqueue_script(){
 				if($type == 'js'){
 
 					$args['dependant'] = count($js_queue) > 0 ? $js_queue : $root_dependancy;
-					em_enqueue_script($asset, $args);
+					enq_me_enqueue_script($asset, $args);
 					array_push($js_queue, $handle);
 					
 				}
@@ -42,7 +42,7 @@ function em_do_enqueue_script(){
 				if($type == 'css'){
 
 					$args['dependant'] = count($css_queue) > 0 ? $css_queue : array();
-					em_enqueue_style($asset, $args);
+					enq_me_enqueue_style($asset, $args);
 					array_push($css_queue, $handle);
 					
 				}
@@ -55,7 +55,7 @@ function em_do_enqueue_script(){
 
 }
 
-add_action( 'wp_enqueue_scripts', 'em_do_enqueue_script' );
+add_action( 'wp_enqueue_scripts', 'enq_me_do_enqueue_script' );
 
 /**
  * Function to build the wp_enqueue_script() agruments and run it based on users options
@@ -66,11 +66,11 @@ add_action( 'wp_enqueue_scripts', 'em_do_enqueue_script' );
  * @return null
  *
  */
-function em_enqueue_script($asset, $args){
+function enq_me_enqueue_script($asset, $args){
 
-	$link 	= apply_filters( 'em_scr_link', esc_url($asset['link']) );
-	$version 	= apply_filters( 'em_script_version', null );
-	$in_footer	= apply_filters( 'em_script_in_footer', $asset['in_footer'] );
+	$link 	= apply_filters( 'enq_me_scr_link', esc_url($asset['link']) );
+	$version 	= apply_filters( 'enq_me_script_version', null );
+	$in_footer	= apply_filters( 'enq_me_script_in_footer', $asset['in_footer'] );
 
 	wp_enqueue_script( $args['handle'], $link, $args['dependant'], $version, $in_footer);
 
@@ -93,11 +93,11 @@ function em_enqueue_script($asset, $args){
  * @return null
  *
  */
-function em_enqueue_style($asset, $args){
+function enq_me_enqueue_style($asset, $args){
 
-	$link 		= apply_filters( 'em_scr_link', esc_url($asset['link']) );
-	$version 	= apply_filters( 'em_script_version', null );
-	$media		= $asset['media'] == null ? 'all' : apply_filters( 'em_css_media', $asset['media'] );
+	$link 		= apply_filters( 'enq_me_scr_link', esc_url($asset['link']) );
+	$version 	= apply_filters( 'enq_me_script_version', null );
+	$media		= $asset['media'] == null ? 'all' : apply_filters( 'enq_me_css_media', $asset['media'] );
 
 	wp_enqueue_style( $args['handle'], $link, $args['dependant'], $version, $media );
 
@@ -118,7 +118,7 @@ function em_enqueue_style($asset, $args){
  * @return null
  *
  */
-function em_generate_handle($asset){
+function enq_me_generate_handle($asset){
 
 	return "em-asset-" . $asset['id'];
 
@@ -131,24 +131,24 @@ function em_generate_handle($asset){
  * @return null
  *
  */
-function em_get_root_rependancy(){
+function enq_me_get_root_rependancy(){
 
-	$root = get_option('em_root_dependancy')['em_root_dependancy'];
+	$root = get_option('enq_me_root_dependancy')['enq_me_root_dependancy'];
 
 	if(esc_url($root) != "" && filter_var($root, FILTER_VALIDATE_URL) == TRUE){
 
 		if(wp_script_is( 'jquery')){
 
-			if(isset(get_option('em_root_dependancy')['em_dereg_jquery'])){
+			if(isset(get_option('enq_me_root_dependancy')['enq_me_dereg_jquery'])){
 				wp_deregister_script('jquery');
 			}
 			
 			 
 		}
 
-		wp_enqueue_script('em_root', $root, null, null, 0);
+		wp_enqueue_script('enq_me_root', $root, null, null, 0);
 
-		return array('em_root');
+		return array('enq_me_root');
 
 	}
 

@@ -5,12 +5,12 @@ jQuery( document ).ready(function() {
 	
 	var table_id = "#sortable";
 
-	em_check_licence();
+	enq_me_check_licence();
 
 	jQuery('#update-licence').click(function(e){
 		e.preventDefault();
-		em_save_licence_details();
-		em_check_licence();
+		enq_me_save_licence_details();
+		enq_me_check_licence();
 	});
 
 	set_sortable_widths(table_id);
@@ -20,15 +20,15 @@ jQuery( document ).ready(function() {
 		placeholder: "ui-sortable-placeholder",
 		stop: function( event, ui ) {
 
-    			em_draw( table_id );
+    			enq_me_draw( table_id );
 
     		}
       
       });
       
-      em_load_packages();
+      enq_me_load_packages();
 
-      em_set_remove_buttons();
+      enq_me_set_remove_buttons();
 
       
 });
@@ -39,34 +39,34 @@ jQuery( document ).resize(function() {
 
 });
 
-function em_save_licence_details(){
+function enq_me_save_licence_details(){
 
 	data = {
-		action 	: 'em_save_licence_details',
+		action 	: 'enq_me_save_licence_details',
 		email 	: jQuery('#licenece-email-box').val(),
 		key		: jQuery('#licenece-box').val()
 	};
 
 	jQuery.post(ajaxurl,data,function(response) {
 
-		em_check_licence();		
+		enq_me_check_licence();		
 
 	});
 }
 
-function em_set_remove_buttons(){
+function enq_me_set_remove_buttons(){
 
 	jQuery('.em-remove-row').click(function(e){
 
       	e.preventDefault();
       	jQuery(this).closest('tr').remove();
-    		em_draw( '#sortable');
+    		enq_me_draw( '#sortable');
 
     });
 
 }
 
-function em_load_packages(){
+function enq_me_load_packages(){
 
 	if(window.user_id){
 		user_id = window.user_id;
@@ -78,18 +78,18 @@ function em_load_packages(){
 	      "user_id" : user_id
 	}
 
-	em_ajax(data, em_process_packages_data, function(){
+	enq_me_ajax(data, enq_me_process_packages_data, function(){
     		console.log('No Results');
 	});
 
 	
 }
 
-function em_get_added_ids(table_id){
+function enq_me_get_added_ids(table_id){
 	
 	var package_ids = new Array();
 	
-	em_draw(table_id, false);
+	enq_me_draw(table_id, false);
 	
 	package_id = jQuery(table_id + " tbody tr").each(function(){
 
@@ -100,7 +100,7 @@ function em_get_added_ids(table_id){
 	return package_ids;
 
 }
-function em_process_packages_data(rD){
+function enq_me_process_packages_data(rD){
 
 	var packages 	= new Array();
 
@@ -118,7 +118,7 @@ function em_process_packages_data(rD){
 
 	jQuery(".em-packages-select").select2({
 		
-		placeholder: em_admin_setting_vars.selectPackage,
+		placeholder: enq_me_admin_setting_vars.selectPackage,
 		allowClear: true,
 		data: packages,
 		templateResult: function(data){
@@ -139,15 +139,15 @@ function em_process_packages_data(rD){
 
 	jQuery('.em-packages-select').on('select2:select', function (p) {
 
-	  	var current_packages = em_get_added_ids('#sortable');
+	  	var current_packages = enq_me_get_added_ids('#sortable');
 
 	  	if(current_packages.indexOf(p.params.data.id) == -1){
 
-	  		em_add_package_to_table('#sortable', p);
+	  		enq_me_add_package_to_table('#sortable', p);
 
 	  	}else{
 
-	  		alert(em_admin_setting_vars.alert_me);
+	  		alert(enq_me_admin_setting_vars.alert_me);
 
 	  	}
 		
@@ -155,7 +155,7 @@ function em_process_packages_data(rD){
 	});
 }
 
-function em_add_package_row(rD){
+function enq_me_add_package_row(rD){
 	 
  	var package = {};
  		
@@ -186,30 +186,30 @@ function em_add_package_row(rD){
 	
 	package.assets = assets;
 
-	em_do_add_row(package);
+	enq_me_do_add_row(package);
 
 }
 
-function em_do_add_row(package, prepare){
+function enq_me_do_add_row(package, prepare){
 
 	prepare = typeof prepare !== 'undefined' ? prepare : true;
 
-	html = em_do_row_html(package);
+	html = enq_me_do_row_html(package);
 
 	jQuery('#sortable').find('tbody').append(html);
 	
 	if(prepare){
 		set_sortable_widths('#sortable');
 		jQuery('#sortable').LoadingOverlay("hide");
-		em_draw('#sortable');
-		em_set_remove_buttons();
+		enq_me_draw('#sortable');
+		enq_me_set_remove_buttons();
 	}
 	
 	return html;
 
 }
 
-function em_do_row_html(package){
+function enq_me_do_row_html(package){
 
 	var html 	= '<tr data-package-id="'+ package.id + '" data-parent-package="0"><td class="row-number"></td><td class="package-name">' + package.package_name + '</td>';
 
@@ -221,19 +221,19 @@ function em_do_row_html(package){
 		var icon = element.type == 'css' ? 'paint-brush' : 'code';
 
 		html += '<i class="fa fa-' + icon + '" aria-hidden="true"></i> '
-		html += '<span data-tooltip-content="#tooltip_' + element.asset_id + '" class="em_asset tooltip" data-asset-id="' + element.asset_id + '" data-asset-link="'+ element.link +'" data-asset-type="' + element.type + '" data-asset-media="' + element.media + '" data-asset-conditional="' + element.conditional + '" data-asset-in-footer="' + element.in_footer + '">' + element.asset_name + '</span><br>';
+		html += '<span data-tooltip-content="#tooltip_' + element.asset_id + '" class="enq_me_asset tooltip" data-asset-id="' + element.asset_id + '" data-asset-link="'+ element.link +'" data-asset-type="' + element.type + '" data-asset-media="' + element.media + '" data-asset-conditional="' + element.conditional + '" data-asset-in-footer="' + element.in_footer + '">' + element.asset_name + '</span><br>';
 
-		html += '<div class="em_tooltip_content"><span id="tooltip_' + element.asset_id + '">' + em_admin_setting_vars.link + ' : '+ element.link +'<br>' + em_admin_setting_vars.type + ' : '+ element.type +'<br>';
-		html += em_admin_setting_vars.condition + '  : ' + element.conditional + '<br>';
+		html += '<div class="enq_me_tooltip_content"><span id="tooltip_' + element.asset_id + '">' + enq_me_admin_setting_vars.link + ' : '+ element.link +'<br>' + enq_me_admin_setting_vars.type + ' : '+ element.type +'<br>';
+		html += enq_me_admin_setting_vars.condition + '  : ' + element.conditional + '<br>';
 		if(element.type == 'css'){
-			html += em_admin_setting_vars.mediaQuery + ' : ' + element.media + '<br>';
+			html += enq_me_admin_setting_vars.mediaQuery + ' : ' + element.media + '<br>';
 		}else{
-			html += em_admin_setting_vars.location + ' : ';
+			html += enq_me_admin_setting_vars.location + ' : ';
 			
 			if(element.in_footer == 0){
-				html += em_admin_setting_vars.header;
+				html += enq_me_admin_setting_vars.header;
 			}else{
-				html += em_admin_setting_vars.footer;
+				html += enq_me_admin_setting_vars.footer;
 			};
 		}
 		html += '</span></div>';
@@ -242,16 +242,16 @@ function em_do_row_html(package){
 	
 	html 		+= '</td>';
 
-	html		+= '<td class="em-action-icons"><a target="_blank" class="em-package-link" href="' + package.url + '" title="' + em_admin_setting_vars.packageLink + '"><i data-tooltip-content="#tooltip_link_' + package.id +'" class="fa fa-link tooltip-interact" aria-hidden="true"></i></a><a href="" class="em-remove-row"><i class="fa fa-minus-circle tooltip" title="'+ em_admin_setting_vars.remove +'" aria-hidden="true"></i></a>';
+	html		+= '<td class="em-action-icons"><a target="_blank" class="em-package-link" href="' + package.url + '" title="' + enq_me_admin_setting_vars.packageLink + '"><i data-tooltip-content="#tooltip_link_' + package.id +'" class="fa fa-link tooltip-interact" aria-hidden="true"></i></a><a href="" class="em-remove-row"><i class="fa fa-minus-circle tooltip" title="'+ enq_me_admin_setting_vars.remove +'" aria-hidden="true"></i></a>';
 
-	html 		+= '<div class="em_tooltip_content"><span id="tooltip_link_'+ package.id +'"><a target="_blank" href="'+ package.url +'">' + em_admin_setting_vars.parkageInfo + ' <i class="fa fa-external-link" aria-hidden="true"></i></a></span></div>';
+	html 		+= '<div class="enq_me_tooltip_content"><span id="tooltip_link_'+ package.id +'"><a target="_blank" href="'+ package.url +'">' + enq_me_admin_setting_vars.parkageInfo + ' <i class="fa fa-external-link" aria-hidden="true"></i></a></span></div>';
 	html 		+= '</td></tr>';
 
 	return html;
 
 }
 
-function em_ajax(data, callback, no_rows_callback){
+function enq_me_ajax(data, callback, no_rows_callback){
 
 	jQuery.ajax({
 		type: 'POST',
@@ -284,7 +284,7 @@ function em_ajax(data, callback, no_rows_callback){
 }
 
 
-function em_add_package_to_table(table, package){
+function enq_me_add_package_to_table(table, package){
 
 	jQuery(table).LoadingOverlay("show");
 
@@ -293,13 +293,13 @@ function em_add_package_to_table(table, package){
 		"package_id" : package.params.data.id
 	}
 
-	em_ajax(data, em_add_package_row, function(){
+	enq_me_ajax(data, enq_me_add_package_row, function(){
 		console.log('No Results');
 	});
 
 }
 
-function em_draw(table_id, save_state){
+function enq_me_draw(table_id, save_state){
 
 	save_state = typeof save_state !== 'undefined' ? save_state : true;
 	
@@ -333,11 +333,11 @@ function em_draw(table_id, save_state){
 	});
 
 	// Save the new state
-	em_update_enqueue_list(table_id, save_state);
+	enq_me_update_enqueue_list(table_id, save_state);
 
 }
 
-function em_update_enqueue_list(table_id, save_state){
+function enq_me_update_enqueue_list(table_id, save_state){
 
 	//Gather Data
 	var packages 	= new Array();
@@ -356,7 +356,7 @@ function em_update_enqueue_list(table_id, save_state){
 
 		var assets 	= new Array();
 
-		t.find('.em_asset').each(function(){
+		t.find('.enq_me_asset').each(function(){
 
 			tt = jQuery(this);
 			
@@ -380,7 +380,7 @@ function em_update_enqueue_list(table_id, save_state){
 	});
 
 	data = {
-		action : 'em_update_enqueue_list',
+		action : 'enq_me_update_enqueue_list',
 		packages : packages,
     };
 
@@ -412,7 +412,7 @@ function set_sortable_widths(id){
 
 }
 
-function em_check_licence(){
+function enq_me_check_licence(){
 
 	jQuery('.spinner-container').LoadingOverlay("show", {color: 'transparent'});
 
@@ -421,54 +421,54 @@ function em_check_licence(){
 		"user_email" : jQuery('#licenece-email-box').val()
 	}
     
-	em_ajax(data, function(rD){
+	enq_me_ajax(data, function(rD){
 		window.user_id = rD;
 		jQuery('.licence-tick').show();
 		jQuery('.licence-cross').hide();
-		em_load_user_packages(rD);
-		em_hide_the_fruit();
+		enq_me_load_user_packages(rD);
+		enq_me_hide_the_fruit();
 		
 	}, function(){
 		jQuery('.licence-cross').show();
 		jQuery('.licence-tick').hide();
-		em_show_the_fruit();
+		enq_me_show_the_fruit();
 	});
 
 	jQuery('.spinner-container').LoadingOverlay("hide");
 
 }
 
-function em_show_the_fruit(){
+function enq_me_show_the_fruit(){
 
 	jQuery('.forbidden-fruit').show();
 	jQuery('.select-box-container.right .selectbox-inner' ).remove();
 	jQuery('.manage-link').hide();
 
 }
-function em_hide_the_fruit(){
+function enq_me_hide_the_fruit(){
 
 	jQuery('.forbidden-fruit').hide();
-	em_show_favourite_select();
+	enq_me_show_favourite_select();
 	jQuery('.manage-link').show();
 };
 
-function em_show_favourite_select(){
+function enq_me_show_favourite_select(){
 	
 	if(jQuery('.em-packages-favoutites-select').length < 1 ){
 		jQuery('.select-box-container.right').append('<div class="selectbox-inner" style="display:none"><p><select class="em-packages-favoutites-select"><option></option></select></p></div>');
 		
-		em_do_favourite_select_box(window.user_id);
+		enq_me_do_favourite_select_box(window.user_id);
 	}
 	
 	
 }
 
-function em_load_user_packages(user_id){
+function enq_me_load_user_packages(user_id){
 
 	var data = {
 		"user_package_state_check" : 1,
 		"user_id" : user_id,
-	    "sync_id" : em_admin_setting_vars.sync_id
+	    "sync_id" : enq_me_admin_setting_vars.sync_id
 	}
         
 	jQuery.ajax({
@@ -480,13 +480,13 @@ function em_load_user_packages(user_id){
 			if(rD != 'use_plugin'){
 
 		    		// Process new timestamp
-		    		em_update_timestamp(rD);
+		    		enq_me_update_timestamp(rD);
 		    		//Build a new local favourites object the print out markup
-		    		em_update_enqueue_table(rD['package_object']);
+		    		enq_me_update_enqueue_table(rD['package_object']);
 
 		    	}
 
-	    		em_draw('#sortable',false);
+	    		enq_me_draw('#sortable',false);
 
 		},
 		error: function (rD, textStatus, errorThrown){
@@ -499,10 +499,10 @@ function em_load_user_packages(user_id){
 
 }
 
-function em_update_enqueue_table(packages){
+function enq_me_update_enqueue_table(packages){
 
 	jQuery('#sortable').LoadingOverlay('show');
-	var current_packages = em_get_added_ids('#sortable');
+	var current_packages = enq_me_get_added_ids('#sortable');
 
 	jQuery('#sortable tbody tr').each(function(){
 		jQuery(this).remove();
@@ -515,7 +515,7 @@ function em_update_enqueue_table(packages){
 			"package_ids" : current_packages
 		}
 
-		em_ajax(data, 
+		enq_me_ajax(data, 
 
 			function(responce){
 				var packages_amount = responce.length;
@@ -526,7 +526,7 @@ function em_update_enqueue_table(packages){
 						
 						if(package.id == current_package_id){
 							
-							em_do_add_row(package, prepare = count == packages_amount ? true : false );
+							enq_me_do_add_row(package, prepare = count == packages_amount ? true : false );
 							
 						}
 
@@ -550,10 +550,10 @@ function em_update_enqueue_table(packages){
 	
 }
 
-function em_update_timestamp(rD){
+function enq_me_update_timestamp(rD){
 	
 	data = {
-		action : 'em_update_timestamp',
+		action : 'enq_me_update_timestamp',
 		timestamp : rD.new_timestamp,
 		user_id : window.user_id
     };
@@ -561,20 +561,20 @@ function em_update_timestamp(rD){
 	jQuery.post(ajaxurl,data,function(response){});
 
 }
-function em_do_favourite_select_box(user_id){
+function enq_me_do_favourite_select_box(user_id){
 
 	var data = {
 		"user_favouites_query_for_select" : 1,
 		"user_id" : user_id,
 	}
 
-	em_ajax(data, em_do_favourite_select_box_responce, function(){
+	enq_me_ajax(data, enq_me_do_favourite_select_box_responce, function(){
 		jQuery('.no-results').show();
 	});
 
 }
 
-function em_do_favourite_select_box_responce(rD){
+function enq_me_do_favourite_select_box_responce(rD){
 
 	var packages 	= new Array();
 
@@ -593,7 +593,7 @@ function em_do_favourite_select_box_responce(rD){
 	jQuery('.select-box-container.right .selectbox-inner').show();
 	jQuery(".em-packages-favoutites-select").select2({
 		
-		placeholder: em_admin_setting_vars.selectPackage,
+		placeholder: enq_me_admin_setting_vars.selectPackage,
 		allowClear: true,
 		data: packages,
 		templateResult: function(data){
@@ -613,15 +613,15 @@ function em_do_favourite_select_box_responce(rD){
 	
 	jQuery('.em-packages-favoutites-select').on('select2:select', function (p) {
 
-	  	var current_packages = em_get_added_ids('#sortable');
+	  	var current_packages = enq_me_get_added_ids('#sortable');
 
 	  	if(current_packages.indexOf(p.params.data.id) == -1){
 
-	  		em_add_package_to_table('#sortable', p);
+	  		enq_me_add_package_to_table('#sortable', p);
 
 	  	}else{
 
-	  		alert(em_admin_setting_vars.alert_me);
+	  		alert(enq_me_admin_setting_vars.alert_me);
 
 	  	}
 		

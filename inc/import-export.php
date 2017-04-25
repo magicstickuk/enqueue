@@ -1,6 +1,6 @@
 <?php 
 
-function em_import_export_buttons(){
+function enq_me_import_export_buttons(){
 	?>
 	
 	<h2><?php _e('Import and Export', 'enqueue-me');?> </h2>
@@ -24,18 +24,18 @@ function em_import_export_buttons(){
 
 	<?php
 }
-add_action('em_after_core_settings', 'em_import_export_buttons');
+add_action('enq_me_after_core_settings', 'enq_me_import_export_buttons');
 
-function em_alert_import_success(){
+function enq_me_alert_import_success(){
 
 	if(isset($_GET['import'])):?>
 		<div class="notice notice-success"><p><?php _e("Your Enqueue Me Settings were succesfully imported", 'enqueue-me'); ?></p></div>
 	<?php endif; 
 }
 
-add_action( 'em_before_core_settings', 'em_alert_import_success');
+add_action( 'enq_me_before_core_settings', 'enq_me_alert_import_success');
 
-function em_load_import_export_scripts(){
+function enq_me_load_import_export_scripts(){
 
 	wp_enqueue_script(
 		'em-import-export-scripts',
@@ -44,16 +44,16 @@ function em_load_import_export_scripts(){
 	);
 
 }
-add_action('admin_enqueue_scripts','em_load_import_export_scripts');
+add_action('admin_enqueue_scripts','enq_me_load_import_export_scripts');
 
 
-function em_get_em_options_for_export(){
+function enq_me_get_enq_me_options_for_export(){
 
-	$assets = get_option('em_assets_to_enqueue');
-	$root	 = get_option('em_root_dependancy');
-	$user	 = get_option('em_user_licence');
+	$assets = get_option('enq_me_assets_to_enqueue');
+	$root	 = get_option('enq_me_root_dependancy');
+	$user	 = get_option('enq_me_user_licence');
 
-	$package = apply_filters('em_export_package',
+	$package = apply_filters('enq_me_export_package',
 		array( 
 			'assets' 	=> $assets,
 			'root' 	=> $root,
@@ -66,10 +66,10 @@ function em_get_em_options_for_export(){
 	die(0);
 
 }
-add_action('wp_ajax_em_get_options', 'em_get_em_options_for_export');
+add_action('wp_ajax_enq_me_get_options', 'enq_me_get_enq_me_options_for_export');
 
 
-function em_set_em_options_on_import(){
+function enq_me_set_enq_me_options_on_import(){
 
 	$uncoded_import = stripslashes($_POST['import']);
 
@@ -87,9 +87,9 @@ function em_set_em_options_on_import(){
 	
 	if($package && isset($package['assets']) && isset($package['root']) && isset($package['user']) ){
 
-		$result = update_option('em_assets_to_enqueue', $package['assets']);
-		$result = update_option('em_root_dependancy', $package['root']);
-		$result = update_option('em_user_licence', $package['user']);
+		$result = update_option('enq_me_assets_to_enqueue', $package['assets']);
+		$result = update_option('enq_me_root_dependancy', $package['root']);
+		$result = update_option('enq_me_user_licence', $package['user']);
 
 		_e('success', 'enqueue-me'); 
 
@@ -102,4 +102,4 @@ function em_set_em_options_on_import(){
 
 }
 
-add_action('wp_ajax_em_set_options', 'em_set_em_options_on_import');
+add_action('wp_ajax_enq_me_set_options', 'enq_me_set_enq_me_options_on_import');

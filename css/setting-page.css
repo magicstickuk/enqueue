@@ -75,7 +75,7 @@ h1.my-enqueue-header{
 #sortable tr td{
 	border-top: 1px solid #f5f5f5;
 }
-.em_tooltip_content{
+.enq_me_tooltip_content{
 	display: none;
 }
 .tooltipster-content a{
