@@ -94,7 +94,7 @@ function enq_me_root_settings_render(){
 function enq_me_select_root_render(){
 
     $options    = get_option('enq_me_root_dependancy');
-    $user_root =  isset($options['enq_me_root_dependancy']) ? $options['enq_me_root_dependancy'] : '';
+    $user_root =  isset($options['enq_me_root_dependancy']) ? esc_url($options['enq_me_root_dependancy']) : '';
 
      ?>
 
@@ -282,25 +282,25 @@ function enq_me_admin_menu_markup(){
                                             <i class="fa fa-<?php echo $icon; ?>" aria-hidden="true"></i>
                                                     
                                             <span data-tooltip-content="#tooltip_<?php echo $asset['id']; ?>" class="enq_me_asset tooltip"
-                                                data-asset-id="<?php echo $asset['id']?>"
-                                                data-asset-link="<?php echo $asset['link']?>"
-                                                data-asset-type="<?php echo $asset['type']?>"
-                                                data-asset-media="<?php echo $asset['media']?>"
-                                                data-asset-conditional="<?php echo $asset['conditional']?>"
-                                                data-asset-in-footer="<?php echo $asset['in_footer']?>">
-                                                <?php echo $asset['name']?>
+                                                data-asset-id="<?php echo esc_attr($asset['id']); ?>"
+                                                data-asset-link="<?php echo esc_url($asset['link']); ?>"
+                                                data-asset-type="<?php echo esc_attr($asset['type']); ?>"
+                                                data-asset-media="<?php echo esc_attr($asset['media']); ?>"
+                                                data-asset-conditional="<?php echo esc_attr($asset['conditional']);?>"
+                                                data-asset-in-footer="<?php echo esc_attr($asset['in_footer']);?>">
+                                                <?php echo esc_html($asset['name']);?>
                                             </span><br>
 
                                             <div class="enq_me_tooltip_content">
 
                                                 <span id="tooltip_<?php echo $asset['id']; ?>">
                                                     
-                                                    <?php _e('Link','enqueue-me') ?> : <?php echo $asset['link']?><br>
-                                                    <?php _e('Type','enqueue-me') ?> : <?php echo strtoupper($asset['type']); ?><br>
-                                                    <?php _e('Condition','enqueue-me') ?> : <?php echo $asset['conditional']?><br>
+                                                    <?php _e('Link','enqueue-me') ?> : <?php echo esc_url($asset['link']);?><br>
+                                                    <?php _e('Type','enqueue-me') ?> : <?php echo strtoupper(esc_attr($asset['type'])); ?><br>
+                                                    <?php _e('Condition','enqueue-me') ?> : <?php echo esc_html($asset['conditional']);?><br>
                                                     
                                                     <?php if($asset['type'] == 'css'): ?>
-                                                        <?php _e('Media Query','enqueue-me') ?> : <?php echo $asset['media']?><br>
+                                                        <?php _e('Media Query','enqueue-me') ?> : <?php echo esc_html($asset['media'])?><br>
                                                     <?php else:?>
                                                         
                                                         <?php _e('Location','enqueue-me') ?> : <?php echo $asset['in_footer'] == 0 ? __('Header', 'enqueue-me') : __('Footer', 'enqueue-me') ?>
@@ -316,13 +316,13 @@ function enq_me_admin_menu_markup(){
 
                                     <td class="em-action-icons">    
 
-                                        <a target="_blank" class="em-package-link" href="<?php echo $package['url']; ?>" title="Package Link"><i data-tooltip-content="#tooltip_link_<?php echo $package['id']; ?>" class="fa fa-link tooltip-interact" aria-hidden="true"></i></a><a href="" class="em-remove-row"><i class="fa fa-minus-circle tooltip" title="<?php _e('Remove', 'enqueue-me');?>" aria-hidden="true"></i></a>
+                                        <a target="_blank" class="em-package-link" href="<?php echo esc_url($package['url']); ?>" title="Package Link"><i data-tooltip-content="#tooltip_link_<?php echo $package['id']; ?>" class="fa fa-link tooltip-interact" aria-hidden="true"></i></a><a href="" class="em-remove-row"><i class="fa fa-minus-circle tooltip" title="<?php _e('Remove', 'enqueue-me');?>" aria-hidden="true"></i></a>
                                            
                                         <div class="enq_me_tooltip_content">
 
                                             <span id="tooltip_link_<?php echo $package['id']; ?>">
                                                 
-                                                <a target="_blank" href="<?php echo $package['url']; ?>"><?php _e('Package Info', 'enqueue-me');?> <i class="fa fa-external-link" aria-hidden="true"></i></a>
+                                                <a target="_blank" href="<?php echo esc_url($package['url']); ?>"><?php _e('Package Info', 'enqueue-me');?> <i class="fa fa-external-link" aria-hidden="true"></i></a>
                                             
                                             </span>
 
@@ -376,7 +376,7 @@ function enq_me_get_sync_id(){
 	$user_id = get_current_user_id();
 	$sync_id = get_user_meta( $user_id, 'enq_me_last_modified', true);
 
-	return $sync_id;
+	return intval($sync_id);
 
 }
 
@@ -391,7 +391,7 @@ function enq_me_get_sync_id(){
  */
 function enq_me_update_sync_id($user_id, $sync_id){
 
-	update_user_meta( $user_id, 'enq_me_last_modified', $sync_id);
+	update_user_meta( $user_id, 'enq_me_last_modified', intval($sync_id));
 
 }
 
@@ -404,8 +404,8 @@ function enq_me_update_sync_id($user_id, $sync_id){
  */
 function enq_me_update_sync_id_ajax(){
 
-	$new_timestamp = $_POST['timestamp'];
-	$user_id = $_POST['user_id'];
+	$new_timestamp = intval($_POST['timestamp']);
+	$user_id       = intval($_POST['user_id']);
 
 	enq_me_update_sync_id($user_id, $new_timestamp);
 
@@ -446,8 +446,8 @@ add_action('wp_ajax_enq_me_update_enqueue_list', 'enq_me_update_enqueue_list_aja
 function enq_me_save_licence_details(){
 
     $user_licence = array(
-        'user_email' => $_POST['email'],
-        'user_licence' => $_POST['key']
+        'user_email'       => sanitize_email($_POST['email']),
+        'user_licence'     => sanitize_text_field( $_POST['key'] )
     );
 
     update_option( 'enq_me_user_licence', $user_licence );

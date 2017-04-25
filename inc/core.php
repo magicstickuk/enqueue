@@ -95,9 +95,9 @@ function enq_me_enqueue_script($asset, $args){
  */
 function enq_me_enqueue_style($asset, $args){
 
-	$link 		= apply_filters( 'enq_me_scr_link', esc_url($asset['link']) );
+	$link 	= apply_filters( 'enq_me_scr_link', esc_url($asset['link']) );
 	$version 	= apply_filters( 'enq_me_script_version', null );
-	$media		= $asset['media'] == null ? 'all' : apply_filters( 'enq_me_css_media', $asset['media'] );
+	$media	= $asset['media'] == null ? 'all' : apply_filters( 'enq_me_css_media', $asset['media'] );
 
 	wp_enqueue_style( $args['handle'], $link, $args['dependant'], $version, $media );
 
