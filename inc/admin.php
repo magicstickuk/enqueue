@@ -138,7 +138,9 @@ function enq_me_de_reg_jquery_render(  ) {
  */
 function enq_me_user_licence_render(){
 
-    $user_licence = get_option('enq_me_user_licence')['user_licence']; ?>
+    $options        = get_option('enq_me_user_licence');
+    $user_licence   = isset($options['user_licence']) ? $options['user_licence'] : '';
+    ?>
 
         <input id="licenece-box" type='text' name='enq_me_user_licence[user_licence]' value='<?php echo $user_licence; ?>'> <span class="licence-tick" style="display:none"><img src="<?php echo plugins_url('../img/tick.png',__FILE__); ?>" alt=""></span><span class="licence-cross" style="display:none"><img src="<?php echo plugins_url('../img/cross.png',__FILE__); ?>" alt=""></span><span class="spinner-container"></span>
         <p><a target="_blank" id="update-licence" href="">Update User Key</a> <span class="forbidden-fruit">| <a href="http://www.wpmaz.uk/enqueue-me/">Get a User Key</a></span></p>
@@ -296,7 +298,7 @@ function enq_me_admin_menu_markup(){
                                                 <span id="tooltip_<?php echo $asset['id']; ?>">
                                                     
                                                     <?php _e('Link','enqueue-me') ?> : <?php echo esc_url($asset['link']);?><br>
-                                                    <?php _e('Type','enqueue-me') ?> : <?php echo strtoupper(esc_attr($asset['type'])); ?><br>
+                                                    <?php _e('Type','enqueue-me') ?> : <?php echo strtoupper(esc_html($asset['type'])); ?><br>
                                                     <?php _e('Condition','enqueue-me') ?> : <?php echo esc_html($asset['conditional']);?><br>
                                                     
                                                     <?php if($asset['type'] == 'css'): ?>
@@ -445,9 +447,11 @@ add_action('wp_ajax_enq_me_update_enqueue_list', 'enq_me_update_enqueue_list_aja
  */
 function enq_me_save_licence_details(){
 
+    $user_licence_key  = sanitize_text_field( $_POST['key'] );
+
     $user_licence = array(
         'user_email'       => sanitize_email($_POST['email']),
-        'user_licence'     => sanitize_text_field( $_POST['key'] )
+        'user_licence'     => $user_licence_key
     );
 
     update_option( 'enq_me_user_licence', $user_licence );
