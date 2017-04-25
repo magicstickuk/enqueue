@@ -218,9 +218,9 @@ function enq_me_do_row_html(package){
 	
 	package.assets.forEach(function(element) {
 		
-		var icon = element.type == 'css' ? 'paint-brush' : 'code';
+		var icon = element.type == 'css' ? 'paint' : 'code';
 
-		html += '<i class="fa fa-' + icon + '" aria-hidden="true"></i> '
+		html += '<img src="'+ enq_me_admin_setting_vars.plugin_url +'/../img/'+ icon +'.png" />';
 		html += '<span data-tooltip-content="#tooltip_' + element.asset_id + '" class="enq_me_asset tooltip" data-asset-id="' + element.asset_id + '" data-asset-link="'+ element.link +'" data-asset-type="' + element.type + '" data-asset-media="' + element.media + '" data-asset-conditional="' + element.conditional + '" data-asset-in-footer="' + element.in_footer + '">' + element.asset_name + '</span><br>';
 
 		html += '<div class="enq_me_tooltip_content"><span id="tooltip_' + element.asset_id + '">' + enq_me_admin_setting_vars.link + ' : '+ element.link +'<br>' + enq_me_admin_setting_vars.type + ' : '+ element.type +'<br>';
@@ -242,9 +242,9 @@ function enq_me_do_row_html(package){
 	
 	html 		+= '</td>';
 
-	html		+= '<td class="em-action-icons"><a target="_blank" class="em-package-link" href="' + package.url + '" title="' + enq_me_admin_setting_vars.packageLink + '"><i data-tooltip-content="#tooltip_link_' + package.id +'" class="fa fa-link tooltip-interact" aria-hidden="true"></i></a><a href="" class="em-remove-row"><i class="fa fa-minus-circle tooltip" title="'+ enq_me_admin_setting_vars.remove +'" aria-hidden="true"></i></a>';
+	html		+= '<td class="em-action-icons"><a target="_blank" class="em-package-link" href="' + package.url + '" title="' + enq_me_admin_setting_vars.packageLink + '"><img data-tooltip-content="#tooltip_link_' + package.id +'" class="tooltip-interact" src="'+ enq_me_admin_setting_vars.plugin_url +'/../img/link.png" /></a><a href="" class="em-remove-row"><img class="tooltip" title="'+ enq_me_admin_setting_vars.remove +'" src="'+ enq_me_admin_setting_vars.plugin_url +'/../img/remove.png" /></a>';
 
-	html 		+= '<div class="enq_me_tooltip_content"><span id="tooltip_link_'+ package.id +'"><a target="_blank" href="'+ package.url +'">' + enq_me_admin_setting_vars.parkageInfo + ' <i class="fa fa-external-link" aria-hidden="true"></i></a></span></div>';
+	html 		+= '<div class="enq_me_tooltip_content"><span id="tooltip_link_'+ package.id +'"><a target="_blank" href="'+ package.url +'">' + enq_me_admin_setting_vars.parkageInfo + ' <img src="'+ enq_me_admin_setting_vars.plugin_url +'/../img/external.png" /></a></span></div>';
 	html 		+= '</td></tr>';
 
 	return html;

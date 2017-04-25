@@ -277,9 +277,9 @@ function enq_me_admin_menu_markup(){
                                             
                                         <?php foreach($package['assets'] as $asset):?>
 
-                                            <?php $icon = $asset['type'] == 'css' ? 'paint-brush' : 'code'; ?>
+                                            <?php $icon = $asset['type'] == 'css' ? 'paint' : 'code'; ?>
 
-                                            <i class="fa fa-<?php echo $icon; ?>" aria-hidden="true"></i>
+                                            <img src="<?php echo plugins_url('../img/'. $icon .'.png',__FILE__); ?>"/>
                                                     
                                             <span data-tooltip-content="#tooltip_<?php echo $asset['id']; ?>" class="enq_me_asset tooltip"
                                                 data-asset-id="<?php echo esc_attr($asset['id']); ?>"
@@ -316,13 +316,13 @@ function enq_me_admin_menu_markup(){
 
                                     <td class="em-action-icons">    
 
-                                        <a target="_blank" class="em-package-link" href="<?php echo esc_url($package['url']); ?>" title="Package Link"><i data-tooltip-content="#tooltip_link_<?php echo $package['id']; ?>" class="fa fa-link tooltip-interact" aria-hidden="true"></i></a><a href="" class="em-remove-row"><i class="fa fa-minus-circle tooltip" title="<?php _e('Remove', 'enqueue-me');?>" aria-hidden="true"></i></a>
+                                        <a target="_blank" class="em-package-link" href="<?php echo esc_url($package['url']); ?>" title="Package Link"><img data-tooltip-content="#tooltip_link_<?php echo $package['id']; ?>" class="tooltip-interact" src="<?php echo plugins_url('../img/link.png',__FILE__);?>" /></a><a href="" class="em-remove-row"><img class="tooltip" title="<?php _e('Remove', 'enqueue-me');?>" src="<?php echo plugins_url('../img/remove.png',__FILE__);?>" /></a>
                                            
                                         <div class="enq_me_tooltip_content">
 
                                             <span id="tooltip_link_<?php echo $package['id']; ?>">
                                                 
-                                                <a target="_blank" href="<?php echo esc_url($package['url']); ?>"><?php _e('Package Info', 'enqueue-me');?> <i class="fa fa-external-link" aria-hidden="true"></i></a>
+                                                <a target="_blank" href="<?php echo esc_url($package['url']); ?>"><?php _e('Package Info', 'enqueue-me');?> <img src="<?php echo plugins_url('../img/external.png',__FILE__);?>" /></a>
                                             
                                             </span>
 
