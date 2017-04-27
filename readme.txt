@@ -41,5 +41,8 @@ None Yet!
 
 == Changelog ==
 
+= 0.2 =
+* Fixed issue with initial default settings.
+
 = 0.1 =
-Initial release
+* Initial release

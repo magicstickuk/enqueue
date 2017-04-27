@@ -133,13 +133,14 @@ function enq_me_generate_handle($asset){
  */
 function enq_me_get_root_rependancy(){
 
-	$root = get_option('enq_me_root_dependancy')['enq_me_root_dependancy'];
+	$options = get_option('enq_me_root_dependancy');
+	$root = $options['enq_me_root_dependancy'];
 
 	if(esc_url($root) != "" && filter_var($root, FILTER_VALIDATE_URL) == TRUE){
 
 		if(wp_script_is( 'jquery')){
 
-			if(isset(get_option('enq_me_root_dependancy')['enq_me_dereg_jquery'])){
+			if(isset($options['enq_me_dereg_jquery'])){
 				wp_deregister_script('jquery');
 			}
 			
