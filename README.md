@@ -14,7 +14,7 @@ Easily enqueue your favourite javascript and CSS libraries from an open-source p
 
 Easily enqueue your favourite javascript and CSS libraries from an open-source package library. Designed specifically for WordPress theme developers.
 
-[vimeo https://vimeo.com/215253163]
+https://vimeo.com/215253163
 
 *   Enqueue jQuery and CSS packages from a library of popular packages
 *	Save your favourite packages to access easily across all your projects
