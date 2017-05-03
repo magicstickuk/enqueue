@@ -11,19 +11,25 @@ add_action('enq_me_in_wrap', 'enq_me_favourite_list_ui');
 
 function enq_me_load_fav_lists_scripts(){
 
-	wp_enqueue_script(
-		'em-fav-lists-scripts',
-		plugins_url( '../js/fav-lists.js', __FILE__ ),
-		array( 'jquery' )
-	);
+	$screenid = get_current_screen()->id;
+	
+	if($screenid == 'settings_page_enq_me_settings'){
 
-	wp_register_style(
-			'em-fav-lists-styles',
-			plugins_url( '../css/fav-lists.css', __FILE__ ),
-			array('em-settings-styles')
+		wp_enqueue_script(
+			'em-fav-lists-scripts',
+			plugins_url( '../js/fav-lists.js', __FILE__ ),
+			array( 'jquery' )
 		);
 
-	wp_enqueue_style( 'em-fav-lists-styles');
+		wp_register_style(
+				'em-fav-lists-styles',
+				plugins_url( '../css/fav-lists.css', __FILE__ ),
+				array('em-settings-styles')
+			);
+
+		wp_enqueue_style( 'em-fav-lists-styles');
+
+	}
 
 }
 add_action('admin_enqueue_scripts','enq_me_load_fav_lists_scripts');
