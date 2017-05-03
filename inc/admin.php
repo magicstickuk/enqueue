@@ -226,6 +226,8 @@ function enq_me_admin_menu_markup(){
             </div>
 
             <div class="my-enqueue-wrap">
+                <?php do_action('enq_me_in_wrap'); ?>
+                
                 <h1 class="my-enqueue-header"><?php _e('My Enqueue', 'enqueue-me');?> <span class="state-saved-icon"><img style="display:none" src="<?php echo plugins_url('../img/tick.png',__FILE__); ?>" alt=""></span><span class="state-saved-words" style="display:none">Saved</span></h1>
 
             <div id="mypackage-wrap">

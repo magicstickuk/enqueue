@@ -1,7 +1,7 @@
 === Enqueue Me ===
 
 Contributors: MagicStick
-Tags: enqueue, library, package, javascript, UI, GUI, favourites, manage
+Tags: enqueue, script, style, library, package, javascript, UI, GUI, favourites, manage
 Requires at least: 3.1
 Tested up to: 4.7.2
 Stable tag: trunk

@@ -440,16 +440,19 @@ function enq_me_check_licence(){
 
 function enq_me_show_the_fruit(){
 
+	jQuery(document).trigger('show_the_fruit');
 	jQuery('.forbidden-fruit').show();
 	jQuery('.select-box-container.right .selectbox-inner' ).remove();
 	jQuery('.manage-link').hide();
 
 }
 function enq_me_hide_the_fruit(){
-
+	
+	jQuery(document).trigger('hide_the_fruit');
 	jQuery('.forbidden-fruit').hide();
 	enq_me_show_favourite_select();
 	jQuery('.manage-link').show();
+
 };
 
 function enq_me_show_favourite_select(){

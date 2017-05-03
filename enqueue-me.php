@@ -4,7 +4,7 @@
 Plugin Name: 	Enqueue Me
 Plugin URI: 	http://www.wpmaz.uk
 Description:    Easily enqueue your favourite CSS and Javascipt libraries into your theme
-Version: 		0.2
+Version: 		0.3
 Text Domain: 	enqueue-me
 Author: 		Mario Jaconelli
 Author URI:  	http://www.wpmaz.uk
@@ -14,6 +14,7 @@ include('inc/admin.php');
 include('inc/load-scripts.php');
 include('inc/core.php');
 include('inc/import-export.php');
+include('inc/fav-lists.php');
 
 /**
  * 
