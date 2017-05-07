@@ -3,7 +3,18 @@
 function enq_me_favourite_list_ui(){
 	?>
 		<div class="enc-me-fav-lists-container">
-		Mario
+			<input type="submit" name="em-save-list" id="em-save-list" class="button button-secondary" data-tooltip-content="#tooltip-save-list" value="Save Current List">
+		</div>
+		<div class="enq_me_tooltip_content">
+			<div id="tooltip-save-list">
+				<div id="tooltip-save-list-content">
+				<form>
+					<label><em>List Name</em></label><br>
+					<input type="text" name="em-save-list-name" id="em-save-list-name" value=""> <input type="submit" name="em-save-list-button" id="em-save-list-button" class="button button-primary" value="Save List"> <span class="spinner-container-custom">mario</span>
+				</form>
+					
+				</div>
+			</div>
 		</div>
 	<?php
 }

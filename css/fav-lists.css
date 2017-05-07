@@ -1,4 +1,13 @@
 .enc-me-fav-lists-container{
 	float:right;
 	display:none;
+	margin-top: -2.5em;
+}
+#tooltip-save-list{
+	display: inline-block;
+}
+.spinner-container-custom{
+		width: 1.25em;
+	height: 1.25em;
+	display: none;
 }
