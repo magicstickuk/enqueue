@@ -3,6 +3,7 @@
 function enq_me_favourite_list_ui(){
 	?>
 		<div class="enc-me-fav-lists-container">
+			<input type="submit" name="em-load-list" id="em-load-list" class="button button-secondary" data-tooltip-content="#tooltip-load-list" value="Load a List">
 			<input type="submit" name="em-save-list" id="em-save-list" class="button button-secondary" data-tooltip-content="#tooltip-save-list" value="Save Current List">
 		</div>
 		<div class="enq_me_tooltip_content">
@@ -14,7 +15,19 @@ function enq_me_favourite_list_ui(){
 				
 					
 				</div>
+
+
 			</div>
+			<div id="tooltip-load-list">
+				<div id="tooltip-load-list-content">
+				
+					<label><em>Your Lists</em></label><br>
+					
+				
+					
+			</div>
+			</div>
+			
 		</div>
 	<?php
 }
