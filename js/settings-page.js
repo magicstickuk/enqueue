@@ -259,13 +259,13 @@ function enq_me_ajax(data, callback, no_rows_callback){
 		crossDomain: true,
 		success: function(rD, textStatus, jqXHR){
 
-			if(rD != 0){
+			if(rD !== 0){
 
 	    	 		callback(rD);
 
 	    		}else{
 	    	 	
-	    	 		no_rows_callback();	
+	    	 		no_rows_callback(rD);	
 	    	 	
 	    		}
 

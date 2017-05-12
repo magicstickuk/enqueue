@@ -10,7 +10,7 @@ function enq_me_favourite_list_ui(){
 				<div id="tooltip-save-list-content">
 				
 					<label><em>List Name</em></label><br>
-					<input type="text" name="em-save-list-name" id="em-save-list-name" value=""> <input type="submit" name="em-save-list-button" id="em-save-list-button" class="button button-primary" value="Save List"> <span class="spinner-container-custom">mario</span>
+					<input type="text" name="em-save-list-name" id="em-save-list-name" value=""> <input type="submit" name="em-save-list-button" id="em-save-list-button" class="button button-primary" value="Save List"> <span class="licence-tick"><img src="<?php echo plugins_url('../img/tick.png',__FILE__); ?>" alt=""></span>
 				
 					
 				</div>
