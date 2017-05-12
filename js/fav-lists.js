@@ -38,6 +38,7 @@ jQuery(document).on('hide_the_fruit', function(){
 		interactive : true,
 		trigger: 'click',
 		content: '.....',
+		contentAsHTML : true,
 		functionReady : function(o, el){
 			var tooltip = jQuery(el.tooltip);
 			tooltip.find('.tooltipster-box').LoadingOverlay('show', {zIndex: 999999999});
@@ -46,7 +47,22 @@ jQuery(document).on('hide_the_fruit', function(){
 		      		"get_fav_list" : window.user_id
 			};
 			enq_me_ajax(data, function(responce){
+				console.log(responce);
+
+				var html = "<table cellpadding='3' style='border:1px'><thead><tr><th>List Name</th><th>Assets</th><th>Actions</th></tr></thead>";
+
+				responce.forEach(function(element, index){
+					html += "<tr data-ids='" + element.fav_list + "'>";
+					html += "<td>" + element.list_name +"</td>";
+					html += "<td>" + element.fav_list.length +"</td>";
+					html += "<td> Load | Delete </td>";
+					html +=	"</tr>";
+				});
+
+				html += "</table>";
 				
+				o.content(html);
+				tooltip.find('.tooltipster-box').LoadingOverlay('hide');
 
 			}, function(responce){
 				console.log(responce);
