@@ -46,23 +46,45 @@ jQuery(document).on('hide_the_fruit', function(){
 			var data = {
 		      		"get_fav_list" : window.user_id
 			};
+			
 			enq_me_ajax(data, function(responce){
-				console.log(responce);
-
-				var html = "<table cellpadding='3' style='border:1px'><thead><tr><th>List Name</th><th>Assets</th><th>Actions</th></tr></thead>";
-
-				responce.forEach(function(element, index){
-					html += "<tr data-ids='" + element.fav_list + "'>";
-					html += "<td>" + element.list_name +"</td>";
-					html += "<td>" + element.fav_list.length +"</td>";
-					html += "<td> Load | Delete </td>";
-					html +=	"</tr>";
-				});
-
-				html += "</table>";
 				
-				o.content(html);
-				tooltip.find('.tooltipster-box').LoadingOverlay('hide');
+				if(responce.length > 0){
+
+					var html = "<table cellpadding='3' style='border:1px'><thead><tr><th>List Name</th><th>Assets</th><th>Actions</th></tr></thead>";
+
+					responce.forEach(function(element, index){
+						html += "<tr data-theids='" + element.fav_list + "' data-id='" + element.ID + "'>";
+						html += "<td>" + element.list_name +"</td>";
+						html += "<td>" + element.fav_list.length +"</td>";
+						html += "<td> <span class='tooltip-button load-fav-list-button'>Load</span> | <span class='tooltip-button delete-fav-list-button'>Delete</span></td>";
+						html +=	"</tr>";
+					});
+
+					html += "</table>";
+
+					o.content(html);
+					tooltip.find('.tooltipster-box').LoadingOverlay('hide');
+
+					jQuery('.load-fav-list-button').on('click', function(){
+						var theIDS = jQuery(this).closest('tr').attr('data-theids').split(",");
+						console.log(theIDS);
+					});
+
+					jQuery('.delete-fav-list-button').on('click', function(){
+						var theID = jQuery(this).closest('tr').attr('data-id');
+						console.log(theID);
+					});
+
+				}else{
+
+					var html = "You have no favourite lists at the moment";
+
+					o.content(html);
+					tooltip.find('.tooltipster-box').LoadingOverlay('hide');
+
+				}
+				
 
 			}, function(responce){
 				console.log(responce);
