@@ -41,8 +41,8 @@ function enq_me_load_admin_scripts(){
 				'sync_id' 		=> enq_me_get_sync_id(),
 				'plugin_url'	=> plugins_url( '', __FILE__ ),
 				'alert_me' 		=> __("This package is already in your enqueue list.", 'enqueue-me' ),
-				'link' 		=> __("Link", 'enqueue-me' ),
-				'type' 		=> __("Type", 'enqueue-me' ),
+				'link' 			=> __("Link", 'enqueue-me' ),
+				'type' 			=> __("Type", 'enqueue-me' ),
 				'location' 		=> __("Location", 'enqueue-me' ),
 				'mediaQuery' 	=> __("Media Query", 'enqueue-me' ),
 				'condition' 	=> __("Condition", 'enqueue-me' ),
@@ -51,7 +51,7 @@ function enq_me_load_admin_scripts(){
 				'packageLink' 	=> __("Package Link", 'enqueue-me' ),
 				'remove' 		=> __("Remove", 'enqueue-me' ),
 				'parkageInfo' 	=> __("Package Info", 'enqueue-me' ),
-				'selectPackage' 	=> __("Select a package", 'enqueue-me' ),
+				'selectPackage' => __("Select a package", 'enqueue-me' ),
 			)
 		);
 

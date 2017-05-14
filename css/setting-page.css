@@ -149,4 +149,7 @@ div.forbidden-fruit{
 	font-weight: 600!important;
     font-size: 1.1em!important;
 }
-    
+.tooltip-button{
+	text-decoration: underline;
+	cursor: pointer;
+    }
