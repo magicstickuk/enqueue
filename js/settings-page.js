@@ -197,6 +197,7 @@ function enq_me_do_add_row(package, prepare){
 	html = enq_me_do_row_html(package);
 
 	jQuery('#sortable').find('tbody').append(html);
+	jQuery(document).trigger('em_row_added');
 	
 	if(prepare){
 		set_sortable_widths('#sortable');
@@ -288,9 +289,11 @@ function enq_me_add_package_to_table(table, package){
 
 	jQuery(table).LoadingOverlay("show");
 
+	var package_id = typeof package === 'object' ? package.params.data.id : package;
+
 	var data = {
 		"single_package_query" : 1,
-		"package_id" : package.params.data.id
+		"package_id" : package_id
 	}
 
 	enq_me_ajax(data, enq_me_add_package_row, function(){
@@ -502,14 +505,19 @@ function enq_me_load_user_packages(user_id){
 
 }
 
+function enq_me_clear_all_packages_from_enqueue(table){
+	jQuery(table + ' tbody tr').each(function(){
+		jQuery(this).remove();
+	});
+}
+
 function enq_me_update_enqueue_table(packages){
 
 	jQuery('#sortable').LoadingOverlay('show');
+
 	var current_packages = enq_me_get_added_ids('#sortable');
 
-	jQuery('#sortable tbody tr').each(function(){
-		jQuery(this).remove();
-	});
+	enq_me_clear_all_packages_from_enqueue('#sortable');
 
 	if(current_packages.length > 0){
 

@@ -48,7 +48,7 @@ jQuery(document).on('hide_the_fruit', function(){
 			};
 			
 			enq_me_ajax(data, function(responce){
-				
+
 				if(responce.length > 0){
 
 					var html = "<table cellpadding='3' style='border:1px'><thead><tr><th>List Name</th><th>Assets</th><th>Actions</th></tr></thead>";
@@ -67,8 +67,56 @@ jQuery(document).on('hide_the_fruit', function(){
 					tooltip.find('.tooltipster-box').LoadingOverlay('hide');
 
 					jQuery('.load-fav-list-button').on('click', function(){
-						var theIDS = jQuery(this).closest('tr').attr('data-theids').split(",");
-						console.log(theIDS);
+
+						if (confirm('Are you sure you want to load this list? Your current list will be lost')) {
+
+							enq_me_clear_all_packages_from_enqueue('#sortable');
+
+							jQuery('#sortable').LoadingOverlay('show');
+
+    						var theIDS = jQuery(this).closest('tr').attr('data-theids').split(",");
+
+							window.packages = new Array();
+
+							theIDS.forEach(function(element, index){
+								
+								data = {
+									'single_package_query' : 1,
+									'package_id' : element
+								}
+
+								enq_me_ajax(data, function(responce){
+
+									window.packages.push(responce);
+									
+									if(theIDS.length == window.packages.length){
+
+										window.orderedpackages = new Array();
+
+										theIDS.forEach(function(IDelement, IDindex){
+											
+											window.packages.forEach(function(element, index){
+												if(element.ID == IDelement){
+													window.orderedpackages.push(element);
+												}
+											});
+											
+										});
+
+										window.orderedpackages.forEach(function(element, index){
+											enq_me_add_package_row(element);
+										});
+
+									}
+
+								}, function(responce){});
+								
+							});
+							jQuery('#sortable').LoadingOverlay('hide');
+							enq_me_update_enqueue_list('#sortable');
+
+						}
+						
 					});
 
 					jQuery('.delete-fav-list-button').on('click', function(){
@@ -85,7 +133,6 @@ jQuery(document).on('hide_the_fruit', function(){
 
 				}
 				
-
 			}, function(responce){
 				console.log(responce);
 			});
@@ -94,3 +141,4 @@ jQuery(document).on('hide_the_fruit', function(){
 	});
 
 });
+
