@@ -1,3 +1,7 @@
+jQuery(document).on('show_the_fruit', function(){
+	jQuery('.enc-me-fav-lists-container').hide();
+});
+
 jQuery(document).on('hide_the_fruit', function(){
 	
 	jQuery('.enc-me-fav-lists-container').show();
