@@ -120,9 +120,27 @@ jQuery(document).on('hide_the_fruit', function(){
 					});
 
 					jQuery('.delete-fav-list-button').on('click', function(){
+
+						if (confirm('Are you sure you want to delete this list?')) {
+
 						var theID = jQuery(this).closest('tr').attr('data-id');
-						console.log(theID);
+
+						data = {
+							'delete_fav_list' : theID,
+							'user_id' : window.user_id
+						}
+						
+						enq_me_ajax(data, function(responce){
+							if(responce == 'deleted'){
+								jQuery('#em-load-list').tooltipster('close', function(){ jQuery('#em-load-list').tooltipster('open')});
+							}
+						}, function(responce){
+
+						});
+					}
+
 					});
+
 
 				}else{
 
@@ -134,7 +152,12 @@ jQuery(document).on('hide_the_fruit', function(){
 				}
 				
 			}, function(responce){
-				console.log(responce);
+
+				var html = "You have no favourite lists at the moment";
+
+				o.content(html);
+				tooltip.find('.tooltipster-box').LoadingOverlay('hide');
+				
 			});
 		}
 
