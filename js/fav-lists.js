@@ -51,13 +51,13 @@ jQuery(document).on('hide_the_fruit', function(){
 
 				if(responce.length > 0){
 
-					var html = "<table cellpadding='3' style='border:1px'><thead><tr><th>List Name</th><th>Assets</th><th>Actions</th></tr></thead>";
+					var html = "<table class='fav-list-table' cellpadding='3' cellspacing='0' style='border:1px'><thead><tr><th>" + enq_me_fav_list_vars.listname + "</th><th>" + enq_me_fav_list_vars.packages + "</th><th></th></tr></thead>";
 
 					responce.forEach(function(element, index){
 						html += "<tr data-theids='" + element.fav_list + "' data-id='" + element.ID + "'>";
 						html += "<td>" + element.list_name +"</td>";
-						html += "<td>" + element.fav_list.length +"</td>";
-						html += "<td> <span class='tooltip-button load-fav-list-button'>Load</span> | <span class='tooltip-button delete-fav-list-button'>Delete</span></td>";
+						html += "<td class='listsize'>" + element.fav_list.length +"</td>";
+						html += "<td> <span class='tooltip-button load-fav-list-button'>" + enq_me_fav_list_vars.load + "</span> | <span class='tooltip-button delete-fav-list-button'>" + enq_me_fav_list_vars.delete + "</span></td>";
 						html +=	"</tr>";
 					});
 
@@ -68,7 +68,7 @@ jQuery(document).on('hide_the_fruit', function(){
 
 					jQuery('.load-fav-list-button').on('click', function(){
 
-						if (confirm('Are you sure you want to load this list? Your current list will be lost')) {
+						if (confirm(enq_me_fav_list_vars.loadFavMsg)) {
 
 							enq_me_clear_all_packages_from_enqueue('#sortable');
 
@@ -112,6 +112,7 @@ jQuery(document).on('hide_the_fruit', function(){
 								}, function(responce){});
 								
 							});
+
 							jQuery('#sortable').LoadingOverlay('hide');
 							enq_me_update_enqueue_list('#sortable');
 
@@ -121,7 +122,7 @@ jQuery(document).on('hide_the_fruit', function(){
 
 					jQuery('.delete-fav-list-button').on('click', function(){
 
-						if (confirm('Are you sure you want to delete this list?')) {
+						if (confirm(enq_me_fav_list_vars.deleFavMsg)) {
 
 						var theID = jQuery(this).closest('tr').attr('data-id');
 
@@ -144,7 +145,7 @@ jQuery(document).on('hide_the_fruit', function(){
 
 				}else{
 
-					var html = "You have no favourite lists at the moment";
+					var html = enq_me_fav_list_vars.noFavMsg;
 
 					o.content(html);
 					tooltip.find('.tooltipster-box').LoadingOverlay('hide');
@@ -153,11 +154,11 @@ jQuery(document).on('hide_the_fruit', function(){
 				
 			}, function(responce){
 
-				var html = "You have no favourite lists at the moment";
+				var html = enq_me_fav_list_vars.noFavMsg;
 
 				o.content(html);
 				tooltip.find('.tooltipster-box').LoadingOverlay('hide');
-				
+
 			});
 		}
 
