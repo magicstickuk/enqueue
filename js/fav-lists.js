@@ -21,15 +21,21 @@ jQuery(document).on('hide_the_fruit', function(){
 				
 				tooltip.find('.tooltipster-box').LoadingOverlay('show', {zIndex: 999999999});
 
-				var data = {
-		      		"add_fav_list" : enq_me_get_added_ids('#sortable'),
-		      		"user_id" : window.user_id,
-		      		"package_name" : tooltip.find('#em-save-list-name').val()
-				};
-				enq_me_ajax(data, null, function(){
-					tooltip.find('.licence-tick').show('medium');
-					tooltip.find('.tooltipster-box').LoadingOverlay('hide');
-				});
+				var package_name = tooltip.find('#em-save-list-name').val();
+				package_name = package_name.replace('"', '&quot;');
+				package_name = package_name.replace("'", '&#39;');
+				
+					var data = {
+			      		"add_fav_list" : enq_me_get_added_ids('#sortable'),
+			      		"user_id" : window.user_id,
+			      		"package_name" : package_name
+					};
+					enq_me_ajax(data, null, function(){
+						tooltip.find('.licence-tick').show('medium');
+						tooltip.find('.tooltipster-box').LoadingOverlay('hide');
+					});
+				
+				
 			
 			});
 		
@@ -55,7 +61,7 @@ jQuery(document).on('hide_the_fruit', function(){
 
 				if(responce.length > 0){
 
-					var html = "<table class='fav-list-table' cellpadding='3' cellspacing='0' style='border:1px'><thead><tr><th>" + enq_me_fav_list_vars.listname + "</th><th>" + enq_me_fav_list_vars.packages + "</th><th></th></tr></thead>";
+					var html = "<table class='fav-list-table' cellpadding='3' cellspacing='0' style='border:1px'><thead><tr><th>" + enq_me_fav_list_vars.listname + "</th><th>" + enq_me_fav_list_vars.packages + "</th><th>&nbsp;</th></tr></thead>";
 
 					responce.forEach(function(element, index){
 						html += "<tr data-theids='" + element.fav_list + "' data-id='" + element.ID + "'>";
@@ -124,7 +130,7 @@ jQuery(document).on('hide_the_fruit', function(){
 						
 					});
 
-					jQuery('.delete-fav-list-button').on('click', function(){
+					jQuery('.delete-fav-list-button').on('click', function(e){
 
 						if (confirm(enq_me_fav_list_vars.deleFavMsg)) {
 
@@ -136,8 +142,12 @@ jQuery(document).on('hide_the_fruit', function(){
 						}
 						
 						enq_me_ajax(data, function(responce){
+							var theRow = jQuery(e.target).closest('tr');
+							theRow.LoadingOverlay('show');
 							if(responce == 'deleted'){
-								jQuery('#em-load-list').tooltipster('close', function(){ jQuery('#em-load-list').tooltipster('open')});
+								theRow.LoadingOverlay('hide');
+								theRow.remove();
+								jQuery('#em-load-list').tooltipster('reposition');
 							}
 						}, function(responce){
 

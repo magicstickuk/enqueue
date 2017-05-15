@@ -26,4 +26,5 @@ font-size: 0.9em;
 }
 .fav-list-table {
 	border-collapse: collapse;
+	width: 100%;
 }
