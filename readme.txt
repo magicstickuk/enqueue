@@ -19,8 +19,9 @@ https://vimeo.com/215253163
 *   Enqueue jQuery and CSS packages from a library of popular packages
 *	Save your favourite packages to access easily across all your projects
 *	Drag an drop packages to change package dependancies
-*	Add your own custom packages to our public library or make them visible for your use only.
-*	Export and Import your Enqueue configuration across all your projects.
+*	Add your own custom packages to our public library or make them visible for your use only
+*	Export and Import your Enqueue configuration across all your projects
+*	Save and edit your favourite lists for use across all your projects
 
 == Installation ==
 
@@ -42,6 +43,9 @@ None Yet!
 6. Manage/edit packages at wpmaz.uk/enqueue-me
 
 == Changelog ==
+
+= 0.3 =
+* You can now save and edit your favourite lists for use across all your projects
 
 = 0.2 =
 * Fixed issue with initial default settings.
