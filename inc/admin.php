@@ -476,6 +476,12 @@ function enq_me_update_enqueue_list($packages){
 
 	update_option('enq_me_assets_to_enqueue', $packages);
 
+    if($packages){
+        $package_ids = array_column( $packages , 'id' );
+    }
+
+    update_option('enq_me_assets_ids_to_enqueue', $package_ids);
+    
 }
 /**
  * A helper function to help display the default state of a settings page checkbox
