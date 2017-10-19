@@ -439,6 +439,8 @@ function enq_me_check_licence(){
 
 	jQuery('.spinner-container').LoadingOverlay("hide");
 
+	enq_me_maybe_add_from_url();
+
 }
 
 function enq_me_show_the_fruit(){
@@ -509,8 +511,6 @@ function enq_me_load_user_packages(user_id){
 		    	}
 
 	    		enq_me_draw('#sortable',false);
-
-	    		enq_me_maybe_add_from_url();
 	    		
 
 		},
@@ -523,13 +523,28 @@ function enq_me_load_user_packages(user_id){
 	});
 
 }
+
+
+
 function enq_me_maybe_add_from_url(){
 
 	var url_vars = getUrlVars();
 
 	if(url_vars.add_package){
-		
-		enq_me_add_package_to_table('#sortable', url_vars.add_package);
+
+		packages = url_vars.add_package.split(',');
+
+		jQuery.each(packages,function(key, value){
+
+			var current_packages = enq_me_get_added_ids('#sortable');
+
+			if(jQuery.inArray(value, current_packages) == -1){
+				enq_me_add_package_to_table('#sortable', value);
+			}
+			
+		});
+
+		enq_me_draw();
 
 	}
 
