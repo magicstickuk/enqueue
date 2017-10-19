@@ -546,6 +546,8 @@ function enq_me_maybe_add_from_url(){
 
 		enq_me_draw();
 
+		alert('Congratulations. you have enqueued the required packages.')
+
 	}
 
 
