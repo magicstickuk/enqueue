@@ -469,12 +469,28 @@ function enq_me_show_favourite_select(){
 	
 }
 
+function getUrlVars(){
+
+    var vars 	= [], hash;
+    var hashes 	= window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+
+    for(var i = 0; i < hashes.length; i++){
+
+        hash = hashes[i].split('=');
+        vars.push(hash[0]);
+        vars[hash[0]] = hash[1];
+
+    }
+
+    return vars;
+}
+
 function enq_me_load_user_packages(user_id){
 
 	var data = {
 		"user_package_state_check" : 1,
 		"user_id" : user_id,
-	    "sync_id" : enq_me_admin_setting_vars.sync_id
+	    	"sync_id" : enq_me_admin_setting_vars.sync_id
 	}
         
 	jQuery.ajax({
@@ -494,6 +510,9 @@ function enq_me_load_user_packages(user_id){
 
 	    		enq_me_draw('#sortable',false);
 
+	    		enq_me_maybe_add_from_url();
+	    		
+
 		},
 		error: function (rD, textStatus, errorThrown){
 	    		
@@ -504,6 +523,20 @@ function enq_me_load_user_packages(user_id){
 	});
 
 }
+function enq_me_maybe_add_from_url(){
+
+	var url_vars = getUrlVars();
+
+	if(url_vars.add_package){
+		
+		enq_me_add_package_to_table('#sortable', url_vars.add_package);
+
+	}
+
+
+}
+
+
 
 function enq_me_clear_all_packages_from_enqueue(table){
 	jQuery(table + ' tbody tr').each(function(){
@@ -558,6 +591,7 @@ function enq_me_update_enqueue_table(packages){
 	}else{
 		jQuery('#sortable').LoadingOverlay('hide');
 	}
+
 	
 }
 
