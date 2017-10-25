@@ -532,7 +532,8 @@ function enq_me_maybe_add_from_url(){
 
 	if(url_vars.add_package){
 
-		packages = url_vars.add_package.split(',');
+		packages_prep = url_vars.add_package.replace('%2C', ',');
+		packages = packages_prep.split(',');
 
 		jQuery.each(packages,function(key, value){
 
