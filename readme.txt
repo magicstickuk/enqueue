@@ -44,6 +44,9 @@ None Yet!
 
 == Changelog ==
 
+= 0.4 =
+* Bug fixes and API improvements
+
 = 0.3 =
 * You can now save and edit your favourite lists for use across all your projects
 
