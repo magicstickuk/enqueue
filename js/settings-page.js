@@ -1,4 +1,9 @@
+jQuery( document ).on('table_saved', function(e){
+	console.log('add a row');
 
+
+	//enq_me_maybe_add_from_url();
+})
 //
 // 
 jQuery( document ).ready(function() {
@@ -387,7 +392,7 @@ function enq_me_update_enqueue_list(table_id, save_state){
 		packages : packages,
     };
 
-    	if(save_state){
+    if(save_state){
 
 		jQuery.post(ajaxurl,data,function(response) {
 
@@ -401,7 +406,11 @@ function enq_me_update_enqueue_list(table_id, save_state){
 
 		});
 
+		jQuery(document).trigger('table_saved');
+
 	}
+
+	
 
 }
 
@@ -438,8 +447,6 @@ function enq_me_check_licence(){
 	});
 
 	jQuery('.spinner-container').LoadingOverlay("hide");
-
-	enq_me_maybe_add_from_url();
 
 }
 
@@ -529,6 +536,8 @@ function enq_me_load_user_packages(user_id){
 function enq_me_maybe_add_from_url(){
 
 	var url_vars = getUrlVars();
+
+	window.packages_to_be_added = url_vars;
 
 	if(url_vars.add_package){
 
