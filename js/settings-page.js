@@ -1,14 +1,19 @@
 jQuery( document ).on('table_saved', function(e){
-	console.log('add a row');
+	
+	if(value = window.packages_to_be_added.slice(-1).pop()){
+		enq_me_add_package_to_table('#sortable', value);
+	}
 
+	console.log(window.packages_to_be_added.splice(-1,1));
 
-	//enq_me_maybe_add_from_url();
-})
+});
 //
 // 
 jQuery( document ).ready(function() {
 	
 	var table_id = "#sortable";
+
+	enq_me_maybe_add_from_url();
 
 	enq_me_check_licence();
 
@@ -536,8 +541,8 @@ function enq_me_load_user_packages(user_id){
 function enq_me_maybe_add_from_url(){
 
 	var url_vars = getUrlVars();
-
-	window.packages_to_be_added = url_vars;
+	window.packages_to_be_added = [];
+	//window.packages_to_be_added = url_vars;
 
 	if(url_vars.add_package){
 
@@ -549,14 +554,16 @@ function enq_me_maybe_add_from_url(){
 			var current_packages = enq_me_get_added_ids('#sortable');
 
 			if(jQuery.inArray(value, current_packages) == -1){
-				enq_me_add_package_to_table('#sortable', value);
+				
+				window.packages_to_be_added.push(value);
+				
 			}
 			
 		});
 
 		enq_me_draw();
 
-		alert('Congratulations. you have enqueued the required packages.')
+		//alert('Congratulations. you have enqueued the required packages.')
 
 	}
 
