@@ -44,6 +44,9 @@ None Yet!
 
 == Changelog ==
 
+= 0.5 =
+* Improved import functionality
+
 = 0.4 =
 * Bug fixes and API improvements
 
