@@ -532,7 +532,7 @@ function enq_me_maybe_add_from_url(){
 
 	if(url_vars.add_package){
 
-		packages_prep = url_vars.add_package.replace('%2C', ',');
+		packages_prep = enq_replaceAll(url_vars.add_package, '%2C', ',' );
 		packages = packages_prep.split(',');
 
 		jQuery.each(packages,function(key, value){
@@ -554,6 +554,10 @@ function enq_me_maybe_add_from_url(){
 
 }
 
+
+function enq_replaceAll(str, find, replace) {
+    return str.replace(new RegExp(find, 'g'), replace);
+}
 
 
 function enq_me_clear_all_packages_from_enqueue(table){
